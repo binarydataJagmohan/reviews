@@ -10,7 +10,7 @@ export default function Document() {
         <link href={process.env.NEXT_PUBLIC_BASE_URL+'assets/css/responsiveness.css'} rel="stylesheet"/>
         <link  type="text/css" rel="stylesheet" id="jssDefault" href={process.env.NEXT_PUBLIC_BASE_URL+'assets/css/colors/main.css'}/>
       </Head>
-      <body>
+      <body className="home-2">
         <Main />
         <NextScript />
         <script src={process.env.NEXT_PUBLIC_BASE_URL+'assets/js/jquery.min.js'}></script>

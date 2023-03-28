@@ -6,12 +6,10 @@ import { Props } from "./Props";
 export default function Layout({ children, ...props }: Props)  {
   const router = useRouter()
   return (
-    <div className="home-2">
-      <div className="wrapper">
-        <Header />
-        <main {...props}>{children}</main>
-        <Footer />
-      </div>
+    <div className="wrapper">
+      <Header />
+      <main {...props}>{children}</main>
+      <Footer />
     </div>
   )
 }
