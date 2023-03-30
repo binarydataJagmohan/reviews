@@ -6,9 +6,10 @@ export default function Home(): JSX.Element{
                 <div className="container">
                     <div className="banner-caption">
                     <div className="col-md-12 col-sm-12 banner-text">
-                        <h1>Cooking with fine Wine</h1>
-                        <p>Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit, Sed Do Eiusmod Tempor Incididunt Ut Labore Et Dolore Magna Aliqua. Ut Enim Ad Minim Veniam</p>
-                        <form className="form-verticle">
+                        <h1>What is Bungee?</h1>
+                        <p>Bungee is an anonymous review platform meant to inform other professionals about their peers before they make a career move. We have found that some of the largest contributors to satisfaction at work revolve around work / life balance and group culture- both largely impacted by bosses, colleagues, and other members of the group.
+</p>
+                        <form className="form-verticle" id="home-btn">
                         <div className="col-md-10 col-sm-10 no-padd">
                             <i className="banner-icon icon-pencil"></i>
                             <input type="text" className="form-control left-radius right-br" placeholder="Keywords.."/>
@@ -196,8 +197,10 @@ export default function Home(): JSX.Element{
                     <div className="col-md-10 col-md-offset-1">
                     <div className="tag-content">
                         <img src="assets/img/listing-hub-favicon.png" className="img-responsive" alt="" />
-                        <h2>Hello favourite day</h2>
-                        <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa</p>
+                        <h2>How can I see my colleagues' reviews?
+</h2>
+                        <p>Once you have signed up and logged in, you'll be able to see reviews and write your own reviews anonymously on the platform.
+</p>
                         <a href="#" className="btn theme-btn btn-radius">EXPLORE US<i className="ti-shift-right" /></a>
                     </div>
                     </div>

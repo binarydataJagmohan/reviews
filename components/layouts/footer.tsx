@@ -5,7 +5,7 @@ export default function Footer() {
         <div>
            <footer className="footer image-bg">
 				<div className="footer-copyright">
-					<p>Copyright@ 2023 Listing Hub Design By <a href="component.html" title="Themezhub" target="_blank">Component</a></p>
+					<p>Copyright@ 2023 Powered By <a href="component.html" title="Themezhub" target="_blank" style={{ color: '#fff',fontSize: '16px',fontWeight: '700' }}>Bungee</a></p>
 				</div>
 			</footer>
         </div>

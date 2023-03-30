@@ -2,11 +2,11 @@
 
 @font-face {
 	font-family: 'themify';
-	src:url('assets/plugins/css/plugins/fonts/themify.eot?-fvbane');
-	src:url('fonts/themify.eot?#iefix-fvbane') format('embedded-opentype'),
-		url('fonts/themify.woff?-fvbane') format('woff'),
-		url('fonts/themify.ttf?-fvbane') format('truetype'),
-		url('fonts/themify.svg?-fvbane#themify') format('svg');
+	src:url('assets/plugins/css/plugins/fonts/themify.eot');
+	src:url('fonts/themify.eot') format('embedded-opentype'),
+		url('fonts/themify.woff') format('woff'),
+		url('fonts/themify.ttf') format('truetype'),
+		url('fonts/themify.svg') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -1627,7 +1627,7 @@ body nav.navbar.bootsnav ul.nav > li > a.addlist i {
 }
 /*---------- Transparent Navigation ---------*/
 body.home-2 nav.navbar.bootsnav.navbar-transparent {
-    background-color: #000;
+    background-color: transparent;
 	box-shadow:none;
     border-bottom:1px solid rgba(255,255,255,0.10);
 }
@@ -1647,7 +1647,7 @@ body.home-2 nav.navbar.bootsnav ul.nav > li > a.addlist i {
     color:#ffffff;
 }
 body.home-2 nav.navbar.bootsnav.no-background.white .attr-nav > ul > li > a, body.home-2 nav.navbar.bootsnav.navbar-transparent.white .attr-nav > ul > li > a, body.home-2 nav.navbar.bootsnav.navbar-transparent.white ul.nav > li > a, body.home-2 nav.navbar.bootsnav.no-background.white ul.nav > li > a {
-    color:#fff;
+    color:#01A2DD;
     text-shadow: none;
 }
 
@@ -1674,11 +1674,6 @@ nav.navbar.bootsnav.dark ul.nav>li>a {
        Home Banner Styles
 ========================================================================== */
 /*--- Common Banner Style ------*/
-#home-btn.form-verticle {
-    width: 50%;
-    display: inline-block;
-	margin:1em 0;
-}
 form.form-verticle {
     width: 100%;
     display: inline-block;
@@ -2314,17 +2309,13 @@ a.btn.listing-btn {
 .banner .btn.btn-default{
 	color:#ffffff;
 	text-shadow: none;
-	font-size:16px;
+	font-size:20px;
 	margin:0;
 	box-shadow:none;
 	border-radius:0px;
-	padding:0 12px;
-	height:50px;
+	padding:0 20px;
+	height:52px;
 	width:100%;
-}
-.banner .btn.btn-default:focus{
-    outline: 0;
-    box-shadow: none;
 }
 
 .banner-caption .btn-primary{
@@ -3436,7 +3427,7 @@ Profile Page Styles
     color: #fff;
     background-size: cover !important;
     background-position:center !important;
-	height:250px;
+	height:510px;
 }
 .detail-section .overlay {
     -webkit-backface-visibility: hidden;
@@ -3453,7 +3444,7 @@ Profile Page Styles
 
 .profile-cover-content {
     position: absolute;
-    bottom: 0px;
+    bottom: 20px;
     width: 100%;
     text-align: right;
     z-index: 10;
@@ -3508,10 +3499,10 @@ Profile Page Styles
     position: absolute;
     min-width: 250px;
     bottom: -50px;
-    left: 9%;
+    left: 5%;
 }
 .listing-owner-avater {
-    max-width:150px;
+    max-width:80px;
     display: inline-block;
     float: left;
 }
@@ -4319,7 +4310,7 @@ Pages Settings
 	border-bottom: 1px solid #eaeff5;
 }
 .detail-wrapper-header h4{
-	margin:10px;
+	margin:0;
 }
 .detail-list-rating {
     float: left;
@@ -4441,9 +4432,6 @@ button.btn.remove-field.light-gray-btn {
 
 
 /*------------------ preview Listing -------------------*/
-div#add-reviews {
-    margin-top: 100px;
-}
 .preview-info label {
     font-weight: 400;
 	margin-bottom:20px;
@@ -6101,23 +6089,4 @@ a.cl-box {
 
 .coquelicot {
     background: #ff3800
-}
-
-.login-form {
-    display: flex;
-    justify-content: center;
-}
-
-/*  */
-
-.user_detail {
-    font-size: 18px;
-    line-height: 50px;
-    padding: 0px 30px 0px 0px;
-}
-.user_name {
-    font-size: 20px;
-    line-height: 50px;
-    padding: 0px 30px 0px 0px;
-    font-weight: bold;
 }
