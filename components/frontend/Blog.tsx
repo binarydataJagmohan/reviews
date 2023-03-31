@@ -10,7 +10,7 @@ export default function Blog()
 					<div className="title-content">
 						<h1>All Blogs</h1>
 						<div className="breadcrumbs">
-							<a href="#">Home</a>
+							<Link href="#">Home</Link>
 							<span className="gt3_breadcrumb_divider"></span>
 							<span className="current">Blog</span>
 						</div>
@@ -37,7 +37,7 @@ export default function Blog()
 									</div> */}
 									<h4>Why People Use Listing Hub</h4>
 									<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum</p>
-									<a href="/BlogDetails" className="theme-cl" title="Read More..">Continue...</a>
+									<Link href="/BlogDetails" className="theme-cl" title="Read More..">Continue...</Link>
 								</div>
 								
 							</div>
@@ -57,7 +57,7 @@ export default function Blog()
 									</div> */}
 									<h4>Why People Use Listing Hub</h4>
 									<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum</p>
-									<a href="blog-detail.html" className="theme-cl" title="Read More..">Continue...</a>
+									<Link href="blog-detail.html" className="theme-cl" title="Read More..">Continue...</Link>
 								</div>
 							</div>
 						</div>
@@ -74,7 +74,7 @@ export default function Blog()
 									</div> */}
 									<h4>Why People Use Listing Hub</h4>
 									<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum</p>
-									<a href="blog-detail.html" className="theme-cl" title="Read More..">Continue...</a>
+									<Link href="blog-detail.html" className="theme-cl" title="Read More..">Continue...</Link>
 								</div>
 							</div>
 						</div>
@@ -93,7 +93,7 @@ export default function Blog()
 									</div> */}
 									<h4>Why People Use Listing Hub</h4>
 									<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum</p>
-									<a href="blog-detail.html" className="theme-cl" title="Read More..">Continue...</a>
+									<Link href="blog-detail.html" className="theme-cl" title="Read More..">Continue...</Link>
 								</div>
 							</div>
 						</div>
@@ -110,7 +110,7 @@ export default function Blog()
 									</div> */}
 									<h4>Why People Use Listing Hub</h4>
 									<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum</p>
-									<a href="blog-detail.html" className="theme-cl" title="Read More..">Continue...</a>
+									<Link href="blog-detail.html" className="theme-cl" title="Read More..">Continue...</Link>
 								</div>
 							</div>
 						</div>
@@ -127,7 +127,7 @@ export default function Blog()
 									</div> */}
 									<h4>Why People Use Listing Hub</h4>
 									<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum</p>
-									<a href="blog-detail.html" className="theme-cl" title="Read More..">Continue...</a>
+									<Link href="blog-detail.html" className="theme-cl" title="Read More..">Continue...</Link>
 								</div>
 							</div>
 						</div>
@@ -146,7 +146,7 @@ export default function Blog()
 									</div> */}
 									<h4>Why People Use Listing Hub</h4>
 									<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum</p>
-									<a href="blog-detail.html" className="theme-cl" title="Read More..">Continue...</a>
+									<Link href="blog-detail.html" className="theme-cl" title="Read More..">Continue...</Link>
 								</div>
 							</div>
 						</div>
@@ -163,7 +163,7 @@ export default function Blog()
 									</div> */}
 									<h4>Why People Use Listing Hub</h4>
 									<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum</p>
-									<a href="blog-detail.html" className="theme-cl" title="Read More..">Continue...</a>
+									<Link href="blog-detail.html" className="theme-cl" title="Read More..">Continue...</Link>
 								</div>
 							</div>
 						</div>
@@ -180,7 +180,7 @@ export default function Blog()
 									</div> */}
 									<h4>Why People Use Listing Hub</h4>
 									<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum</p>
-									<a href="blog-detail.html" className="theme-cl" title="Read More..">Continue...</a>
+									<Link href="blog-detail.html" className="theme-cl" title="Read More..">Continue...</Link>
 								</div>
 							</div>
 						</div>
@@ -190,13 +190,13 @@ export default function Blog()
 						<div className="col-md-12">
 							<div className="bs-example">
 								<ul className="pagination">
-									<li><a href="#">«</a></li>
-									<li><a href="#">1</a></li>
-									<li><a href="#">2</a></li>
-									<li><a href="#">3</a></li>
-									<li><a href="#">4</a></li>
-									<li><a href="#">5</a></li>
-									<li><a href="#">»</a></li>
+									<li><Link href="#">«</Link></li>
+									<li><Link href="#">1</Link></li>
+									<li><Link href="#">2</Link></li>
+									<li><Link href="#">3</Link></li>
+									<li><Link href="#">4</Link></li>
+									<li><Link href="#">5</Link></li>
+									<li><Link href="#">»</Link></li>
 								</ul>
 							</div>
 						</div>

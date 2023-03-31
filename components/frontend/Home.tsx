@@ -1,5 +1,6 @@
 import React, { useState ,useEffect} from 'react'
 import Link from 'next/link' ;
+import Image from 'next/image'
 export default function Home(): JSX.Element{
     return(
         <>
@@ -22,7 +23,7 @@ export default function Home(): JSX.Element{
                         </div>
                         </form>
                         <div className="pulse-tag">
-                        <a href="#listing" className="pulse btn-banner-link"><i className="theme-cl ti-angle-double-down"></i></a>
+                        <Link href="#listing" className="pulse btn-banner-link"><i className="theme-cl ti-angle-double-down"></i></Link>
                         </div>
                     </div>
                     </div>
@@ -49,7 +50,7 @@ export default function Home(): JSX.Element{
                   <div className="tp-author-detail-wrapper">
                     <div className="tp-author-detail-box">	
                       <div className="tp-author">
-                        <a href="author-detail.html" title="author"><img src="../assets/img/team3.jpg" className="img-responsive " alt="" /></a>
+                        <Link href="author-detail.html" title="author"><img src="../assets/img/team3.jpg" className="img-responsive " alt="" /></Link>
                       </div>
                     </div>
                     <div className="listing-shot-caption">
@@ -77,7 +78,7 @@ export default function Home(): JSX.Element{
                           <i className="fa fa-star" aria-hidden="true" />
                         </div>
                         <div className="col-md-5 col-sm-5 col-xs-6 pull-right">
-                          <a href="listing-detail.html" className="detail-link">Open Now</a>
+                          <Link href="listing-detail.html" className="detail-link">Open Now</Link>
                         </div>
                       </div>
                     </div>
@@ -93,7 +94,7 @@ export default function Home(): JSX.Element{
                   <div className="tp-author-detail-wrapper">
                     <div className="tp-author-detail-box">	
                       <div className="tp-author">
-                        <a href="author-detail.html" title="author"><img src="../assets/img/team4.jpg" className="img-responsive " alt="" /></a>
+                        <Link href="author-detail.html" title="author"><img src="../assets/img/team4.jpg" className="img-responsive " alt="" /></Link>
                       </div>
                     </div>
                     <div className="listing-shot-caption">
@@ -121,7 +122,7 @@ export default function Home(): JSX.Element{
                           <i className="fa fa-star" aria-hidden="true" />
                         </div>
                         <div className="col-md-5 col-sm-5 col-xs-6 pull-right">
-                          <a href="listing-detail.html" className="detail-link">Open Now</a>
+                          <Link href="listing-detail.html" className="detail-link">Open Now</Link>
                         </div>
                       </div>
                     </div>
@@ -137,7 +138,7 @@ export default function Home(): JSX.Element{
                   <div className="tp-author-detail-wrapper">
                     <div className="tp-author-detail-box">	
                       <div className="tp-author">
-                        <a href="author-detail.html" title="author"><img src="../assets/img/team3.jpg" className="img-responsive " alt="" /></a>
+                        <Link href="author-detail.html" title="author"><img src="../assets/img/team3.jpg" className="img-responsive " alt="" /></Link>
                       </div>
                     </div>
                     <div className="listing-shot-caption">
@@ -165,7 +166,7 @@ export default function Home(): JSX.Element{
                           <i className="fa fa-star" aria-hidden="true" />
                         </div>
                         <div className="col-md-5 col-sm-5 col-xs-6 pull-right">
-                          <a href="listing-detail.html" className="detail-link">Open Now</a>
+                          <Link href="listing-detail.html" className="detail-link">Open Now</Link>
                         </div>
                       </div>
                     </div>
@@ -214,11 +215,11 @@ export default function Home(): JSX.Element{
                     <div className="col-md-10 col-md-offset-1">
                     <div className="tag-content">
                         <img src="assets/img/listing-hub-favicon.png" className="img-responsive" alt="" />
-                        <h2>How can I see my colleagues' reviews?
-</h2>
-                        <p>Once you have signed up and logged in, you'll be able to see reviews and write your own reviews anonymously on the platform.
-</p>
-                        <Link href="User/ListingDetails" className="btn theme-btn btn-radius">Our Top Reviewrs<i className="ti-shift-right" /></Link>
+                        <h2>How can I see my colleagues&apos; reviews?</h2>
+
+<p>Once you have signed up and logged in, you&apos;ll be able to see reviews and write your own reviews anonymously on the platform.</p>
+
+                        <Link href="User/TopReviewrs" className="btn theme-btn btn-radius">Our Top Reviewrs<i className="ti-shift-right" /></Link>
                     </div>
                     </div>
                 </div>

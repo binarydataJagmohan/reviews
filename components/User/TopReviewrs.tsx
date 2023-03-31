@@ -11,7 +11,7 @@ export default function TopReviers()
             <div className="title-content">
               <h1>Full Width Grid</h1>
               <div className="breadcrumbs">
-                <a href="#">Home</a>
+                <Link href="#">Home</Link>
                 <span className="gt3_breadcrumb_divider" />
                 <span className="current">Full Width Grid</span>
               </div>
@@ -59,8 +59,8 @@ export default function TopReviers()
               </div>
               <div className="col-md-6">
                 <div className="layout-option pull-right">
-                  <a href="full-width-grid.html" className="active" title="Grid Layout"><i className="ti-layout-grid3" /></a>
-                  <a href="full-width-vertical.html" title="List Layout"><i className="ti-view-list" /></a>
+                  <Link href="full-width-grid.html" className="active" title="Grid Layout"><i className="ti-layout-grid3" /></Link>
+                  <Link href="full-width-vertical.html" title="List Layout"><i className="ti-view-list" /></Link>
                 </div>
               </div>
             </div>
@@ -73,7 +73,7 @@ export default function TopReviers()
                   <div className="tp-author-detail-wrapper">
                     <div className="tp-author-detail-box">	
                       <div className="tp-author">
-                        <a href="/User/ListingDetails" title="author"><img src="../assets/img/team3.jpg" className="img-responsive " alt="" /></a>
+                        <Link href="/User/ListingDetails" title="author"><img src="../assets/img/team3.jpg" className="img-responsive " alt="" /></Link>
                       </div>
                     </div>
                     <div className="listing-shot-caption">
@@ -101,7 +101,7 @@ export default function TopReviers()
                           <i className="fa fa-star" aria-hidden="true" />
                         </div>
                         <div className="col-md-5 col-sm-5 col-xs-6 pull-right">
-                          <a href="/User/ListingDetails" className="detail-link">Open Now</a>
+                          <Link href="/User/ListingDetails" className="detail-link">Open Now</Link>
                         </div>
                       </div>
                     </div>
@@ -116,7 +116,7 @@ export default function TopReviers()
                   <div className="tp-author-detail-wrapper">
                     <div className="tp-author-detail-box">	
                       <div className="tp-author">
-                        <a href="/User/ListingDetails" title="author"><img src="../assets/img/team4.jpg" className="img-responsive " alt="" /></a>
+                        <Link href="/User/ListingDetails" title="author"><img src="../assets/img/team4.jpg" className="img-responsive " alt="" /></Link>
                       </div>
                     </div>
                     <div className="listing-shot-caption">
@@ -144,7 +144,7 @@ export default function TopReviers()
                           <i className="fa fa-star" aria-hidden="true" />
                         </div>
                         <div className="col-md-5 col-sm-5 col-xs-6 pull-right">
-                          <a href="/User/ListingDetails" className="detail-link">Open Now</a>
+                          <Link href="/User/ListingDetails" className="detail-link">Open Now</Link>
                         </div>
                       </div>
                     </div>
@@ -159,7 +159,7 @@ export default function TopReviers()
                   <div className="tp-author-detail-wrapper">
                     <div className="tp-author-detail-box">	
                       <div className="tp-author">
-                        <a href="/User/ListingDetails" title="author"><img src="../assets/img/team4.jpg" className="img-responsive " alt="" /></a>
+                        <Link href="/User/ListingDetails" title="author"><img src="../assets/img/team4.jpg" className="img-responsive " alt="" /></Link>
                       </div>
                     </div>
                     <div className="listing-shot-caption">
@@ -187,7 +187,7 @@ export default function TopReviers()
                           <i className="fa fa-star" aria-hidden="true" />
                         </div>
                         <div className="col-md-5 col-sm-5 col-xs-6 pull-right">
-                          <a href="/User/ListingDetails" className="detail-link">Open Now</a>
+                          <Link href="/User/ListingDetails" className="detail-link">Open Now</Link>
                         </div>
                       </div>
                     </div>
@@ -202,7 +202,7 @@ export default function TopReviers()
                   <div className="tp-author-detail-wrapper">
                     <div className="tp-author-detail-box">	
                       <div className="tp-author">
-                        <a href="/User/ListingDetails" title="author"><img src="../assets/img/team4.jpg" className="img-responsive " alt="" /></a>
+                        <Link href="/User/ListingDetails" title="author"><img src="../assets/img/team4.jpg" className="img-responsive " alt="" /></Link>
                       </div>
                     </div>
                     <div className="listing-shot-caption">
@@ -230,7 +230,7 @@ export default function TopReviers()
                           <i className="fa fa-star" aria-hidden="true" />
                         </div>
                         <div className="col-md-5 col-sm-5 col-xs-6 pull-right">
-                          <a href="/User/ListingDetails" className="detail-link">Open Now</a>
+                          <Link href="/User/ListingDetails" className="detail-link">Open Now</Link>
                         </div>
                       </div>
                     </div>
@@ -245,7 +245,7 @@ export default function TopReviers()
                   <div className="tp-author-detail-wrapper">
                     <div className="tp-author-detail-box">	
                       <div className="tp-author">
-                        <a href="author-detail.html" title="author"><img src="../assets/img/team3.jpg" className="img-responsive " alt="" /></a>
+                        <Link href="author-detail.html" title="author"><img src="../assets/img/team3.jpg" className="img-responsive " alt="" /></Link>
                       </div>
                     </div>
                     <div className="listing-shot-caption">
@@ -273,7 +273,7 @@ export default function TopReviers()
                           <i className="fa fa-star" aria-hidden="true" />
                         </div>
                         <div className="col-md-5 col-sm-5 col-xs-6 pull-right">
-                          <a href="listing-detail.html" className="detail-link">Open Now</a>
+                          <Link href="listing-detail.html" className="detail-link">Open Now</Link>
                         </div>
                       </div>
                     </div>
@@ -288,7 +288,7 @@ export default function TopReviers()
                   <div className="tp-author-detail-wrapper">
                     <div className="tp-author-detail-box">	
                       <div className="tp-author">
-                        <a href="author-detail.html" title="author"><img src="../assets/img/team3.jpg" className="img-responsive " alt="" /></a>
+                        <Link href="author-detail.html" title="author"><img src="../assets/img/team3.jpg" className="img-responsive " alt="" /></Link>
                       </div>
                     </div>
                     <div className="listing-shot-caption">
@@ -316,7 +316,7 @@ export default function TopReviers()
                           <i className="fa fa-star" aria-hidden="true" />
                         </div>
                         <div className="col-md-5 col-sm-5 col-xs-6 pull-right">
-                          <a href="listing-detail.html" className="detail-link">Open Now</a>
+                          <Link href="listing-detail.html" className="detail-link">Open Now</Link>
                         </div>
                       </div>
                     </div>
@@ -331,7 +331,7 @@ export default function TopReviers()
                   <div className="tp-author-detail-wrapper">
                     <div className="tp-author-detail-box">	
                       <div className="tp-author">
-                        <a href="author-detail.html" title="author"><img src="../assets/img/team3.jpg" className="img-responsive " alt="" /></a>
+                        <Link href="author-detail.html" title="author"><img src="../assets/img/team3.jpg" className="img-responsive " alt="" /></Link>
                       </div>
                     </div>
                     <div className="listing-shot-caption">
@@ -359,7 +359,7 @@ export default function TopReviers()
                           <i className="fa fa-star" aria-hidden="true" />
                         </div>
                         <div className="col-md-5 col-sm-5 col-xs-6 pull-right">
-                          <a href="listing-detail.html" className="detail-link">Open Now</a>
+                          <Link href="listing-detail.html" className="detail-link">Open Now</Link>
                         </div>
                       </div>
                     </div>
@@ -374,7 +374,7 @@ export default function TopReviers()
                   <div className="tp-author-detail-wrapper">
                     <div className="tp-author-detail-box">	
                       <div className="tp-author">
-                        <a href="author-detail.html" title="author"><img src="../assets/img/team3.jpg" className="img-responsive " alt="" /></a>
+                        <Link href="author-detail.html" title="author"><img src="../assets/img/team3.jpg" className="img-responsive " alt="" /></Link>
                       </div>
                     </div>
                     <div className="listing-shot-caption">
@@ -402,7 +402,7 @@ export default function TopReviers()
                           <i className="fa fa-star" aria-hidden="true" />
                         </div>
                         <div className="col-md-5 col-sm-5 col-xs-6 pull-right">
-                          <a href="listing-detail.html" className="detail-link">Open Now</a>
+                          <Link href="listing-detail.html" className="detail-link">Open Now</Link>
                         </div>
                       </div>
                     </div>
@@ -417,7 +417,7 @@ export default function TopReviers()
                   <div className="tp-author-detail-wrapper">
                     <div className="tp-author-detail-box">	
                       <div className="tp-author">
-                        <a href="author-detail.html" title="author"><img src="../assets/img/team3.jpg" className="img-responsive " alt="" /></a>
+                        <Link href="author-detail.html" title="author"><img src="../assets/img/team3.jpg" className="img-responsive " alt="" /></Link>
                       </div>
                     </div>
                     <div className="listing-shot-caption">
@@ -445,7 +445,7 @@ export default function TopReviers()
                           <i className="fa fa-star" aria-hidden="true" />
                         </div>
                         <div className="col-md-5 col-sm-5 col-xs-6 pull-right">
-                          <a href="listing-detail.html" className="detail-link">Open Now</a>
+                          <Link href="listing-detail.html" className="detail-link">Open Now</Link>
                         </div>
                       </div>
                     </div>
@@ -460,7 +460,7 @@ export default function TopReviers()
                   <div className="tp-author-detail-wrapper">
                     <div className="tp-author-detail-box">	
                       <div className="tp-author">
-                        <a href="author-detail.html" title="author"><img src="../assets/img/team4.jpg" className="img-responsive " alt="" /></a>
+                        <Link href="author-detail.html" title="author"><img src="../assets/img/team4.jpg" className="img-responsive " alt="" /></Link>
                       </div>
                     </div>
                     <div className="listing-shot-caption">
@@ -488,7 +488,7 @@ export default function TopReviers()
                           <i className="fa fa-star" aria-hidden="true" />
                         </div>
                         <div className="col-md-5 col-sm-5 col-xs-6 pull-right">
-                          <a href="listing-detail.html" className="detail-link">Open Now</a>
+                          <Link href="listing-detail.html" className="detail-link">Open Now</Link>
                         </div>
                       </div>
                     </div>
@@ -503,7 +503,7 @@ export default function TopReviers()
                   <div className="tp-author-detail-wrapper">
                     <div className="tp-author-detail-box">	
                       <div className="tp-author">
-                        <a href="author-detail.html" title="author"><img src="../assets/img/team3.jpg" className="img-responsive " alt="" /></a>
+                        <Link href="author-detail.html" title="author"><img src="../assets/img/team3.jpg" className="img-responsive " alt="" /></Link>
                       </div>
                     </div>
                     <div className="listing-shot-caption">
@@ -531,7 +531,7 @@ export default function TopReviers()
                           <i className="fa fa-star" aria-hidden="true" />
                         </div>
                         <div className="col-md-5 col-sm-5 col-xs-6 pull-right">
-                          <a href="listing-detail.html" className="detail-link">Open Now</a>
+                          <Link href="listing-detail.html" className="detail-link">Open Now</Link>
                         </div>
                       </div>
                     </div>
@@ -546,7 +546,7 @@ export default function TopReviers()
                   <div className="tp-author-detail-wrapper">
                     <div className="tp-author-detail-box">	
                       <div className="tp-author">
-                        <a href="author-detail.html" title="author"><img src="../assets/img/team4.jpg" className="img-responsive " alt="" /></a>
+                        <Link href="author-detail.html" title="author"><img src="../assets/img/team4.jpg" className="img-responsive " alt="" /></Link>
                       </div>
                     </div>
                     <div className="listing-shot-caption">
@@ -574,7 +574,7 @@ export default function TopReviers()
                           <i className="fa fa-star" aria-hidden="true" />
                         </div>
                         <div className="col-md-5 col-sm-5 col-xs-6 pull-right">
-                          <a href="listing-detail.html" className="detail-link">Open Now</a>
+                          <Link href="listing-detail.html" className="detail-link">Open Now</Link>
                         </div>
                       </div>
                     </div>
@@ -587,13 +587,13 @@ export default function TopReviers()
               <div className="col-md-12">
                 <div className="bs-example">
                   <ul className="pagination">
-                    <li><a href="#"><i className="ti-arrow-left" /></a></li>
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
-                    <li><a href="#"><i className="ti-arrow-right" /></a></li>
+                    <li><Link href="#"><i className="ti-arrow-left" /></Link></li>
+                    <li><Link href="#">1</Link></li>
+                    <li><Link href="#">2</Link></li>
+                    <li><Link href="#">3</Link></li>
+                    <li><Link href="#">4</Link></li>
+                    <li><Link href="#">5</Link></li>
+                    <li><Link href="#"><i className="ti-arrow-right" /></Link></li>
                   </ul>
                 </div>
               </div>

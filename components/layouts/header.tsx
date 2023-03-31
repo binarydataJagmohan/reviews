@@ -25,34 +25,34 @@ export default function Header() {
 							<li className="dropdown">
 								<Link href="/User/TopReviewrs" className="dropdowns-toggle" data-toggle="dropdown">Explore</Link>
 								{/* <ul className="dropdown-menu animated fadeOutUp"> */}
-									{/* <li><a href="top-author.html">Top Author<span className="new-page-badge">New</span></a></li>
-									<li><a href="author-detail.html">Author Detail<span className="new-page-badge">New</span></a></li>
-									<li><a href="search-listing.html">Search Listing</a></li>
-									<li><a href="add-listing.html">Add Listing</a></li>
-									<li><a href="listing-detail.html">Listing Detail</a></li> */}
+									{/* <li><Link href="top-author.html">Top Author<span className="new-page-badge">New</span></Link></li>
+									<li><Link href="author-detail.html">Author Detail<span className="new-page-badge">New</span></Link></li>
+									<li><Link href="search-listing.html">Search Listing</Link></li>
+									<li><Link href="add-listing.html">Add Listing</Link></li>
+									<li><Link href="listing-detail.html">Listing Detail</Link></li> */}
 									{/* <li className="dropdown">
-										<a href="#" className="dropdown-toggle" data-toggle="dropdown">Listing</a>
+										<Link href="#" className="dropdown-toggle" data-toggle="dropdown">Listing</Link>
 										<ul className="dropdown-menu animated fadeOutUp">
-											<li><a href="/User/ListingDetails">Full Width Listing</a></li>
-											<li><a href="full-width-vertical.html">Full Verticcategoryal Listing</a></li>
-											<li><a href="grid-sidebar.html">Listing With Sidebar</a></li>
-											<li><a href="vertical-sidebar.html">Vertical With Sidebar</a></li>
-											<li><a href="top-place-list.html">Top Places</a></li>
+											<li><Link href="/User/ListingDetails">Full Width Listing</Link></li>
+											<li><Link href="full-width-vertical.html">Full Verticcategoryal Listing</Link></li>
+											<li><Link href="grid-sidebar.html">Listing With Sidebar</Link></li>
+											<li><Link href="vertical-sidebar.html">Vertical With Sidebar</Link></li>
+											<li><Link href="top-place-list.html">Top Places</Link></li>
 										</ul>
 									</li> */}
 									{/* <li className="dropdown">
 										<Link href="/Category" className="dropdown-toggle" data-toggle="dropdown">Category</Link>
 										<ul className="dropdown-menu animated fadeOutUp"> 
-											<li><a href="category-1.html">Category Style 1</a></li> 
-											 <li><a href="category-2.html">Category Style 2</a></li>
-											<li><a href="category-3.html">Category Style 3</a></li>
+											<li><Link href="category-1.html">Category Style 1</Link></li> 
+											 <li><Link href="category-2.html">Category Style 2</Link></li>
+											<li><Link href="category-3.html">Category Style 3</Link></li>
 										</ul>
 									</li> */}
 									{/* <li className="dropdown">
-										<a href="#" className="dropdown-toggle" data-toggle="dropdown">User Panel</a>
+										<Link href="#" className="dropdown-toggle" data-toggle="dropdown">User Panel</Link>
 										<ul className="dropdown-menu animated fadeOutUp">
-											<li><a href="edit-profile.html">Profile Settings</a></li>
-											<li><a href="profile-detail.html">Profile Detail</a></li>
+											<li><Link href="edit-profile.html">Profile Settings</Link></li>
+											<li><Link href="profile-detail.html">Profile Detail</Link></li>
 										</ul>
 									</li> */}
 								{/* </ul> */}
@@ -60,12 +60,12 @@ export default function Header() {
 							<li className="dropdown">
 								<Link href="/Blog" className="dropdowns-toggle" data-toggle="dropdown">Blogs</Link>
 								{/* <ul className="dropdown-menu animated fadeOutUp">
-									<li><a href="thank-you.html">Thank You</a></li>
-									<li><a href="blog.html">Blog</a></li>
-									<li><a href="blog-detail.html">Blog Detail</a></li>
-									<li><a href="contact.html">Contact</a></li>
-									<li><a href="404.html">404</a></li>
-									<li><a href="404.html">Faq</a></li>
+									<li><Link href="thank-you.html">Thank You</Link></li>
+									<li><Link href="blog.html">Blog</Link></li>
+									<li><Link href="blog-detail.html">Blog Detail</Link></li>
+									<li><Link href="contact.html">Contact</Link></li>
+									<li><Link href="404.html">404</Link></li>
+									<li><Link href="404.html">Faq</Link></li>
 								</ul> */}
 							</li>
 							<li>
@@ -74,10 +74,10 @@ export default function Header() {
                              
                             </li>
 
-							<li><a href="javascript:void(0)" data-toggle="modal" data-target="#signin">Sign In</a></li>
+							<li><Link href="javascript:void(0)" data-toggle="modal" data-target="#signin">Sign In</Link></li>
 						</ul>
 						<ul className="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
-							<li className="no-pd"><a href="/AddReviews" className="addlist"><i className="ti-user" aria-hidden="true" />Add Listing</a></li>
+							<li className="no-pd"><Link href="/AddReviews" className="addlist"><i className="ti-user" aria-hidden="true" />Add Listing</Link></li>
 						</ul>
 					</div>
 				</div>   
@@ -127,15 +127,16 @@ export default function Header() {
 							
 							<div className="connect-with">
 								<ul>
-									<li className="fb-ic"><a href="#"><i className="ti-facebook"></i></a></li>
-									<li className="gp-ic"><a href="#"><i className="ti-google"></i></a></li>
-									<li className="tw-ic"><a href="#"><i className="ti-twitter"></i></a></li>
+									<li className="fb-ic"><Link href="#"><i className="ti-facebook"></i></Link></li>
+									<li className="gp-ic"><Link href="#"><i className="ti-google"></i></Link></li>
+									<li className="tw-ic"><Link href="#"><i className="ti-twitter"></i></Link></li>
 								</ul>
 							</div>
 							
 							<div className="center mrg-top-5">
-								<div className="bottom-login text-center">Don't have an account</div>
-								<a href="javascript:void(0)" className="theme-cl" data-toggle="modal" data-dismiss="modal" data-target="#register">Create An Account</a>
+							<div className="bottom-login text-center">Don&apos;t have an account</div>
+
+								<Link href="javascript:void(0)" className="theme-cl" data-toggle="modal" data-dismiss="modal" data-target="#register">Create An Account</Link>
 							</div>
 							
 							
@@ -201,15 +202,15 @@ export default function Header() {
 							
 							<div className="connect-with">
 								<ul>
-									<li className="fb-ic"><a href="#"><i className="ti-facebook"></i></a></li>
-									<li className="gp-ic"><a href="#"><i className="ti-google"></i></a></li>
-									<li className="tw-ic"><a href="#"><i className="ti-twitter"></i></a></li>
+									<li className="fb-ic"><Link href="#"><i className="ti-facebook"></i></Link></li>
+									<li className="gp-ic"><Link href="#"><i className="ti-google"></i></Link></li>
+									<li className="tw-ic"><Link href="#"><i className="ti-twitter"></i></Link></li>
 								</ul>
 							</div>
 							
 							<div className="center mrg-top-5">
 								<div className="bottom-login text-center">Already have an account?</div>
-								<a href="javascript:void(0)" className="theme-cl" data-toggle="modal" data-dismiss="modal" data-target="#signin">Login</a>
+								<Link href="javascript:void(0)" className="theme-cl" data-toggle="modal" data-dismiss="modal" data-target="#signin">Login</Link>
 							</div>
 							
 							
