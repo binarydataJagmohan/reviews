@@ -121,7 +121,7 @@ export default function ListingDetails()
 														<div className="review-info">
 															<div className="review-comment">
 																<div className="review-author">
-																	<b>03/03/23 17:24 ET |</b> #.66
+																	<b>03/03/23 17:24 ET |</b> Anonymous #.66
 																</div>
 																<div className="review-comment-stars">
 																	<i className="fa fa-star"></i>
@@ -154,7 +154,7 @@ export default function ListingDetails()
 														<div className="review-info">
 															<div className="review-comment">
 																<div className="review-author">
-																<b>05/09/20 14:24 ET | </b>#.23
+																<b>05/09/20 14:24 ET | </b>Anonymous #.23
 																</div>
 																<div className="review-comment-stars">
 																	<i className="fa fa-star"></i>
@@ -186,7 +186,7 @@ export default function ListingDetails()
 														<div className="review-info">
 															<div className="review-comment">
 																<div className="review-author">
-																<b>02/08/22 15:30 ET |</b> #.19
+																<b>02/08/22 15:30 ET |</b> Anonymous #.19
 																</div>
 																<div className="review-comment-stars">
 																	<i className="fa fa-star"></i>
@@ -274,15 +274,20 @@ export default function ListingDetails()
 															<h6><a href="#" title="Listing">New York, NY
                                                          </a></h6>					
 														</div>
-														<div className="review-comment-stars">
+														<div className='row'>
+														<div className="col-md-5 review-comment-stars">
 																	<i className="fa fa-star"></i>
 																	<i className="fa fa-star"></i>
 																	<i className="fa fa-star"></i>
 																	<i className="fa fa-star"></i>
 																	<i className="fa fa-star empty"></i>
 																</div>
-																
+																<div className='col-md-7'>
+																	<span className='badge bg-success'>9.7/10</span>
+																</div>
+																</div>
 													</div>
+													
 												</li>
 												
 												<li>
@@ -303,12 +308,17 @@ export default function ListingDetails()
 															<h6><a href="#" title="Listing">New York, NY
                                                          </a></h6>					
 														</div>
-														<div className="review-comment-stars">
+														<div className='row'>
+														<div className="col-md-5 review-comment-stars">
 																	<i className="fa fa-star"></i>
 																	<i className="fa fa-star"></i>
 																	<i className="fa fa-star"></i>
 																	<i className="fa fa-star"></i>
 																	<i className="fa fa-star empty"></i>
+																</div>
+																<div className='col-md-7'>
+																	<span className='badge bg-warning'>9.7/10</span>
+																</div>
 																</div>
 													</div>
 												</li>

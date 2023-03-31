@@ -42,7 +42,7 @@ export default function Contact()
             
 			
             <section className="padd-top-25" >
-				<div className="container d-flex">
+				<div className="container" style={{marginLeft:'350px'}}>
 					<div className="col-md-6 col-sm-6 " >
 						<form>
 							<div className="form-group">
