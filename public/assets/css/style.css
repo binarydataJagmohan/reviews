@@ -2221,7 +2221,7 @@ body.home-2 .banner{
 }
 
 body.home-2 .banner h1 {
-    font-size:42px;
+    font-size:40px;
 	opacity:1;
     margin-bottom:15px;
     padding-bottom: 0;
@@ -4287,6 +4287,9 @@ Slick Slider
 .slick-next:before {
     content: '\f061';
 }
+section#listing {
+    padding-bottom: 10px;
+}
 /*==================================================
 Pages Settings
 =================================================*/
@@ -4295,7 +4298,7 @@ Pages Settings
 	display:block;
 	overflow:hidden;
 	border-radius:6px;
-	margin-bottom:40px;
+	margin-bottom:0px;
     background:#ffffff;
     box-shadow: 0px 0px 10px 1px rgba(71, 85, 95,0.08);
     -webkit-box-shadow: 0px 0px 10px 1px rgba(71, 85, 95,0.08);
@@ -4540,7 +4543,7 @@ label.prizm {
 
 /*-------------- Review Box ------------*/
 .review-body{
-    padding-left:90px;
+    padding-left:0px;
 	position:relative;
 }
 .detail-wrapper-body .review-list {

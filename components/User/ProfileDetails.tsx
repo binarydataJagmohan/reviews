@@ -1,4 +1,5 @@
 import React from "react"
+import Link from 'next/link';
 
 export default function ProfileDetails()
 {
@@ -17,9 +18,9 @@ export default function ProfileDetails()
             {/* General Information */}
             <div className="add-listing-box translateY-60 edit-info mrg-bot-25 padd-bot-30 padd-top-25">
               <div className="listing-box-header">
-                <div className="avater-box">
+                <Link href="/User/EditProfile"><div className="avater-box">
                   <img src="../assets/img/avatar.jpg" className="img-responsive img-circle edit-avater" alt="" />
-                </div>
+                </div></Link>
                 <h3>Daniel M. Dev</h3>
                 <p>Account Manager</p>
               </div>

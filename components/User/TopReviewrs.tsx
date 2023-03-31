@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from 'next/link';
 
 export default function TopReviers()
 {
@@ -63,8 +64,8 @@ export default function TopReviers()
                 </div>
               </div>
             </div>
-            <div className="row">
-              <div className="col-md-4 col-sm-6">
+            <Link href="/User/ListingDetails"><div className="row">
+            <div className="col-md-4 col-sm-6">
                 <div className="tp-author-box">
                   <div className="author-cover-img">
                     <img src="../assets/img/places/place-1.jpg" className="img-responsive" alt="" />
@@ -107,6 +108,135 @@ export default function TopReviers()
                   </div>
                 </div>
               </div>
+              <Link href="/User/ListingDetails"><div className="col-md-4 col-sm-6">
+                <div className="tp-author-box">
+                  <div className="author-cover-img">
+                    <img src="../assets/img/places/place-1.jpg" className="img-responsive" alt="" />
+                  </div>
+                  <div className="tp-author-detail-wrapper">
+                    <div className="tp-author-detail-box">	
+                      <div className="tp-author">
+                        <a href="/User/ListingDetails" title="author"><img src="../assets/img/team3.jpg" className="img-responsive " alt="" /></a>
+                      </div>
+                    </div>
+                    <div className="listing-shot-caption">
+                      <h4>Art &amp; Design</h4>
+                      <p className="listing-location">Bishop Avenue, New York</p>
+                      <span className="like-listing style-2"><i className="fa fa-heart-o" aria-hidden="true" /></span>
+                    </div>
+                    <div className="listing-shot-info">
+                      <div className="row extra">
+                        <div className="col-md-12">
+                          <div className="listing-detail-info">
+                            <span><i className="fa fa-phone" aria-hidden="true" /> 807-502-5867</span>
+                            <span><i className="fa fa-globe" aria-hidden="true" /> www.mysitelink.com</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="listing-shot-info rating">
+                      <div className="row extra">
+                        <div className="col-md-7 col-sm-7 col-xs-6">
+                          <i className="color fa fa-star" aria-hidden="true" />
+                          <i className="color fa fa-star" aria-hidden="true" />
+                          <i className="color fa fa-star" aria-hidden="true" />
+                          <i className="color fa fa-star-half-o" aria-hidden="true" />
+                          <i className="fa fa-star" aria-hidden="true" />
+                        </div>
+                        <div className="col-md-5 col-sm-5 col-xs-6 pull-right">
+                          <a href="/User/ListingDetails" className="detail-link">Open Now</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div></Link> 
+              <Link href="/User/ListingDetails"><div className="col-md-4 col-sm-6">
+                <div className="tp-author-box">
+                  <div className="author-cover-img">
+                    <img src="../assets/img/places/place-1.jpg" className="img-responsive" alt="" />
+                  </div>
+                  <div className="tp-author-detail-wrapper">
+                    <div className="tp-author-detail-box">	
+                      <div className="tp-author">
+                        <a href="/User/ListingDetails" title="author"><img src="../assets/img/team3.jpg" className="img-responsive " alt="" /></a>
+                      </div>
+                    </div>
+                    <div className="listing-shot-caption">
+                      <h4>Art &amp; Design</h4>
+                      <p className="listing-location">Bishop Avenue, New York</p>
+                      <span className="like-listing style-2"><i className="fa fa-heart-o" aria-hidden="true" /></span>
+                    </div>
+                    <div className="listing-shot-info">
+                      <div className="row extra">
+                        <div className="col-md-12">
+                          <div className="listing-detail-info">
+                            <span><i className="fa fa-phone" aria-hidden="true" /> 807-502-5867</span>
+                            <span><i className="fa fa-globe" aria-hidden="true" /> www.mysitelink.com</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="listing-shot-info rating">
+                      <div className="row extra">
+                        <div className="col-md-7 col-sm-7 col-xs-6">
+                          <i className="color fa fa-star" aria-hidden="true" />
+                          <i className="color fa fa-star" aria-hidden="true" />
+                          <i className="color fa fa-star" aria-hidden="true" />
+                          <i className="color fa fa-star-half-o" aria-hidden="true" />
+                          <i className="fa fa-star" aria-hidden="true" />
+                        </div>
+                        <div className="col-md-5 col-sm-5 col-xs-6 pull-right">
+                          <a href="/User/ListingDetails" className="detail-link">Open Now</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div></Link> 
+              <Link href="/User/ListingDetails"><div className="col-md-4 col-sm-6">
+                <div className="tp-author-box">
+                  <div className="author-cover-img">
+                    <img src="../assets/img/places/place-1.jpg" className="img-responsive" alt="" />
+                  </div>
+                  <div className="tp-author-detail-wrapper">
+                    <div className="tp-author-detail-box">	
+                      <div className="tp-author">
+                        <a href="/User/ListingDetails" title="author"><img src="../assets/img/team3.jpg" className="img-responsive " alt="" /></a>
+                      </div>
+                    </div>
+                    <div className="listing-shot-caption">
+                      <h4>Art &amp; Design</h4>
+                      <p className="listing-location">Bishop Avenue, New York</p>
+                      <span className="like-listing style-2"><i className="fa fa-heart-o" aria-hidden="true" /></span>
+                    </div>
+                    <div className="listing-shot-info">
+                      <div className="row extra">
+                        <div className="col-md-12">
+                          <div className="listing-detail-info">
+                            <span><i className="fa fa-phone" aria-hidden="true" /> 807-502-5867</span>
+                            <span><i className="fa fa-globe" aria-hidden="true" /> www.mysitelink.com</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="listing-shot-info rating">
+                      <div className="row extra">
+                        <div className="col-md-7 col-sm-7 col-xs-6">
+                          <i className="color fa fa-star" aria-hidden="true" />
+                          <i className="color fa fa-star" aria-hidden="true" />
+                          <i className="color fa fa-star" aria-hidden="true" />
+                          <i className="color fa fa-star-half-o" aria-hidden="true" />
+                          <i className="fa fa-star" aria-hidden="true" />
+                        </div>
+                        <div className="col-md-5 col-sm-5 col-xs-6 pull-right">
+                          <a href="/User/ListingDetails" className="detail-link">Open Now</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div></Link> 
               <div className="col-md-4 col-sm-6">
                 <div className="tp-author-box">
                   <div className="author-cover-img">
@@ -451,136 +581,7 @@ export default function TopReviers()
                   </div>
                 </div>
               </div>
-              <div className="col-md-4 col-sm-6">
-                <div className="tp-author-box">
-                  <div className="author-cover-img">
-                    <img src="../assets/img/places/place-1.jpg" className="img-responsive" alt="" />
-                  </div>
-                  <div className="tp-author-detail-wrapper">
-                    <div className="tp-author-detail-box">	
-                      <div className="tp-author">
-                        <a href="author-detail.html" title="author"><img src="../assets/img/team3.jpg" className="img-responsive " alt="" /></a>
-                      </div>
-                    </div>
-                    <div className="listing-shot-caption">
-                      <h4>Art &amp; Design</h4>
-                      <p className="listing-location">Bishop Avenue, New York</p>
-                      <span className="like-listing style-2"><i className="fa fa-heart-o" aria-hidden="true" /></span>
-                    </div>
-                    <div className="listing-shot-info">
-                      <div className="row extra">
-                        <div className="col-md-12">
-                          <div className="listing-detail-info">
-                            <span><i className="fa fa-phone" aria-hidden="true" /> 807-502-5867</span>
-                            <span><i className="fa fa-globe" aria-hidden="true" /> www.mysitelink.com</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="listing-shot-info rating">
-                      <div className="row extra">
-                        <div className="col-md-7 col-sm-7 col-xs-6">
-                          <i className="color fa fa-star" aria-hidden="true" />
-                          <i className="color fa fa-star" aria-hidden="true" />
-                          <i className="color fa fa-star" aria-hidden="true" />
-                          <i className="color fa fa-star-half-o" aria-hidden="true" />
-                          <i className="fa fa-star" aria-hidden="true" />
-                        </div>
-                        <div className="col-md-5 col-sm-5 col-xs-6 pull-right">
-                          <a href="listing-detail.html" className="detail-link">Open Now</a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-4 col-sm-6">
-                <div className="tp-author-box">
-                  <div className="author-cover-img">
-                    <img src="../assets/img/places/place-1.jpg" className="img-responsive" alt="" />
-                  </div>
-                  <div className="tp-author-detail-wrapper">
-                    <div className="tp-author-detail-box">	
-                      <div className="tp-author">
-                        <a href="author-detail.html" title="author"><img src="../assets/img/team3.jpg" className="img-responsive " alt="" /></a>
-                      </div>
-                    </div>
-                    <div className="listing-shot-caption">
-                      <h4>Art &amp; Design</h4>
-                      <p className="listing-location">Bishop Avenue, New York</p>
-                      <span className="like-listing style-2"><i className="fa fa-heart-o" aria-hidden="true" /></span>
-                    </div>
-                    <div className="listing-shot-info">
-                      <div className="row extra">
-                        <div className="col-md-12">
-                          <div className="listing-detail-info">
-                            <span><i className="fa fa-phone" aria-hidden="true" /> 807-502-5867</span>
-                            <span><i className="fa fa-globe" aria-hidden="true" /> www.mysitelink.com</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="listing-shot-info rating">
-                      <div className="row extra">
-                        <div className="col-md-7 col-sm-7 col-xs-6">
-                          <i className="color fa fa-star" aria-hidden="true" />
-                          <i className="color fa fa-star" aria-hidden="true" />
-                          <i className="color fa fa-star" aria-hidden="true" />
-                          <i className="color fa fa-star-half-o" aria-hidden="true" />
-                          <i className="fa fa-star" aria-hidden="true" />
-                        </div>
-                        <div className="col-md-5 col-sm-5 col-xs-6 pull-right">
-                          <a href="listing-detail.html" className="detail-link">Open Now</a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-4 col-sm-6">
-                <div className="tp-author-box">
-                  <div className="author-cover-img">
-                    <img src="../assets/img/places/place-1.jpg" className="img-responsive" alt="" />
-                  </div>
-                  <div className="tp-author-detail-wrapper">
-                    <div className="tp-author-detail-box">	
-                      <div className="tp-author">
-                        <a href="author-detail.html" title="author"><img src="../assets/img/team3.jpg" className="img-responsive " alt="" /></a>
-                      </div>
-                    </div>
-                    <div className="listing-shot-caption">
-                      <h4>Art &amp; Design</h4>
-                      <p className="listing-location">Bishop Avenue, New York</p>
-                      <span className="like-listing style-2"><i className="fa fa-heart-o" aria-hidden="true" /></span>
-                    </div>
-                    <div className="listing-shot-info">
-                      <div className="row extra">
-                        <div className="col-md-12">
-                          <div className="listing-detail-info">
-                            <span><i className="fa fa-phone" aria-hidden="true" /> 807-502-5867</span>
-                            <span><i className="fa fa-globe" aria-hidden="true" /> www.mysitelink.com</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="listing-shot-info rating">
-                      <div className="row extra">
-                        <div className="col-md-7 col-sm-7 col-xs-6">
-                          <i className="color fa fa-star" aria-hidden="true" />
-                          <i className="color fa fa-star" aria-hidden="true" />
-                          <i className="color fa fa-star" aria-hidden="true" />
-                          <i className="color fa fa-star-half-o" aria-hidden="true" />
-                          <i className="fa fa-star" aria-hidden="true" />
-                        </div>
-                        <div className="col-md-5 col-sm-5 col-xs-6 pull-right">
-                          <a href="listing-detail.html" className="detail-link">Open Now</a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            </div></Link> 
             {/* Start Pagination */}
             <div className="row">
               <div className="col-md-12">

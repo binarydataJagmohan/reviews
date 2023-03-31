@@ -33,7 +33,7 @@ export default function BlogDetails()
 								
 									
 									<figure className="img-holder">
-										<a href="blog-detail.html"><img src="assets/img/category/travel.jpg" className="img-responsive" alt="News" /></a>
+										<a href="#"><img src="assets/img/category/travel.jpg" className="img-responsive" alt="News" /></a>
 										<div className="blog-post-date theme-bg">
 											Mar 12, 2017
 										</div>
@@ -82,7 +82,7 @@ export default function BlogDetails()
 							
 							
 							
-							<div className="row no-mrg">
+							{/* <div className="row no-mrg">
 								<div className="col-md-12 col-sm-12">
 									<div className="comments">      
 										<div className="comments-title">
@@ -179,11 +179,11 @@ export default function BlogDetails()
 										
 									</div>
 								</div>
-							</div>
+							</div> */}
 							
 							
 							
-							<div className="row">
+							{/* <div className="row">
 								<div className="col-md-12 col-sm-12">
 									<div className="comments-form"> 
 										<div className="section-title2">
@@ -210,7 +210,7 @@ export default function BlogDetails()
 									</div>
 								
 								</div>
-							</div>
+							</div> */}
 							
 							
 						</div>
@@ -308,7 +308,7 @@ export default function BlogDetails()
 								
 								
 								
-								<div className="widget-boxed">
+								{/* <div className="widget-boxed">
 									<div className="widget-boxed-header">
 										<h4><i className="ti-briefcase padd-r-10"></i>Top Categories</h4>
 									</div>
@@ -325,11 +325,11 @@ export default function BlogDetails()
 											</ul>
 										</div>
 									</div>
-								</div>
+								</div> */}
 								
 								
 							
-								<div className="widget-boxed">
+								{/* <div className="widget-boxed">
 									<div className="widget-boxed-header">
 										<h4><i className="ti-check-box padd-r-10"></i>Recent Blogs</h4>
 									</div>
@@ -395,7 +395,7 @@ export default function BlogDetails()
 											</ul>
 										</div>
 									</div>
-								</div>
+								</div> */}
 								
 								
 							</div>

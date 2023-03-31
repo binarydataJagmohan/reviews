@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from 'next/link';
 export default function ListingDetails()
 {
     return(
@@ -11,15 +12,18 @@ export default function ListingDetails()
 							<ul>
 							<li><div className="user_name">SUNIL KUMAR</div></li>
 							<li><div className="user_detail">Binary Data | Web designer</div></li>
-							<li><div className="inside-rating buttons listing-rating theme-btn button-plain"><span className="value">9.7</span> <sup className="out-of">/10</sup></div></li>
+							<li>
+								<div className="inside-rating buttons listing-rating theme-btn button-plain"><span className="value">9.7</span> <sup className="out-of">/10</sup>
+								</div>
+								</li>
 							<li><a href="#add-review" className="buttons btn-outlined medium add-review"><i className="fa fa-comments-o"></i><span className="hidden-xs">Add review</span></a></li>
 							{/* <li><a href="#" data-listing-id="74" data-nonce="01a769d424" className="buttons btn-outlined"><i className="fa fa-heart-o"></i><span className="hidden-xs">Bookmark</span> </a></li> */}
 							</ul>
 						</div>
 						<div className="listing-owner hidden-xs hidden-sm">
-							<div className="listing-owner-avater">
+							<Link href="/User/ProfileDetails"><div className="listing-owner-avater">
 								<img src="../assets/img/avatar.jpg" className="img-responsive img-circle" alt="" />
-							</div>
+							</div></Link>
 							{/* <div className="listing-owner-detail">
 								<h4>Lucy Lukie</h4>
 								<span className="theme-cl">Web Designer</span>
@@ -64,7 +68,9 @@ export default function ListingDetails()
 									<h4 className="mt-3">Overview</h4>
 								</div>
 								<div className="detail-wrapper-body">
-									<p>Used to work with this guy and he is very aggressive in his expectations of you and timeline for deliverables. Very much a project manager but doesn’t actually have insightful thoughts to add. </p>
+									<p>Used to work with this guy and he is very aggressive in his expectations of you and timeline for deliverables. Very much a project manager but doesn’t actually have insightful thoughts to add.
+										
+									  </p>
 								</div>
 							</div>
 							
@@ -108,14 +114,14 @@ export default function ListingDetails()
 										<li>
 											<div className="reviews-box">
 												<div className="review-body">
-													<div className="review-avatar">
+													{/* <div className="review-avatar">
 														<img alt="" src="../assets/img/user-1.png" className="avatar avatar-140 photo" />
-													</div>
+													</div> */}
 													<div className="review-content">
 														<div className="review-info">
 															<div className="review-comment">
 																<div className="review-author">
-																	Cole Harris																			
+																	<b>03/03/23 17:24 ET |</b> #.66
 																</div>
 																<div className="review-comment-stars">
 																	<i className="fa fa-star"></i>
@@ -124,6 +130,7 @@ export default function ListingDetails()
 																	<i className="fa fa-star"></i>
 																	<i className="fa fa-star empty"></i>
 																</div>
+																
 															</div>
 															<div className="review-comment-date">
 																<div className="review-date">
@@ -140,14 +147,14 @@ export default function ListingDetails()
 										<li>
 											<div className="reviews-box">
 												<div className="review-body">
-													<div className="review-avatar">
+													{/* <div className="review-avatar">
 														<img alt="" src="../assets/img/user-2.jpg" className="avatar avatar-140 photo" />
-													</div>
+													</div> */}
 													<div className="review-content">
 														<div className="review-info">
 															<div className="review-comment">
 																<div className="review-author">
-																	Mariya Merry																			
+																<b>05/09/20 14:24 ET | </b>#.23
 																</div>
 																<div className="review-comment-stars">
 																	<i className="fa fa-star"></i>
@@ -172,14 +179,14 @@ export default function ListingDetails()
 										<li>
 											<div className="reviews-box">
 												<div className="review-body">
-													<div className="review-avatar">
+													{/* <div className="review-avatar">
 														<img alt="" src="../assets/img/user-3.jpg" className="avatar avatar-140 photo" />
-													</div>
+													</div> */}
 													<div className="review-content">
 														<div className="review-info">
 															<div className="review-comment">
 																<div className="review-author">
-																	Wadden Will																	
+																<b>02/08/22 15:30 ET |</b> #.19
 																</div>
 																<div className="review-comment-stars">
 																	<i className="fa fa-star"></i>
@@ -258,10 +265,23 @@ export default function ListingDetails()
 														</div>
 													</a>
 													<div className="listing-list-info">
-														<h5><a href="#" title="Listing">Freel Documentry</a></h5>
+														<h5><a href="#" title="Listing">Brandon Fiala
+                                                         </a></h5>
 														<div className="listing-post-meta">
-															<span className="updated">Nov 26, 2017</span> | <a href="#" rel="tag">Documentry</a>					
+															<span className="updated">Credit Suisse
+                                                           </span> | <a href="#" rel="tag">IBCM Technology | Analyst
+                                                            </a>
+															<h6><a href="#" title="Listing">New York, NY
+                                                         </a></h6>					
 														</div>
+														<div className="review-comment-stars">
+																	<i className="fa fa-star"></i>
+																	<i className="fa fa-star"></i>
+																	<i className="fa fa-star"></i>
+																	<i className="fa fa-star"></i>
+																	<i className="fa fa-star empty"></i>
+																</div>
+																
 													</div>
 												</li>
 												
@@ -272,10 +292,24 @@ export default function ListingDetails()
 														</div>
 													</a>
 													<div className="listing-list-info">
-														<h5><a href="#" title="Listing">Preez Food Rock</a></h5>
+														<h5><a href="#" title="Listing">Ryan
+														Macedo
+
+                                                         </a></h5>
 														<div className="listing-post-meta">
-															<span className="updated">Oct 10, 2017</span> | <a href="#" rel="tag">Food</a>					
+															<span className="updated">Credit Suisse
+                                                           </span> | <a href="#" rel="tag">IBCM Technology | Analyst
+                                                            </a>
+															<h6><a href="#" title="Listing">New York, NY
+                                                         </a></h6>					
 														</div>
+														<div className="review-comment-stars">
+																	<i className="fa fa-star"></i>
+																	<i className="fa fa-star"></i>
+																	<i className="fa fa-star"></i>
+																	<i className="fa fa-star"></i>
+																	<i className="fa fa-star empty"></i>
+																</div>
 													</div>
 												</li>
 												
@@ -286,10 +320,23 @@ export default function ListingDetails()
 														</div>
 													</a>
 													<div className="listing-list-info">
-														<h5><a href="#" title="Listing">Cricket Buzz High</a></h5>
+														<h5><a href="#" title="Listing">Phylicia
+														Wilkov
+</a></h5>
 														<div className="listing-post-meta">
-															<span className="updated">Oct 07, 2017</span> | <a href="#" rel="tag">Sport</a>					
+															<span className="updated">Apollo Global Management
+                                                        </span> | <a href="#" rel="tag">Investor
+                                                         </a>
+														 <h6><a href="#" title="Listing">New York, NY
+                                                         </a></h6>					
 														</div>
+														<div className="review-comment-stars">
+																	<i className="fa fa-star"></i>
+																	<i className="fa fa-star"></i>
+																	<i className="fa fa-star"></i>
+																	<i className="fa fa-star"></i>
+																	<i className="fa fa-star empty"></i>
+																</div>
 													</div>
 												</li>
 												
@@ -300,10 +347,22 @@ export default function ListingDetails()
 														</div>
 													</a>
 													<div className="listing-list-info">
-														<h5><a href="#" title="Listing">Tour travel Tick</a></h5>
+														<h5><a href="#" title="Listing">Cullen
+														Lee
+                                                       </a></h5>
 														<div className="listing-post-meta">
-															<span className="updated">Sep 27, 2017</span> | <a href="#" rel="tag">Travel</a>					
+															<span className="updated">Credit Suisse |
+                                                            </span> Equity Capital Markets
+                                                           | <a href="#" rel="tag">Group Head
+                                                           </a>					
 														</div>
+														<div className="review-comment-stars">
+																	<i className="fa fa-star"></i>
+																	<i className="fa fa-star"></i>
+																	<i className="fa fa-star"></i>
+																	<i className="fa fa-star"></i>
+																	<i className="fa fa-star empty"></i>
+																</div>
 													</div>
 												</li>
 

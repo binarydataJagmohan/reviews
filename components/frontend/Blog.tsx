@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from 'next/link'
 export default function Blog()
 {
     return(
@@ -22,7 +23,7 @@ export default function Blog()
 			
 			<section>
 				<div className="container">
-					<div className="row">
+					<Link href="/BlogDetails"><div className="row">
 						<div className="col-md-4 col-sm-6">
 							<div className="blog-box blog-grid-box">
 								<div className="blog-grid-box-img">
@@ -77,9 +78,9 @@ export default function Blog()
 								</div>
 							</div>
 						</div>
-					</div>
+					</div></Link>
 					
-					<div className="row">
+					<Link href="/BlogDetails"><div className="row">
 						<div className="col-md-4 col-sm-6">
 							<div className="blog-box blog-grid-box">
 								<div className="blog-grid-box-img">
@@ -130,9 +131,9 @@ export default function Blog()
 								</div>
 							</div>
 						</div>
-					</div>
+					</div></Link>
 					
-					<div className="row">
+					<Link href="/BlogDetails"><div className="row">
 						<div className="col-md-4 col-sm-6">
 							<div className="blog-box blog-grid-box">
 								<div className="blog-grid-box-img">
@@ -183,7 +184,7 @@ export default function Blog()
 								</div>
 							</div>
 						</div>
-					</div>
+					</div></Link>
 					
 					<div className="row">
 						<div className="col-md-12">
