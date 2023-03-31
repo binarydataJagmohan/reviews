@@ -93,7 +93,7 @@ export default function Home(): JSX.Element{
                   <div className="tp-author-detail-wrapper">
                     <div className="tp-author-detail-box">	
                       <div className="tp-author">
-                        <a href="author-detail.html" title="author"><img src="../assets/img/team3.jpg" className="img-responsive " alt="" /></a>
+                        <a href="author-detail.html" title="author"><img src="../assets/img/team4.jpg" className="img-responsive " alt="" /></a>
                       </div>
                     </div>
                     <div className="listing-shot-caption">

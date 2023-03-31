@@ -31,10 +31,10 @@ export default function Blog()
 								</div>
 								
 								<div className="blog-grid-box-content">
-									<div className="blog-avatar text-center">
+									{/* <div className="blog-avatar text-center">
 										<img src="assets/img/user-1.png" className="img-responsive" alt="" />
 										<p><strong>By</strong> <span className="theme-cl">Adam Khiwak</span></p>
-									</div>
+									</div> */}
 									<h4>Why People Use Listing Hub</h4>
 									<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum</p>
 									<a href="/BlogDetails" className="theme-cl" title="Read More..">Continue...</a>
@@ -51,10 +51,10 @@ export default function Blog()
 								</div>
 								
 								<div className="blog-grid-box-content">
-									<div className="blog-avatar text-center">
+									{/* <div className="blog-avatar text-center">
 										<img src="assets/img/user-2.jpg" className="img-responsive" alt="" />
 										<p><strong>By</strong> <span className="theme-cl">Adam Khiwak</span></p>
-									</div>
+									</div> */}
 									<h4>Why People Use Listing Hub</h4>
 									<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum</p>
 									<a href="blog-detail.html" className="theme-cl" title="Read More..">Continue...</a>
@@ -68,10 +68,10 @@ export default function Blog()
 									<img src="assets/img/blog/blog-3.jpg" className="img-responsive" alt="" />
 								</div>
 								<div className="blog-grid-box-content">
-									<div className="blog-avatar text-center">
+									{/* <div className="blog-avatar text-center">
 										<img src="assets/img/user-3.jpg" className="img-responsive" alt="" />
 										<p><strong>By</strong> <span className="theme-cl">Adam Khiwak</span></p>
-									</div>
+									</div> */}
 									<h4>Why People Use Listing Hub</h4>
 									<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum</p>
 									<a href="blog-detail.html" className="theme-cl" title="Read More..">Continue...</a>
@@ -87,10 +87,10 @@ export default function Blog()
 									<img src="assets/img/blog/blog-4.jpg" className="img-responsive" alt="" />
 								</div>
 								<div className="blog-grid-box-content">
-									<div className="blog-avatar text-center">
+									{/* <div className="blog-avatar text-center">
 										<img src="assets/img/user-1.png" className="img-responsive" alt="" />
 										<p><strong>By</strong> <span className="theme-cl">Adam Khiwak</span></p>
-									</div>
+									</div> */}
 									<h4>Why People Use Listing Hub</h4>
 									<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum</p>
 									<a href="blog-detail.html" className="theme-cl" title="Read More..">Continue...</a>
@@ -104,10 +104,10 @@ export default function Blog()
 									<img src="assets/img/blog/blog-5.jpg" className="img-responsive" alt="" />
 								</div>
 								<div className="blog-grid-box-content">
-									<div className="blog-avatar text-center">
+									{/* <div className="blog-avatar text-center">
 										<img src="assets/img/user-2.jpg" className="img-responsive" alt="" />
 										<p><strong>By</strong> <span className="theme-cl">Adam Khiwak</span></p>
-									</div>
+									</div> */}
 									<h4>Why People Use Listing Hub</h4>
 									<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum</p>
 									<a href="blog-detail.html" className="theme-cl" title="Read More..">Continue...</a>
@@ -121,10 +121,10 @@ export default function Blog()
 									<img src="assets/img/blog/blog-6.jpg" className="img-responsive" alt="" />
 								</div>
 								<div className="blog-grid-box-content">
-									<div className="blog-avatar text-center">
+									{/* <div className="blog-avatar text-center">
 										<img src="assets/img/user-3.jpg" className="img-responsive" alt="" />
 										<p><strong>By</strong> <span className="theme-cl">Adam Khiwak</span></p>
-									</div>
+									</div> */}
 									<h4>Why People Use Listing Hub</h4>
 									<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum</p>
 									<a href="blog-detail.html" className="theme-cl" title="Read More..">Continue...</a>
@@ -140,10 +140,10 @@ export default function Blog()
 									<img src="assets/img/blog/blog-7.jpg" className="img-responsive" alt="" />
 								</div>
 								<div className="blog-grid-box-content">
-									<div className="blog-avatar text-center">
+									{/* <div className="blog-avatar text-center">
 										<img src="assets/img/user-1.png" className="img-responsive" alt="" />
 										<p><strong>By</strong> <span className="theme-cl">Adam Khiwak</span></p>
-									</div>
+									</div> */}
 									<h4>Why People Use Listing Hub</h4>
 									<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum</p>
 									<a href="blog-detail.html" className="theme-cl" title="Read More..">Continue...</a>
@@ -157,10 +157,10 @@ export default function Blog()
 									<img src="assets/img/blog/blog-8.jpg" className="img-responsive" alt="" />
 								</div>
 								<div className="blog-grid-box-content">
-									<div className="blog-avatar text-center">
+									{/* <div className="blog-avatar text-center">
 										<img src="assets/img/user-2.jpg" className="img-responsive" alt="" />
 										<p><strong>By</strong> <span className="theme-cl">Adam Khiwak</span></p>
-									</div>
+									</div> */}
 									<h4>Why People Use Listing Hub</h4>
 									<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum</p>
 									<a href="blog-detail.html" className="theme-cl" title="Read More..">Continue...</a>
@@ -174,10 +174,10 @@ export default function Blog()
 									<img src="assets/img/blog/blog-4.jpg" className="img-responsive" alt="" />
 								</div>
 								<div className="blog-grid-box-content">
-									<div className="blog-avatar text-center">
+									{/* <div className="blog-avatar text-center">
 										<img src="assets/img/user-3.jpg" className="img-responsive" alt="" />
 										<p><strong>By</strong> <span className="theme-cl">Adam Khiwak</span></p>
-									</div>
+									</div> */}
 									<h4>Why People Use Listing Hub</h4>
 									<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum</p>
 									<a href="blog-detail.html" className="theme-cl" title="Read More..">Continue...</a>

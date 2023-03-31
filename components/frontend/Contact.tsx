@@ -20,29 +20,30 @@ export default function Contact()
             <section className="padd-0">
 				<div className="container">
 					<div className="col-md-10 col-md-offset-1 col-sm-12 translateY-60">
-						<div className="col-md-6 col-sm-6">
+						{/* <div className="col-md-6 col-sm-6">
 							<div className="detail-wrapper text-center padd-top-40 mrg-bot-10 padd-bot-40 light-bg">
 								<i className="theme-cl font-30 ti-location-pin"></i>
 								<h4>India Office</h4>
 								Sco 52, Sector 48, Near Gurudwara<br />
 								Chandigarh (258458)
 							</div>
-						</div>
-						<div className="col-md-6 col-sm-6">
+						</div> */}
+						{/* <div className="col-md-6 col-sm-6">
 							<div className="detail-wrapper text-center padd-top-40 mrg-bot-10 padd-bot-40 light-bg">
 								<i className="theme-cl font-30 ti-location-pin"></i>
 								<h4>Uk Office</h4>
 								Sco 52, Sector 48, Near Gurudwara<br />
 								Chandigarh (258458)
 							</div>
-						</div>
+						</div> */}
 					</div>
 				</div>
 			</section>
-
-            <section className="padd-top-0">
-				<div className="container">
-					<div className="col-md-6 col-sm-6">
+            
+			
+            <section className="padd-top-25" >
+				<div className="container d-flex">
+					<div className="col-md-6 col-sm-6 " >
 						<form>
 							<div className="form-group">
 								<label>Name:</label>
@@ -66,6 +67,7 @@ export default function Contact()
 					</div>
 				</div>
 			</section>
+			
         </>
     )
 }
