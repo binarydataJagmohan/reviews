@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
 import Link from 'next/link'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/router'
+import {register} from '../../lib/frontendapi';
+import { removeToken, removeStorageData } from "../../lib/session";
 
 export default function SignUp()
 {
@@ -17,7 +18,12 @@ export default function SignUp()
     password_confirmation: "",
   });
 
-  const router = useRouter();
+  useEffect(() => {
+    removeToken();
+    removeStorageData();
+  }, []);
+
+
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -48,26 +54,48 @@ export default function SignUp()
       return;
     }
 
-    const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/register`, user);
-    console.log(res);
-
-    if (res.data.exists) {
-      toast.error('This email address is already registered');
-      return;}
+    register(user)
+	    .then(res => {
+	    	if(res.status==true){
+		    	if(res.token){
+            window.localStorage.setItem("token", res.token);
+            window.localStorage.setItem("id", res.user.id);
+            window.localStorage.setItem("first_name", res.user.first_name);
+            window.localStorage.setItem("last_name", res.user.last_name);
+            window.localStorage.setItem("email", res.user.email);
       
-    toast.success('Registration successful!', { autoClose: 5000 });
-    if (res.status === 200) {
+            toast.success(res.message, {
+              position: toast.POSITION.TOP_RIGHT,
+            });
 
-      localStorage.setItem('token', res.data.token);
-      router.push('/SignUp'); // Redirect to the login page
-    }
+             window.location.href = '/user/EditProfile';
+
+
+		      } else {
+            
+              toast.error('You are not a authorized user', {
+                position: toast.POSITION.TOP_RIGHT,
+              });
+		      	}
+		    } else {
+          
+		    	let errors = res.errors;
+          let errorMessage = "";
+          for (let error in errors) {
+            errorMessage += errors[error];
+          }
+          toast.error(errorMessage, {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+		      }
+	    })
+	    .catch(err => {
+	        console.log(err);
+	    });
+    
 
   }
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    router.push('/auth/logout'); // Redirect to the logout page
-  }
     return(
         <>
           <section className="form-part ">

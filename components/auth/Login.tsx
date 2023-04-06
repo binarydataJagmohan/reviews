@@ -3,16 +3,22 @@ import Link from 'next/link'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
-import { useRouter } from 'next/router';
+import {login} from '../../lib/frontendapi';
+import { removeToken, removeStorageData } from "../../lib/session";
 
 export default function Login() {
 
   const [errorMessage, setErrorMessage] = useState('');
-  const router = useRouter();
+
   const [user, setUser] = useState({
     email: "",
     password: "",
   });
+
+  useEffect(() => {
+    removeToken();
+    removeStorageData();
+  }, []);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -30,29 +36,43 @@ export default function Login() {
     if (!user.email || !user.password) {
       toast.error('Please fill in all the required fields');
       return;
-    }
-    try {
-      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/login`, user);
-      console.log(res);
-      if (res.status === 200) {
-        localStorage.setItem('token', res.data.token);
-        router.push('/User/Search'); // Redirect to the dashboard page
-      }
-      // toast.success('Login successful!', { autoClose: 5000 });
-      // You can redirect the user to another page upon successful login
-     } 
-         //catch (error) {
-    //   console.log(error);
-    //   setErrorMessage('Invalid email or password');
-    catch (error) {
-      console.log(error);
-      if (error.response.status === 404) {
-        toast.error('Email does not exist');
-      } else if (error.response.status === 401) {
-        toast.error('Password mismatch');
-      } else {
-        setErrorMessage('An error occurred');
-      }
+    } else {
+      
+      login(user)
+	    .then(res => {
+	    	if(res.status==true){
+          if(res.authorisation.token){
+            window.localStorage.setItem("token", res.authorisation.token);
+            window.localStorage.setItem("id", res.user.id);
+            window.localStorage.setItem("first_name", res.user.first_name);
+            window.localStorage.setItem("last_name", res.user.last_name);
+            window.localStorage.setItem("email", res.user.email);
+      
+            toast.success(res.message, {
+              position: toast.POSITION.TOP_RIGHT,
+            });
+
+            window.location.href = '/user/EditProfile';
+
+		      } else {
+            
+              toast.error('You are not a authorized user', {
+                position: toast.POSITION.TOP_RIGHT,
+              });
+		      	}
+		    } else {
+
+          toast.error(res.message, {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+          
+		    	
+		      }
+	    })
+	    .catch(err => {
+	        console.log(err);
+	    });
+
     }
   }
     return(

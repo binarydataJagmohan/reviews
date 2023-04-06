@@ -1,10 +1,28 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react';
 import Link from 'next/link'
-
+import { getCurrentUserData } from "../../lib/session";
 export default function Search()
 {
+
+  const [user_id, setCurrentUserID] = useState('');
+
+  useEffect(() => {
+    getUserData();
+  }, []);
+
+  const getUserData = async () => {
+    const current_user_data = getCurrentUserData();
+   
+    if(current_user_data.id!=null){
+        current_user_data.id ? setCurrentUserID(current_user_data.id) : setCurrentUserID('');
+    } else {
+        window.location.href = '/Login';
+    }
+  }
+
     return(
         <>
+        
          <section className="search-part section-sp">
           <div className="container"> 
             <div className="banner-search-box">

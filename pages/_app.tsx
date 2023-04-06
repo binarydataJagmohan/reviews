@@ -17,17 +17,17 @@ export default function App({ Component, pageProps }: AppProps) {
         <Component {...pageProps} />
       </>
     ) 
-  } else if (router.pathname.startsWith("/user")) {
-    return(
-      <>
-        <Head>
-          <title>Admin Dashboard</title>  
-          <meta charSet="utf-8"/>
-          <meta name="viewport" content="width=device-width, initial-scale=1"/>    
-        </Head>
-        <Component {...pageProps} />
-      </>
-    ) 
+  // } else if (router.pathname.startsWith("/user")) {
+  //   return(
+  //     <>
+  //       <Head>
+  //         <title>Admin Dashboard</title>  
+  //         <meta charSet="utf-8"/>
+  //         <meta name="viewport" content="width=device-width, initial-scale=1"/>    
+  //       </Head>
+  //       <Component {...pageProps} />
+  //     </>
+  //   ) 
   } else {
     return(
       <>
