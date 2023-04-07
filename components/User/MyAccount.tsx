@@ -1,10 +1,14 @@
-import eact from 'react'
+import React, {useState, useEffect} from 'react';
+import dynamic from 'next/dynamic'
+import { useRouter } from "next/router";
 import Link from 'next/link'
+import { removeToken, removeStorageData, getCurrentUserData } from "../../lib/session";
 
-export default function MyAccount()
-{
+export default function MyAccount() {
+  
     return(
         <>
+        
          <section className="edit-part section-sp">
           <div className="container"> 
             <div className="button-part text-right">
@@ -19,7 +23,7 @@ export default function MyAccount()
               <div className="col-sm-6">
                 <div className="user-pro account-big">
                   <img src="/assets/images/user.png" alt="user" className="user" />
-                  <h2>Milan Mirchandani</h2>
+                  <h2>Milan </h2>
                   <h3>Credit Suisse</h3>
                   <h3>IBCM Technology</h3>
                   <h3>Associate</h3>

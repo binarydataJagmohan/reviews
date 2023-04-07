@@ -43,7 +43,7 @@ export default function Header() {
          <header className="header-head dasktop-view">
         <div className="container"> 
           <nav className="navbar navbar-expand-lg navbar-light "> 
-            <Link className="navbar-brand" href="/index"><img src={process.env.NEXT_PUBLIC_BASE_URL+"assets/images/logo-white.png"} alt="logo-white" className="logo dasktop" /></Link>
+            <Link className="navbar-brand" href="/"><img src={process.env.NEXT_PUBLIC_BASE_URL+"assets/images/logo-white.png"} alt="logo-white" className="logo dasktop" /></Link>
             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon" />
             </button>
