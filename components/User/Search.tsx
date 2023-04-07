@@ -1,13 +1,17 @@
 import React, {useState, useEffect} from 'react';
 import Link from 'next/link'
 import { getCurrentUserData } from "../../lib/session";
+import { getAllReviews } from "../../lib/frontendapi";
 export default function Search()
 {
 
   const [user_id, setCurrentUserID] = useState('');
+  const [reviews, setReviews] = useState([]);
+
 
   useEffect(() => {
     getUserData();
+    getAllReviewsData()
   }, []);
 
   const getUserData = async () => {
@@ -18,6 +22,24 @@ export default function Search()
     } else {
         window.location.href = '/Login';
     }
+  }
+
+  const getAllReviewsData = () => {
+    getAllReviews()
+    .then(res => {
+
+    //  console.log(res);
+      
+      if(res.status==true){
+        setReviews(res.data);
+      } else {
+        setReviews(res.message);
+      }
+
+    })
+    .catch(err => {
+        console.log(err);
+    });
   }
 
     return(
