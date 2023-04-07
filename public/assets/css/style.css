@@ -196,6 +196,7 @@ hr {
     padding: 15px 20px;
     border-radius: 10px;
     transition: 0.6s;
+    margin-left:10px;
 }
 .edit-btn:hover {
     background: #0b38f5; 
@@ -730,6 +731,10 @@ p.uverall {
 
 }
 
+/* today css code */
+button.edit-btn.Save.changes {
+    margin-left: 10px;
+}
 
 
 

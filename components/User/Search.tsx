@@ -1,17 +1,26 @@
 import React, {useState, useEffect} from 'react';
 import Link from 'next/link'
 import { getCurrentUserData } from "../../lib/session";
+<<<<<<< HEAD
 import { getAllReviews } from "../../lib/frontendapi";
+=======
+>>>>>>> 65d4f72bbff627725090e092365ec2b6059a0969
 export default function Search()
 {
 
   const [user_id, setCurrentUserID] = useState('');
+<<<<<<< HEAD
   const [reviews, setReviews] = useState([]);
 
 
   useEffect(() => {
     getUserData();
     getAllReviewsData()
+=======
+
+  useEffect(() => {
+    getUserData();
+>>>>>>> 65d4f72bbff627725090e092365ec2b6059a0969
   }, []);
 
   const getUserData = async () => {
@@ -24,6 +33,7 @@ export default function Search()
     }
   }
 
+<<<<<<< HEAD
   const getAllReviewsData = () => {
     getAllReviews()
     .then(res => {
@@ -45,6 +55,11 @@ export default function Search()
     return(
         <>
        {/* {user_id} */}
+=======
+    return(
+        <>
+        
+>>>>>>> 65d4f72bbff627725090e092365ec2b6059a0969
          <section className="search-part section-sp">
           <div className="container"> 
             <div className="banner-search-box">

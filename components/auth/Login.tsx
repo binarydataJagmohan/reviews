@@ -9,7 +9,6 @@ import { removeToken, removeStorageData } from "../../lib/session";
 export default function Login() {
 
   const [errorMessage, setErrorMessage] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
 
   const [user, setUser] = useState({
     email: "",
@@ -31,9 +30,6 @@ export default function Login() {
     });
   }
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  } 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -56,7 +52,7 @@ export default function Login() {
               position: toast.POSITION.TOP_RIGHT,
             });
 
-            window.location.href = '/user/search';
+            window.location.href = '/user/EditProfile';
 
 		      } else {
             
@@ -90,10 +86,10 @@ export default function Login() {
             <input type="email" name="email" onChange={handleChange} />
             <div className="show-fild">
               <label>Password</label>
-              <input type={showPassword ? "text" : "password"} name="password" onChange={handleChange}/>
-              <p className="show" onClick={togglePasswordVisibility}><a href="#">Show</a></p>
+              <input type="password" name="password" onChange={handleChange}/>
+              <p className="show"><a href="#">Show</a></p>
             </div>
-            <p className="forgot-password"><a href="/forgetpassword">Forgot password?</a></p>
+            <p className="forgot-password"><a href="#">Forgot password?</a></p>
             <button type="submit" className="btn-send">Login </button>
             <Link href="/SignUp" className="btn-send black">New to Bungee? Sign up now </Link>
           </form>

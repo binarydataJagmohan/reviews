@@ -26,12 +26,15 @@ export default function SignUp()
     removeStorageData();
   }, []);
 
+<<<<<<< HEAD:components/auth/SignUp.tsx
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   }
   const PasswordVisibility = () => {
     setShownPassword(!shownPassword);
   }
+=======
+>>>>>>> 65d4f72bbff627725090e092365ec2b6059a0969:components/frontend/SignUp.tsx
 
 
   const handleChange = (event) => {
@@ -76,8 +79,39 @@ export default function SignUp()
             toast.success(res.message, {
               position: toast.POSITION.TOP_RIGHT,
             });
+<<<<<<< HEAD:components/auth/SignUp.tsx
              window.location.href = '/user/search';
 		      } else {
+              toast.error('You are not a authorized user', {
+                position: toast.POSITION.TOP_RIGHT,
+              });
+		      	}
+		    } else {
+          
+		    	let errors = res.errors;
+          let errorMessage = "";
+          for (let error in errors) {
+            errorMessage += errors[error];
+          }
+          toast.error(errorMessage, {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+		      }
+	    })
+	    .catch(err => {
+	        console.log(err);
+	    });
+    
+=======
+
+             window.location.href = '/user/EditProfile';
+>>>>>>> 65d4f72bbff627725090e092365ec2b6059a0969:components/frontend/SignUp.tsx
+
+
+<<<<<<< HEAD:components/auth/SignUp.tsx
+=======
+		      } else {
+            
               toast.error('You are not a authorized user', {
                 position: toast.POSITION.TOP_RIGHT,
               });
@@ -101,6 +135,7 @@ export default function SignUp()
 
   }
 
+>>>>>>> 65d4f72bbff627725090e092365ec2b6059a0969:components/frontend/SignUp.tsx
     return(
         <>
           <section className="form-part ">
