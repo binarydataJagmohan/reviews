@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
 import Link from 'next/link'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/router'
+import {register} from '../../lib/frontendapi';
+import { removeToken, removeStorageData } from "../../lib/session";
 
 export default function SignUp()
 {
   const [errorMessage, setErrorMessage] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [shownPassword, setShownPassword] = useState(false);
+  
 
   const [user, setuser] = useState({
     first_name: "",
@@ -17,7 +21,18 @@ export default function SignUp()
     password_confirmation: "",
   });
 
-  const router = useRouter();
+  useEffect(() => {
+    removeToken();
+    removeStorageData();
+  }, []);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  }
+  const PasswordVisibility = () => {
+    setShownPassword(!shownPassword);
+  }
+
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -37,7 +52,7 @@ export default function SignUp()
       return;
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
     if (!emailRegex.test(user.email)) {
       toast.error('Please enter a valid email address');
       return;
@@ -48,26 +63,44 @@ export default function SignUp()
       return;
     }
 
-    const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/register`, user);
-    console.log(res);
-
-    if (res.data.exists) {
-      toast.error('This email address is already registered');
-      return;}
+    register(user)
+	    .then(res => {
+	    	if(res.status==true){
+		    	if(res.token){
+            window.localStorage.setItem("token", res.token);
+            window.localStorage.setItem("id", res.user.id);
+            window.localStorage.setItem("first_name", res.user.first_name);
+            window.localStorage.setItem("last_name", res.user.last_name);
+            window.localStorage.setItem("email", res.user.email);
       
-    toast.success('Registration successful!', { autoClose: 5000 });
-    if (res.status === 200) {
-
-      localStorage.setItem('token', res.data.token);
-      router.push('/SignUp'); // Redirect to the login page
-    }
+            toast.success(res.message, {
+              position: toast.POSITION.TOP_RIGHT,
+            });
+             window.location.href = '/user/search';
+		      } else {
+              toast.error('You are not a authorized user', {
+                position: toast.POSITION.TOP_RIGHT,
+              });
+		      	}
+		    } else {
+          
+		    	let errors = res.errors;
+          let errorMessage = "";
+          for (let error in errors) {
+            errorMessage += errors[error];
+          }
+          toast.error(errorMessage, {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+		      }
+	    })
+	    .catch(err => {
+	        console.log(err);
+	    });
+    
 
   }
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    router.push('/auth/logout'); // Redirect to the logout page
-  }
     return(
         <>
           <section className="form-part ">
@@ -82,13 +115,13 @@ export default function SignUp()
             <input type="text" onChange={handleChange} name="email"/>
             <div className="show-fild">
               <label>Create Password</label>
-              <input type="password" onChange={handleChange} name="password"/>
-              <p className="show"><a href="#">Show</a></p>
+              <input type={showPassword ? "text" : "password"} onChange={handleChange} name="password"/>
+              <p className="show" onClick={togglePasswordVisibility}><a href="javascript:void(0)">Show</a></p>
             </div>
             <div className="show-fild">
               <label>Confirm Password</label>
-              <input type="password" onChange={handleChange} name="password_confirmation" />
-              <p className="show"><a href="#">Show</a></p>
+              <input type={shownPassword ? "text" : "password"}  onChange={handleChange} name="password_confirmation" />
+              <p className="show"  onClick={PasswordVisibility}><a href="javascript:void(0)">Show</a></p>
             </div>
             {/* <a href="#" className="btn-send">Sign up now</a> */}
             <button type="submit" className="btn-send">Sign up now</button>

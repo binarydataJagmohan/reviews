@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { Props } from "./Props";
 
 export default function Layout({ children, ...props }: Props)  {
-  const router = useRouter()
+  const router = useRouter();
   return (
     <div className="wrapper">
       <Header />

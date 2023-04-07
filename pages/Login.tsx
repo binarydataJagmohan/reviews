@@ -1,5 +1,5 @@
 import React from 'react'
-import FrontendLogin from '../components/frontend/Login';
+import FrontendLogin from '../components/auth/Login';
 export default function Login()
 {
     return(

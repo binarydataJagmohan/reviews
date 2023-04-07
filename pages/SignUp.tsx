@@ -1,5 +1,5 @@
 import React from 'react'
-import FrontendSignUp from '../components/frontend/SignUp';
+import FrontendSignUp from '../components/auth/SignUp';
 export default function SignUp()
 {
     return(

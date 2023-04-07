@@ -2,8 +2,32 @@ import React, {useState, useEffect} from 'react';
 import dynamic from 'next/dynamic'
 import { useRouter } from "next/router";
 import Link from 'next/link'
+import { removeToken, removeStorageData, getCurrentUserData } from "../../lib/session";
 
 export default function Header() {
+
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  function redirectToLogin() {
+      window.location.href = '/Login';
+  }
+  function handleLogout(e) {
+      e.preventDefault();
+      removeToken();
+      removeStorageData();
+      redirectToLogin();
+  }
+
+  useEffect(() => {
+    // alert(localStorage.getItem('id'))
+    const token = localStorage.getItem('token');
+    const id = localStorage.getItem('id');
+
+    if (token && id) {
+      setIsAuthenticated(true);
+    }
+  }, []);
+
     return (
         <>
          <header className="header-head dasktop-view">
@@ -20,7 +44,11 @@ export default function Header() {
                 </li>
                 <li className="nav-item">
                   <Link className="nav-link" href="/About">About Bungee</Link>
-                </li>  
+                </li>
+               
+                  {isAuthenticated ?   <li className="nav-item">
+                  <Link className="nav-link" href="/user/search">Search Reviews</Link>
+                </li>  : '' }
               </ul>
               <ul className="navbar-nav ms-auto mb-lg-0 tab-mobile-menu">
                 <li className="nav-item">
@@ -36,9 +64,14 @@ export default function Header() {
                   <a className="nav-link" href="view-profile.html"> <i className="fa-solid fa-user" /> View your profile </a>
                 </li>  
               </ul> 
-              <form className="d-flex"> 
-                <a href="/Login" className="btn btn-all header-btn" type="submit"> Login</a>
-              </form>
+             
+
+              {isAuthenticated ?    <form className="d-flex"> 
+                <a href="#" className="btn btn-all header-btn" onClick={handleLogout}> Logout</a>
+              </form> :  <form className="d-flex"> 
+                <a href="/Login" className="btn btn-all header-btn" > Login</a>
+              </form> }
+
             </div> 
             <a className="navbar-brand" href="#"><img src={process.env.NEXT_PUBLIC_BASE_URL+"assets/images/logo-white.png"} alt="logo-white" className="logo mobile-view" /></a>
             <div className="user-profile mobile-view">
