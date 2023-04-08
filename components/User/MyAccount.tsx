@@ -1,10 +1,40 @@
-import React, {useState, useEffect} from 'react';
-import dynamic from 'next/dynamic'
-import { useRouter } from "next/router";
-import Link from 'next/link'
-import { removeToken, removeStorageData, getCurrentUserData } from "../../lib/session";
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import {removeToken,removeStorageData,getCurrentUserData,} from "../../lib/session";
+import {saveAdminProfileData,getUserProfileData,} from "../../lib/backendapi";
 
 export default function MyAccount() {
+
+  const [user, SetUserData] = useState({
+
+  });
+
+  useEffect(() => {
+    const current_user_data = getCurrentUserData();
+    if (current_user_data.id !== null) {
+      getUserProfileData(current_user_data.id)
+        .then((res) => {
+          if (res.status === true) {
+            SetUserData(res.data);
+            console.log(res.data);
+          } else {
+            toast.error(res.message, {
+              position: toast.POSITION.TOP_RIGHT,
+            });
+          }
+        })
+        .catch((err) => {
+          toast.error(err.message, {
+            position: toast.POSITION.BOTTOM_RIGHT,
+          });
+        });
+    } else {
+      window.location.href = "/Login";
+    }
+  }, []);
   
     return(
         <>
@@ -23,10 +53,10 @@ export default function MyAccount() {
               <div className="col-sm-6">
                 <div className="user-pro account-big">
                   <img src="/assets/images/user.png" alt="user" className="user" />
-                  <h2>Milan </h2>
-                  <h3>Credit Suisse</h3>
-                  <h3>IBCM Technology</h3>
-                  <h3>Associate</h3>
+                  <h2>{user.first_name+' '+user.last_name} </h2>
+                  <h3>{user.group_name}</h3>
+                  <h3>{user.compnay_name}</h3>
+                  <h3>{user.position_title}</h3>
                 </div>
               </div>
               <div className="col-sm-6 text-right">

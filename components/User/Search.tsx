@@ -1,10 +1,19 @@
-import React, {useState, useEffect} from 'react';
-import Link from 'next/link'
-import { getCurrentUserData } from "../../lib/session";
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import {removeToken,removeStorageData,getCurrentUserData,} from "../../lib/session";
+import {saveAdminProfileData,getUserProfileData,searchuser} from "../../lib/backendapi";
+
 export default function Search()
 {
 
   const [user_id, setCurrentUserID] = useState('');
+
+  const[search,setSearch] = useState('');
+
+  const [results, setResults] = useState([]);
 
   useEffect(() => {
     getUserData();
@@ -20,17 +29,31 @@ export default function Search()
     }
   }
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    searchuser(search)
+      .then((res) => {
+        console.log(res.data);
+        setResults(res.data);
+      })
+      .catch((error) => {
+        console.log(error.response.data.message);
+        setResults([]);
+      });
+  };
+
     return(
         <>
-        
+        {search}
          <section className="search-part section-sp">
           <div className="container"> 
             <div className="banner-search-box">
               <p>Search by name, company or group</p>
               <div className="group-search">
                 <div className="input-group mb-3">
-                  <input type="text" className="form-control" aria-label="Recipient's username" aria-describedby="basic-addon2" />
-                  <span className="input-group-text" id="basic-addon2"><i className="fa-solid fa-magnifying-glass" /></span>
+                  <input type="text" className="form-control" aria-label="Recipient's username" aria-describedby="basic-addon2" onChange={e=>setSearch(e.target.value)}/>
+                  <span className="input-group-text" id="basic-addon2"><button type="submit" onClick={handleSubmit} ><i className="fa-solid fa-magnifying-glass" /></button></span>
                 </div>
               </div>
             </div>

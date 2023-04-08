@@ -3,26 +3,24 @@ import Link from "next/link";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {removeToken,removeStorageData,getCurrentUserData} from "../../lib/session";
-import { saveAdminProfileData } from "../../lib/backendapi";
-import { getUserProfileData } from "../../lib/backendapi";
+import {removeToken,removeStorageData,getCurrentUserData,} from "../../lib/session";
+import {saveAdminProfileData,getUserProfileData,} from "../../lib/backendapi";
 
 export default function EditProfile() {
-  const [user, SetUserData] = useState({});
-  // const [firstname, setFirstName] = useState("");
-  // const [last_name, setLastName] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [password, setpassword] = useState("");
-  // const [company_name, setCompany] = useState("");
-  // const [group_name, setGroups] = useState("");
-  // const [postion_title, setPostion] = useState("");
+  const [user, SetUserData] = useState({
+    first_name: "",
+    last_name: "",
+    company_name: "",
+    group_name: "",
+    position_title: "",
+  });
 
   useEffect(() => {
     const current_user_data = getCurrentUserData();
-    if (current_user_data.id != null) {
+    if (current_user_data.id !== null) {
       getUserProfileData(current_user_data.id)
         .then((res) => {
-          if (res.status == true) {
+          if (res.status === true) {
             SetUserData(res.data);
             console.log(res.data);
           } else {
@@ -32,15 +30,14 @@ export default function EditProfile() {
           }
         })
         .catch((err) => {
-          console.log(err);
+          toast.error(err.message, {
+            position: toast.POSITION.BOTTOM_RIGHT,
+          });
         });
-
-      // current_user_data.id ? setCurrentUserID(current_user_data.id) : setCurrentUserID('');
     } else {
       window.location.href = "/Login";
     }
   }, []);
-
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -50,28 +47,37 @@ export default function EditProfile() {
         [name]: value,
       };
     });
-  }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    saveAdminProfileData(user)
-      .then((res) => {
-        console.log(res)
-        return false;
-        toast.success(res.message, {
-          position: toast.POSITION.TOP_RIGHT,
-        });
 
-        //window.localStorage.setItem("username", first_name);
-        window.location.href = "/user/dashboard";
-      })
-      .catch((err) => {
-        toast.error("Error occured", {
-          position: toast.POSITION.BOTTOM_RIGHT,
-        });
+    if (
+      !user.first_name ||
+      !user.last_name ||
+      !user.group_name ||
+      !user.company_name ||
+      !user.position_title
+    ) {
+      toast.error("Please fill in all the required fields");
+      return;
+    }
+
+    try {
+      const res = await saveAdminProfileData(user);
+      console.log(res);
+      toast.success(res.message, {
+        position: toast.POSITION.TOP_RIGHT,
       });
+      window.location.href = "/user/search";
+    } catch (err) {
+      toast.error("Error occurred", {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+    }
   };
+
+  
 
   return (
     <>
@@ -149,6 +155,7 @@ export default function EditProfile() {
               </div>
             </div>
           </div>
+          <ToastContainer />
         </section>
       </form>
       <section className="my-reviews section-sp">
