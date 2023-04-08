@@ -15,21 +15,7 @@ export default function Header() {
       e.preventDefault();
       removeToken();
       removeStorageData();
-<<<<<<< HEAD
       redirectToLogin();
-=======
-      redirectToLogin();const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-      useEffect(() => {
-        // alert(localStorage.getItem('id'))
-        const token = localStorage.getItem('token');
-        const id = localStorage.getItem('id');
-    
-        if (token && id) {
-          setIsAuthenticated(true);
-        }
-      }, []);
->>>>>>> 65d4f72bbff627725090e092365ec2b6059a0969
   }
 
   useEffect(() => {
