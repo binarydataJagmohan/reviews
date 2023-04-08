@@ -9,6 +9,9 @@ import { removeToken, removeStorageData } from "../../lib/session";
 export default function SignUp()
 {
   const [errorMessage, setErrorMessage] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [shownPassword, setShownPassword] = useState(false);
+  
 
   const [user, setuser] = useState({
     first_name: "",
@@ -23,6 +26,15 @@ export default function SignUp()
     removeStorageData();
   }, []);
 
+<<<<<<< HEAD:components/auth/SignUp.tsx
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  }
+  const PasswordVisibility = () => {
+    setShownPassword(!shownPassword);
+  }
+=======
+>>>>>>> 65d4f72bbff627725090e092365ec2b6059a0969:components/frontend/SignUp.tsx
 
 
   const handleChange = (event) => {
@@ -43,7 +55,7 @@ export default function SignUp()
       return;
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
     if (!emailRegex.test(user.email)) {
       toast.error('Please enter a valid email address');
       return;
@@ -67,10 +79,37 @@ export default function SignUp()
             toast.success(res.message, {
               position: toast.POSITION.TOP_RIGHT,
             });
+<<<<<<< HEAD:components/auth/SignUp.tsx
+             window.location.href = '/user/search';
+		      } else {
+              toast.error('You are not a authorized user', {
+                position: toast.POSITION.TOP_RIGHT,
+              });
+		      	}
+		    } else {
+          
+		    	let errors = res.errors;
+          let errorMessage = "";
+          for (let error in errors) {
+            errorMessage += errors[error];
+          }
+          toast.error(errorMessage, {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+		      }
+	    })
+	    .catch(err => {
+	        console.log(err);
+	    });
+    
+=======
 
              window.location.href = '/user/EditProfile';
+>>>>>>> 65d4f72bbff627725090e092365ec2b6059a0969:components/frontend/SignUp.tsx
 
 
+<<<<<<< HEAD:components/auth/SignUp.tsx
+=======
 		      } else {
             
               toast.error('You are not a authorized user', {
@@ -96,6 +135,7 @@ export default function SignUp()
 
   }
 
+>>>>>>> 65d4f72bbff627725090e092365ec2b6059a0969:components/frontend/SignUp.tsx
     return(
         <>
           <section className="form-part ">
@@ -110,13 +150,13 @@ export default function SignUp()
             <input type="text" onChange={handleChange} name="email"/>
             <div className="show-fild">
               <label>Create Password</label>
-              <input type="password" onChange={handleChange} name="password"/>
-              <p className="show"><a href="#">Show</a></p>
+              <input type={showPassword ? "text" : "password"} onChange={handleChange} name="password"/>
+              <p className="show" onClick={togglePasswordVisibility}><a href="javascript:void(0)">Show</a></p>
             </div>
             <div className="show-fild">
               <label>Confirm Password</label>
-              <input type="password" onChange={handleChange} name="password_confirmation" />
-              <p className="show"><a href="#">Show</a></p>
+              <input type={shownPassword ? "text" : "password"}  onChange={handleChange} name="password_confirmation" />
+              <p className="show"  onClick={PasswordVisibility}><a href="javascript:void(0)">Show</a></p>
             </div>
             {/* <a href="#" className="btn-send">Sign up now</a> */}
             <button type="submit" className="btn-send">Sign up now</button>

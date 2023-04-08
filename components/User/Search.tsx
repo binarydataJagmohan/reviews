@@ -1,22 +1,14 @@
-import React, { useState, useEffect } from "react";
-import Link from "next/link";
-import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import {removeToken,removeStorageData,getCurrentUserData,} from "../../lib/session";
-import {saveAdminProfileData,getUserProfileData,searchuser} from "../../lib/backendapi";
-
+import React, {useState, useEffect} from 'react';
+import Link from 'next/link'
+import { getCurrentUserData } from "../../lib/session";
 export default function Search()
 {
 
   const [user_id, setCurrentUserID] = useState('');
 
-  const[search,setSearch] = useState('');
-
-  const [results, setResults] = useState([]);
-
   useEffect(() => {
     getUserData();
+>>>>>>> 65d4f72bbff627725090e092365ec2b6059a0969
   }, []);
 
   const getUserData = async () => {
@@ -43,9 +35,32 @@ export default function Search()
       });
   };
 
+<<<<<<< HEAD
+  const getAllReviewsData = () => {
+    getAllReviews()
+    .then(res => {
+
+    //  console.log(res);
+      
+      if(res.status==true){
+        setReviews(res.data);
+      } else {
+        setReviews(res.message);
+      }
+
+    })
+    .catch(err => {
+        console.log(err);
+    });
+  }
+
     return(
         <>
-        {search}
+       {/* {user_id} */}
+=======
+    return(
+        <>
+        
          <section className="search-part section-sp">
           <div className="container"> 
             <div className="banner-search-box">
