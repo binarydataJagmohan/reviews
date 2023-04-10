@@ -110,45 +110,49 @@ export default function Search() {
           </ul>
           <div className="tab-content" id="pills-tabContent">
             <div className="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-              {results.map(result => (
-                <div className="main_box mt-4">
-                  <div className="row">
-                    <div className="col-sm-8 col-7">
-                      <h4>{result?.first_name} {result?.last_name}</h4>
-                      <h4>{result.group_name} | {result.company_name}</h4>
-                      <h4>{result.position_title}</h4>
-                    </div>
-                    <div className="col-sm-4  col-5 text-right ">
-                      <h6 className="date-time">3/5/23 14:35 ET |<span> 75</span> </h6>
-                      <p><a href="#" className="what">What’s this?</a></p>
-                    </div>
-                  </div>
-                  <p>{result.description}</p>
-                  <div className="row">
-                    <div className="col-6">
-                      <div className="row">
-                        <div className="col-lg-2 col-md-3 col-5 ">
-                          <h4 className="overall-rating">Overall rating:</h4>
-                        </div>
-                        <div className="col-lg-3 col-md-4 col-6 ">
-                          <p className="rating"><span>{result.avg_rating}</span>/5</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-6">
-                      <div className="row">
-                        <div className="col-lg-8 col-md-6 col-2" />
-                        <div className="col-lg-2 col-md-3 col-5">
-                          <p className="thum thum-up"><i className="fa-solid fa-thumbs-up" /> 14</p>
-                        </div>
-                        <div className="col-lg-2 col-md-3 col-5">
-                          <p className="thum thum-down"> <i className="fa-solid fa-thumbs-down" /> 2</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
+            {Array.isArray(results) && results.length > 0 ? (
+  results.map(result => (
+    <div className="main_box mt-4">
+      <div className="row">
+        <div className="col-sm-8 col-7">
+          <h4>{result?.first_name} {result?.last_name}</h4>
+          <h4>{result.group_name} | {result.company_name} | {result.position_title}</h4>
+        </div>
+        <div className="col-sm-4  col-5 text-right ">
+          <h6 className="date-time">3/5/23 14:35 ET |<span> 75</span> </h6>
+          <p><a href="#" className="what">What’s this?</a></p>
+        </div>
+      </div>
+      <p>{result.description}</p>
+      <div className="row">
+        <div className="col-6">
+          <div className="row">
+            <div className="col-lg-2 col-md-3 col-5 ">
+              <h4 className="overall-rating">Overall rating:</h4>
+            </div>
+            <div className="col-lg-3 col-md-4 col-6 ">
+              <p className="rating"><span>{result.avg_rating}</span>/5</p>
+            </div>
+          </div>
+        </div>
+        <div className="col-6">
+          <div className="row">
+            <div className="col-lg-8 col-md-6 col-2" />
+            <div className="col-lg-2 col-md-3 col-5">
+              <p className="thum thum-up"><i className="fa-solid fa-thumbs-up" /> 14</p>
+            </div>
+            <div className="col-lg-2 col-md-3 col-5">
+              <p className="thum thum-down"> <i className="fa-solid fa-thumbs-down" /> 2</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  ))
+) : (
+  <h1>No Latest Review found</h1>
+)}
+
             </div>
             <div className="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">2</div>
             <div className="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">3</div>
