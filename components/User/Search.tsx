@@ -83,7 +83,7 @@ export default function Search() {
             {searchResults.length > 0 && (
               <div className="bg-dark p-3">
                 {searchResults.map((searchResult: any) => (
-                  <p onClick={() => router.push(`/user/AddReview?userId=${searchResult.id}`)} className="cursor-pointer">{searchResult?.first_name} {searchResult?.last_name} | {searchResult?.group_name}</p>
+                  <p onClick={() => router.push(`/user/ViewProfile?userId=${searchResult.id}`)} className="cursor-pointer">{searchResult?.first_name} {searchResult?.last_name} | {searchResult?.group_name}</p>
                 ))}
               </div>
             )}

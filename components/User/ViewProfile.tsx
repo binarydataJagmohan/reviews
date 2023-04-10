@@ -4,17 +4,48 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { removeToken, removeStorageData, getCurrentUserData, } from "../../lib/session";
-import { saveAdminProfileData, getUserProfileData, } from "../../lib/backendapi";
+import { saveAdminProfileData, getLatestReviews, getUserProfileData, } from "../../lib/backendapi";
 import { useRouter } from "next/router";
 
 export default function ViewProfile()
 {
+  const router = useRouter();
+  const { userId } = router.query;
+  const [user, SetUserData] = useState([
+
+  ]);
+  const [reviews, SetReview] = useState([]);
+
+  useEffect(() => {
+    if (!userId) return; 
+    getUserProfileData(userId)
+      .then((res) => {
+        console.log(res)
+        if (res.status === true) {
+          SetUserData(res.data);
+          SetReview(res.reviews);
+          console.log(reviews)
+        } else {
+          toast.error(res.message, {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+        }
+      })
+      .catch((err) => {
+        toast.error(err.message, {
+          position: toast.POSITION.BOTTOM_RIGHT,
+        });
+      });
+  }, []);
+
+  
+
     return(
         <>
           <section className="edit-part section-sp">
           <div className="container"> 
             <div className="button-part text-right"> 
-              <button className="edit-btn Save changes"><i className="fa-solid fa-user-pen" /> Add review</button>
+              <a href={`/user/AddReview?userId=${userId}`} className="edit-btn Save changes" ><i className="fa-solid fa-user-pen"  /> Add review</a>
             </div>
           </div>
         </section>
@@ -24,10 +55,10 @@ export default function ViewProfile()
               <div className="col-sm-8">
                 <div className="user-pro">
                   <img src={process.env.NEXT_PUBLIC_BASE_URL+"assets/images/user.png"} alt="user" className="user" />
-                  <h2>Brandon Fiala</h2>
-                  <h3>Brandon Fiala</h3>
-                  <h3>IBCM Technology</h3>
-                  <h3>Analyst</h3>
+                  <h2>{user.first_name+ " "+user.last_name }</h2>
+                  <h3>{user.group_name}</h3>
+                  <h3>{user.company_name}</h3>
+                  <h3>{user.position_title}</h3>
                 </div>
               </div>
               <div className="col-sm-4 text-right">
@@ -61,74 +92,41 @@ export default function ViewProfile()
             </ul>
             <div className="tab-content" id="pills-tabContent">
               <div className="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">  
-                <div className="main_box mt-4">
-                  <div className="row">
-                    <div className="col-sm-6 col-5  ">
-                      <h6 className="date-time"><b>3/5/23 14:35 ET |<span> 75</span> <a href="#" className="what">What’s this?</a></b> </h6>
-                      <p />
+                
+                {reviews.map((review)=>(
+                    <div className="main_box mt-5">
+                    <div className="row">
+                      <div className="col-sm-6 col-5  ">
+                        <h6 className="date-time"><b>3/5/23 14:35 ET |<span> 75</span> <a href="#" className="what">What’s this?</a></b> </h6>
+                        <p />
+                      </div>
+                      <div className="col-sm-6 col-7 text-right">
+                        <p>{review.first_name} | IBCM Technology | Analyst</p>
+                      </div>               
                     </div>
-                    <div className="col-sm-6 col-7 text-right">
-                      <p>Credit Suisse | IBCM Technology | Analyst</p>
-                    </div>               
-                  </div>
-                  <p>Used to work with this guy and he is very aggressive in his expectations of you and timeline for deliverables.Very much a project manager but doesn’t actually have insightful thoughts to add. 
-                  </p>
-                  <div className="row">
-                    <div className="col-6">
-                      <div className="row">
-                        <div className="col-lg-2 col-md-3 col-5 ">
-                          <h4 className="overall-rating">Overall rating:</h4>
+                    <p>{review.description}</p>
+                    <div className="row">
+                      <div className="col-6">
+                        <div className="row">
+                          <div className="col-lg-2 col-md-3 col-5 ">
+                            <h4 className="overall-rating">Overall rating:</h4>
+                          </div>
+                          <div className="col-lg-3 col-md-4 col-6 ">
+                            <p className="rating"><span>5</span>/5</p>
+                          </div>
                         </div>
-                        <div className="col-lg-3 col-md-4 col-6 ">
-                          <p className="rating"><span>1</span>/5</p>
+                      </div>
+                      <div className="col-6">
+                        <div className="row">
+                          <div className="col-lg-8 col-md-6 col-2" />
+                          <div className="col-lg-2 col-md-3 col-5">
+                            <p className="thum thum-up"><i className="fa-solid fa-thumbs-up" /> 7</p>
+                          </div> 
                         </div>
                       </div>
                     </div>
-                    <div className="col-6">
-                      <div className="row">
-                        <div className="col-lg-8 col-md-6 col-2" />
-                        <div className="col-lg-2 col-md-3 col-5">
-                          <p className="thum thum-up"><i className="fa-solid fa-thumbs-up" /> 14</p>
-                        </div>
-                        <div className="col-lg-2 col-md-3 col-5">
-                          <p className="thum thum-down"> <i className="fa-solid fa-thumbs-down" /> 2</p>
-                        </div>
-                      </div>
-                    </div>
                   </div>
-                </div>
-                <div className="main_box mt-5">
-                  <div className="row">
-                    <div className="col-sm-6 col-5  ">
-                      <h6 className="date-time"><b>3/5/23 14:35 ET |<span> 75</span> <a href="#" className="what">What’s this?</a></b> </h6>
-                      <p />
-                    </div>
-                    <div className="col-sm-6 col-7 text-right">
-                      <p>Credit Suisse | IBCM Technology | Analyst</p>
-                    </div>               
-                  </div>
-                  <p>Current colleague and can attest that Brandon is really hard working and good industry knowledge for an Analyst. Would be a great addition to any team!</p>
-                  <div className="row">
-                    <div className="col-6">
-                      <div className="row">
-                        <div className="col-lg-2 col-md-3 col-5 ">
-                          <h4 className="overall-rating">Overall rating:</h4>
-                        </div>
-                        <div className="col-lg-3 col-md-4 col-6 ">
-                          <p className="rating"><span>5</span>/5</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-6">
-                      <div className="row">
-                        <div className="col-lg-8 col-md-6 col-2" />
-                        <div className="col-lg-2 col-md-3 col-5">
-                          <p className="thum thum-up"><i className="fa-solid fa-thumbs-up" /> 7</p>
-                        </div> 
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                ))}
               </div>
               <div className="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">2</div>
               <div className="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">3</div>
