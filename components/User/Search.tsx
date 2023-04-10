@@ -85,11 +85,11 @@ export default function Search() {
               <div className="">
                 {searchResults.map((searchResult: any, index) => (
                    <div className={`bg-light p-3 border border-secondary`}>
-                    <p onClick={() => router.push(`/user/AddReview?userId=${searchResult.id}`)} className="cursor-pointer text-dark m-0">{searchResult?.first_name} {searchResult?.last_name} | {searchResult?.group_name} | {searchResult?.company_name} <span style={{'float':'right'}}><i className="fa-solid fa-magnifying-glass" /></span></p>
+                    <p onClick={() => router.push(`/user/ViewProfile?userId=${searchResult.id}`)} className="cursor-pointer text-dark m-0">{searchResult?.first_name} {searchResult?.last_name} | {searchResult?.group_name} | {searchResult?.company_name} <span style={{'float':'right'}}><i className="fa-solid fa-magnifying-glass" /></span></p>
                   </div>
                 ))}
                 <div className={`bg-primary p-3 border border-dark`}>
-                    <p onClick={() => router.push(`/user/AddReview?userId=${searchResult.id}`)} className="cursor-pointer m-0 text-center fw-bold">Don’t see who you’re looking for? Add a new review<span style={{'float':'right'}}><i className="fa-solid fa-plus" /></span></p>
+                    <p onClick={() => router.push('/user/NewUserReview')} className="cursor-pointer m-0 text-center fw-bold">Don’t see who you’re looking for? Add a new review<span style={{'float':'right'}}><i className="fa-solid fa-plus" /></span></p>
                   </div>
               </div>
             )}
