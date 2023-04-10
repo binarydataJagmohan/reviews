@@ -70,26 +70,29 @@ export default function Search() {
   return (
     <>
       <section className="search-part section-sp">
-        <div className="container">
+      <div className="container">
           <div className="banner-search-box">
             <p>Search by name, company or group</p>
             <div className="group-search">
               <div className="input-group mb-3">
                 <input type="text" className="form-control" aria-label="Recipient's username" aria-describedby="basic-addon2" onChange={e => setSearch(e.target.value)} value={search} />
-                <span className="input-group-text" id="basic-addon2"><button type="submit" onClick={handleSubmit} ><i className="fa-solid fa-magnifying-glass" /></button></span>
+                <span className="input-group-text" id="basic-addon2"><span type="submit" onClick={handleSubmit} ><i className="fa-solid fa-magnifying-glass" /></span></span>
               </div>
 
             </div>
-            {searchResults.length > 0 && (
-              <div className="bg-dark p-3">
-                {searchResults.map((searchResult: any) => (
-                  <p onClick={() => router.push(`/user/ViewProfile?userId=${searchResult.id}`)} className="cursor-pointer">{searchResult?.first_name} {searchResult?.last_name} | {searchResult?.group_name}</p>
+          </div>
+          {searchResults.length > 0 && (
+              <div className="">
+                {searchResults.map((searchResult: any, index) => (
+                   <div className={`bg-light p-3 border border-secondary`}>
+                    <p onClick={() => router.push(`/user/AddReview?userId=${searchResult.id}`)} className="cursor-pointer text-dark m-0">{searchResult?.first_name} {searchResult?.last_name} | {searchResult?.group_name} <span style={{'float':'right'}}><i className="fa-solid fa-magnifying-glass" /></span></p>
+                  </div>
                 ))}
+                <div className={`bg-primary p-3 border border-dark`}>
+                    <p onClick={() => router.push(`/user/AddReview?userId=${searchResult.id}`)} className="cursor-pointer m-0 text-center fw-bold">Don’t see who you’re looking for? Add a new review<span style={{'float':'right'}}><i className="fa-solid fa-plus" /></span></p>
+                  </div>
               </div>
             )}
-
-
-          </div>
         </div>
       </section>
       <section className="my-reviews section-sp">
