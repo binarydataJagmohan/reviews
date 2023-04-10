@@ -7,6 +7,8 @@ import {removeToken,removeStorageData,getCurrentUserData,} from "../../lib/sessi
 import {saveAdminProfileData,getUserProfileData,} from "../../lib/backendapi";
 
 export default function EditProfile() {
+  const [initialName, setInitialName] = useState('');
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, SetUserData] = useState({
     first_name: "",
     last_name: "",
@@ -16,6 +18,15 @@ export default function EditProfile() {
   });
 
   useEffect(() => {
+    const token = localStorage.getItem('token');
+    const id = localStorage.getItem('id');
+    if (token && id) {
+      setIsAuthenticated(true);
+      const firstName = localStorage.getItem('first_name');
+      const lastName = localStorage.getItem('last_name');
+      setInitialName(`${firstName.charAt(0).toUpperCase()}${lastName.charAt(0).toUpperCase()}`);
+      
+    }
     const current_user_data = getCurrentUserData();
     if (current_user_data.id !== null) {
       getUserProfileData(current_user_data.id)
@@ -96,13 +107,14 @@ export default function EditProfile() {
             <div className="row">
               <div className="col-sm-6">
                 <div className="user-pro">
-                  <a href="#" className="edit-img">
-                    <img
+                <a href="#" className="btn btn-all header-btn add-image-btn">
+                    {/* <img
                       src="/assets/images/user.png"
                       alt="user"
                       className="user"
-                    />{" "}
-                    <i className="fa-solid fa-user-pen" />
+                    />{" "} */}
+                    {initialName}
+                    {/* <i className="fa-solid fa-user-pen" /> */}
                   </a>
                 </div>
               </div>
@@ -129,14 +141,14 @@ export default function EditProfile() {
                   <input type="text" value={user.email} readOnly />
                   <div className="show-fild">
                     <label>Change Password</label>
-                    <input type="password" value={user.view_password} />
+                    <input type="password" value={user.view_password} readOnly/>
                     <p className="show">
                       <a href="#">Show</a>
                     </p>
                   </div>
                   <div className="show-fild">
                     <label>Confirm New Password</label>
-                    <input type="password" value={user.view_password} />
+                    <input type="password" value={user.view_password} readOnly/>
                     <p className="show">
                       <a href="#">Show</a>
                     </p>

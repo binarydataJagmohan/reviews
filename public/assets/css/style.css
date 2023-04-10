@@ -204,6 +204,7 @@ hr {
 .profile-part {
     background: #0b38f5;
     padding: 3% 0;
+    position: relative;
 }
 .profile-part h2 {
     color: #fff;
@@ -740,5 +741,34 @@ button.edit-btn.Save.changes {
 
 
 
+a.btn.btn-all.header-btn.add-image-btn {
+    width: 100px;
+    height: 100px;
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    border-radius: 50%;
+    position: absolute;
+    top: -10%;
+    font-size: 30px;
+}
 
-
+.btn.btn-all.header-btn.top-header-btn {
+    margin-left: 10px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 600;
+}
+@media(max-width:767px){
+    a.btn.btn-all.header-btn.add-image-btn {
+        width: 70px;
+        height: 70px;
+        top: -5%;
+        font-size: 20px;
+    }
+}

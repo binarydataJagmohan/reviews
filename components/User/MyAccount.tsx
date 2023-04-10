@@ -7,12 +7,24 @@ import {removeToken,removeStorageData,getCurrentUserData,} from "../../lib/sessi
 import {saveAdminProfileData,getUserProfileData,} from "../../lib/backendapi";
 
 export default function MyAccount() {
-
+  
+  const [initialName, setInitialName] = useState('');
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, SetUserData] = useState({
 
   });
 
   useEffect(() => {
+    const token = localStorage.getItem('token');
+    const id = localStorage.getItem('id');
+    if (token && id) {
+      setIsAuthenticated(true);
+      const firstName = localStorage.getItem('first_name');
+      const lastName = localStorage.getItem('last_name');
+      setInitialName(`${firstName.charAt(0).toUpperCase()}${lastName.charAt(0).toUpperCase()}`);
+      
+    }
+
     const current_user_data = getCurrentUserData();
     if (current_user_data.id !== null) {
       getUserProfileData(current_user_data.id)
@@ -35,6 +47,17 @@ export default function MyAccount() {
       window.location.href = "/Login";
     }
   }, []);
+
+  function redirectToLogin() {
+    window.location.href = '/Login';
+}
+
+  function handleLogout(e) {
+    e.preventDefault();
+    removeToken();
+    removeStorageData();
+    redirectToLogin();
+}
   
     return(
         <>
@@ -43,7 +66,7 @@ export default function MyAccount() {
           <div className="container"> 
             <div className="button-part text-right">
               <Link href="/user/EditProfile" className="edit-btn"><i className="fa-solid fa-user-pen" /> Edit profile</Link>
-              <button className="edit-btn"><i className="fa-solid fa-right-from-bracket" /> Log out</button>
+              <button className="edit-btn" onClick={handleLogout}><i className="fa-solid fa-right-from-bracket" /> Log out</button>
             </div>
           </div>
         </section> 
@@ -52,7 +75,16 @@ export default function MyAccount() {
             <div className="row">
               <div className="col-sm-6">
                 <div className="user-pro account-big">
-                  <img src="/assets/images/user.png" alt="user" className="user" />
+                <a href="#" className="btn btn-all header-btn add-image-btn">
+                    {/* <img
+                      src="/assets/images/user.png"
+                      alt="user"
+                      className="user"
+                    />{" "} */}
+                    {initialName}
+                    {/* <i className="fa-solid fa-user-pen" /> */}
+                  </a>
+                  {/* <img src="/assets/images/user.png" alt="user" className="user" /> */}
                   <h2>{user.first_name+' '+user.last_name} </h2>
                   <h3>{user.group_name}</h3>
                   <h3>{user.compnay_name}</h3>
