@@ -35,12 +35,12 @@ export default function Home(): JSX.Element{
   <div className="row pt-3 mt-5">
     <div className="col-sm-6 col-6 text-right">
       <p className="button-info">
-        <Link href="/login" className="btn-all">Login</Link>
+        <Link href="/Login" className="btn-all">Login</Link>
       </p>
     </div>
     <div className="col-sm-6 col-6 text-left">
       <p className="button-info">
-        <Link href="/signup" className="btn-all">Sign up</Link>
+        <Link href="/SignUp" className="btn-all">Sign up</Link>
       </p>
     </div>
   </div>
