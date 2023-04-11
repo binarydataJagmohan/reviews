@@ -47,6 +47,7 @@ export default function EditProfile() {
           if (res.status === true) {
             SetUserData(res.data);
             setreviews(res.reviews);
+            setreviews(res.reviews1);
             console.log(res.reviews);
           } else {
             toast.error(res.message, {
@@ -191,9 +192,9 @@ export default function EditProfile() {
             <div className="main_box mt-4">
             <div className="row">
               <div className="col-sm-8 col-7">
-                <h4>{review.review_by}</h4>
-                <h4>Barclays | Investment Banking Technology</h4>
-                <h4>Vice President</h4>
+                <h4>{review.first_name}</h4>
+                <h4>{ review.group_name} | { review.company_name}</h4>
+                <h4>{ review.position_title}</h4>
               </div>
               <div className="col-sm-4 col-5 text-right ">
                 <div className="del-icon">
@@ -263,7 +264,7 @@ export default function EditProfile() {
                   </div>
                   <div className="col-lg-3 col-md-4 col-6 ">
                     <p className="rating">
-                      <span>1</span>/5
+                      <span>{review.avg_rating}</span>/5
                     </p>
                   </div>
                 </div>
