@@ -4,10 +4,11 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {removeToken,removeStorageData,getCurrentUserData,} from "../../lib/session";
-import {saveAdminProfileData,getUserProfileData,} from "../../lib/backendapi";
+import {saveAdminProfileData,getUserProfileData, LikeReview,} from "../../lib/backendapi";
 
 export default function EditProfile() {
   const [initialName, setInitialName] = useState('');
+  const [reviews, setreviews] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, SetUserData] = useState({
     first_name: "",
@@ -16,6 +17,18 @@ export default function EditProfile() {
     group_name: "",
     position_title: "",
   });
+
+  const handleLike = (e, like,id) => {
+    e.preventDefault();
+    const data = {isLiked:like,reviewId:id,userId:user.id};
+    // return false;
+    LikeReview(data).then((res)=>{
+      // this.review.thumbs_up(res.data.thumbs_up)
+      console.log(res)
+      setreviews(res.data);
+    });
+  }
+  
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -33,7 +46,8 @@ export default function EditProfile() {
         .then((res) => {
           if (res.status === true) {
             SetUserData(res.data);
-            console.log(res.data);
+            setreviews(res.reviews);
+            console.log(res.reviews);
           } else {
             toast.error(res.message, {
               position: toast.POSITION.TOP_RIGHT,
@@ -173,10 +187,11 @@ export default function EditProfile() {
       <section className="my-reviews section-sp">
         <div className="container">
           <h1>My reviews</h1>
-          <div className="main_box mt-4">
+          {reviews.map((review)=>(
+            <div className="main_box mt-4">
             <div className="row">
               <div className="col-sm-8 col-7">
-                <h4>Sameed Imran</h4>
+                <h4>{review.review_by}</h4>
                 <h4>Barclays | Investment Banking Technology</h4>
                 <h4>Vice President</h4>
               </div>
@@ -238,10 +253,7 @@ export default function EditProfile() {
               </div>
             </div>
             <p>
-              Used to work with this guy and he is very aggressive in his
-              expectations of you and timeline for deliverables.Very much a
-              project manager but doesn’t actually have insightful thoughts to
-              add.
+              {review.description}
             </p>
             <div className="row">
               <div className="col-6">
@@ -260,71 +272,22 @@ export default function EditProfile() {
                 <div className="row">
                   <div className="col-lg-8 col-md-6 col-2" />
                   <div className="col-lg-2 col-md-3 col-5">
-                    <p className="thum thum-up">
-                      <i className="fa-solid fa-thumbs-up" /> 14
+                    <p className="thum thum-up" onClick={e => handleLike(e,1,review.id)}>
+                      <i className="fa-solid fa-thumbs-up" /> { review.thumbs_up }
                     </p>
                   </div>
                   <div className="col-lg-2 col-md-3 col-5">
-                    <p className="thum thum-down">
+                    <p className="thum thum-down" onClick={e => handleLike(e,0,review.id)}>
                       {" "}
-                      <i className="fa-solid fa-thumbs-down" /> 2
+                      <i className="fa-solid fa-thumbs-down" /> { review.thumbs_down }
                     </p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div className="main_box mt-5">
-            <div className="row">
-              <div className="col-sm-8 col-7">
-                <h4>Brandon Fiala</h4>
-                <h4>Credit Suisse | IBCM Technology</h4>
-                <h4>Analyst</h4>
-              </div>
-              <div className="col-sm-4 col-5 text-right ">
-                <div className="del-icon">
-                  <a href="#">
-                    <i className="fa-solid fa-trash" />
-                  </a>
-                </div>
-              </div>
-            </div>
-            <p>
-              Current colleague and can attest that Brandon is really hard
-              working and good industry knowledge for an Analyst. Would be a
-              great addition to any team!
-            </p>
-            <div className="row">
-              <div className="col-6">
-                <div className="row">
-                  <div className="col-lg-2 col-md-3 col-5 ">
-                    <h4 className="overall-rating">Overall rating:</h4>
-                  </div>
-                  <div className="col-lg-3 col-md-4 col-6 ">
-                    <p className="rating">
-                      <span>5</span>/5
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="col-6">
-                <div className="row">
-                  <div className="col-lg-8 col-md-6 col-2" />
-                  <div className="col-lg-2 col-md-3 col-5">
-                    <p className="thum thum-up">
-                      <i className="fa-solid fa-thumbs-up" /> 7
-                    </p>
-                  </div>
-                  <div className="col-lg-2 col-md-3 col-5">
-                    <p className="thum thum-down">
-                      {" "}
-                      <i className="fa-solid fa-thumbs-down" /> 3
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          ))}
+         
         </div>
       </section>
     </>

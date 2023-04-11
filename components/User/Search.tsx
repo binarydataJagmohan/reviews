@@ -67,6 +67,8 @@ export default function Search() {
     })
   };
 
+ 
+
   return (
     <>
       <section className="search-part section-sp">
@@ -81,7 +83,7 @@ export default function Search() {
 
             </div>
           </div>
-          {searchResults.length > 0 && (
+          {q && (
               <div className="">
                 {searchResults.map((searchResult: any, index) => (
                    <div className={`bg-light p-3 border border-secondary`}>
@@ -89,7 +91,7 @@ export default function Search() {
                   </div>
                 ))}
                 <div className={`bg-primary p-3 border border-dark`}>
-                    <p onClick={() => router.push('/user/NewUserReview')} className="cursor-pointer m-0 text-center fw-bold">Don’t see who you’re looking for? Add a new review<span style={{'float':'right'}}><i className="fa-solid fa-plus" /></span></p>
+                    <p onClick={() => router.push(`/user/NewUserReview`)} className="cursor-pointer m-0 text-center fw-bold">Don’t see who you’re looking for? Add a new review<span style={{'float':'right'}}><i className="fa-solid fa-plus" /></span></p>
                   </div>
               </div>
             )}
@@ -122,7 +124,7 @@ export default function Search() {
           <h4>{result.group_name} | {result.company_name} | {result.position_title}</h4>
         </div>
         <div className="col-sm-4  col-5 text-right ">
-          <h6 className="date-time">3/5/23 14:35 ET |<span> 75</span> </h6>
+          <h6 className="date-time">{result.created_at}<span> #{result.id}</span> </h6>
           <p><a href="#" className="what">What’s this?</a></p>
         </div>
       </div>

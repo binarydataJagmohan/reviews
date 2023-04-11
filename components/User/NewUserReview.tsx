@@ -1,5 +1,25 @@
+import React, { useState, useEffect } from 'react'
+import Link from 'next/link'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useRouter } from 'next/router'
+import {register} from '../../lib/frontendapi';
+import { removeToken, removeStorageData } from "../../lib/session";
+
+
+
 export default function NewUserReview()
 {
+
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const [user, setuser] = useState({
+    first_name: "",
+    last_name: "",
+    email: "",
+    password: "",
+    password_confirmation: "",
+  });
     return(
         <>
           <section className="form-part ">
