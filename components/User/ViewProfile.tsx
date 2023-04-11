@@ -63,7 +63,7 @@ export default function ViewProfile()
               </div>
               <div className="col-sm-4 text-right">
                 <div className="rating-view text-center mt-4">
-                  <h4><span>4.5</span> / 5</h4>
+                  <h4><span>4</span> / 5</h4>
                   <p className="star-list">
                     <i className="fa-solid fa-star" />
                     <i className="fa-solid fa-star" />
@@ -97,11 +97,11 @@ export default function ViewProfile()
                     <div className="main_box mt-5">
                     <div className="row">
                       <div className="col-sm-6 col-5  ">
-                        <h6 className="date-time"><b>3/5/23 14:35 ET |<span> 75</span> <a href="#" className="what">What’s this?</a></b> </h6>
+                        <h6 className="date-time"><b>3/5/23 14:35 ET |<span> #{review.id}</span> <a href="#" className="what">What’s this?</a></b> </h6>
                         <p />
                       </div>
                       <div className="col-sm-6 col-7 text-right">
-                        <p>{review.first_name} | IBCM Technology | Analyst</p>
+                        <p>{review.group_name} | {review.company_name} | {review.position_title}</p>
                       </div>               
                     </div>
                     <p>{review.description}</p>

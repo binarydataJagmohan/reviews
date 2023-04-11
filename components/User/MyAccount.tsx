@@ -48,7 +48,7 @@ export default function MyAccount() {
           if (res.status === true) {
             SetUserData(res.data);
             setreviews(res.reviews);
-            setreviews(res.reviews1);
+            //setreviews(res.reviews1);
             console.log(res.data);
           } else {
             toast.error(res.message, {
@@ -128,13 +128,13 @@ export default function MyAccount() {
               </div>
               <div className="col-sm-4 col-5 text-right ">
                 <div className="del-icon">
-                  <a
+                  {/* <a
                     href="#"
                     data-bs-toggle="modal"
                     data-bs-target="#exampleModal"
                   >
                     <i className="fa-solid fa-trash" />
-                  </a>
+                  </a> */}
                 </div>
                 {/* Modal */}
                 <div
