@@ -772,3 +772,7 @@ a.btn.btn-all.header-btn.add-image-btn {
         font-size: 20px;
     }
 }
+.subinput {
+    width: 70%;
+    margin: 0 auto;
+}

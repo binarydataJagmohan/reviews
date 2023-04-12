@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { removeToken, removeStorageData, getCurrentUserData, } from "../../lib/session";
 import { getSearchedResults, getLatestReviews } from "../../lib/backendapi";
 import { useRouter } from "next/router";
+import { parseISO, format } from 'date-fns';
 
 export default function Search() {
   const router = useRouter()
@@ -18,7 +19,6 @@ export default function Search() {
 
   const [searchResults, setSearchResults] = useState([]);
   const [results, setResults] = useState([]);
-
 
   useEffect(() => {
     if (!q) return;
@@ -58,6 +58,24 @@ export default function Search() {
     }
   }
 
+   const handleSearch = async (e) => {
+    const { value } = e.target;
+    setSearch(value);
+    if(value){
+      getSearchedResults(value)
+        .then((res) => {
+          setSearchResults(res.results);
+        })
+        .catch((error) => {
+          console.log(error.response.data.message);
+          setSearchResults([]);
+        });
+    }
+    else{
+      setSearchResults([]);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     router.push(`/search`, {
@@ -72,19 +90,24 @@ export default function Search() {
   return (
     <>
       <section className="search-part section-sp">
-      <div className="container">
+        <div className="container">
           <div className="banner-search-box">
             <p>Search by name, company or group</p>
             <div className="group-search">
               <div className="input-group mb-3">
-                <input type="text" className="form-control" aria-label="Recipient's username" aria-describedby="basic-addon2" onChange={e => setSearch(e.target.value)} value={search} />
+                <input type="text" className="form-control" aria-label="Recipient's username" aria-describedby="basic-addon2" onChange={handleSearch} value={search} list="searchResults" />
                 <span className="input-group-text" id="basic-addon2"><span type="submit" onClick={handleSubmit} ><i className="fa-solid fa-magnifying-glass" /></span></span>
               </div>
-
+              <datalist >
+                {searchResults.map((searchResult: any, index) => (
+                  <option key={index} value={`${searchResult?.first_name} ${searchResult?.last_name} | ${searchResult?.group_name} | ${searchResult?.company_name}`} />
+                ))}
+              </datalist>
             </div>
           </div>
+          
           {q && (
-              <div className="">
+              <div className="subinput">
                 {searchResults.map((searchResult: any, index) => (
                    <div className={`bg-light p-3 border border-secondary`}>
                     <p onClick={() => router.push(`/user/ViewProfile?userId=${searchResult.id}`)} className="cursor-pointer text-dark m-0">{searchResult?.first_name} {searchResult?.last_name} | {searchResult?.group_name} | {searchResult?.company_name} <span style={{'float':'right'}}><i className="fa-solid fa-magnifying-glass" /></span></p>
@@ -124,7 +147,7 @@ export default function Search() {
           <h4>{result.group_name} | {result.company_name} | {result.position_title}</h4>
         </div>
         <div className="col-sm-4  col-5 text-right ">
-          <h6 className="date-time">{result.created_at}<span> #{result.id}</span> </h6>
+          <h6 className="date-time">{format(parseISO(result.created_at), 'M/d/yy HH:mm ')}ET<span> #{result.id}</span> </h6>
           <p><a href="#" className="what">What’s this?</a></p>
         </div>
       </div>

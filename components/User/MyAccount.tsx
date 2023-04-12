@@ -5,7 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {removeToken,removeStorageData,getCurrentUserData,} from "../../lib/session";
 import {saveAdminProfileData,getUserProfileData, LikeReview,} from "../../lib/backendapi";
-
+import { parseISO, format } from 'date-fns';
 export default function MyAccount() {
   
   const [initialName, setInitialName] = useState('');
@@ -49,7 +49,14 @@ export default function MyAccount() {
             SetUserData(res.data);
             setreviews(res.reviews);
             //setreviews(res.reviews1);
-            console.log(res.data);
+            //console.log(res.data);
+            //console.log(res.reviews)
+           
+    //         const firstReview = res.reviews[0];
+    // const createDateStr = firstReview.created_at;
+    // const createDate = parseISO(createDateStr);
+    // const formattedDate = format(createDate, 'M/d/yy HH:mm z');
+    // console.log(formattedDate);
           } else {
             toast.error(res.message, {
               position: toast.POSITION.TOP_RIGHT,
@@ -126,6 +133,10 @@ export default function MyAccount() {
                 <h4>{ review.group_name} | { review.company_name}</h4>
                 <h4>{ review.position_title}</h4>
               </div>
+              <div className="col-sm-4  col-5 text-right ">
+          <h6 className="date-time">{format(parseISO(review.created_at), 'M/d/yy HH:mm ')}ET<span> #{review.id}</span> </h6>
+          <p><a href="#" className="what">What’s this?</a></p>
+        </div>
               <div className="col-sm-4 col-5 text-right ">
                 <div className="del-icon">
                   {/* <a
