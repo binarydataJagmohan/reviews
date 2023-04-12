@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { removeToken, removeStorageData, getCurrentUserData, } from "../../lib/session";
 import { saveAdminProfileData, getUserProfileData, submitReview, } from "../../lib/backendapi";
 import { useRouter } from "next/router";
+import { log } from "console";
 
 
 export default function AddReview() {
@@ -43,6 +44,8 @@ export default function AddReview() {
 
   const onSubmit = async () => {
     const current_user_data = getCurrentUserData();
+    console.log(current_user_data.id );
+    
     if (!current_user_data) return;
     const body = {
       review_by: current_user_data?.id,

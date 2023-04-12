@@ -12,7 +12,7 @@ export default function NewUserReview()
 {
 
   const [errorMessage, setErrorMessage] = useState('');
-
+  // const [rating, setRating] = useState(0);
   const [user, setuser] = useState({
     first_name: "",
     last_name: "",
@@ -21,9 +21,12 @@ export default function NewUserReview()
     postion_title: "",
     description: "",
     total_rating : "",
+    rating : 0,
+    review_by : '',
   });
 
   const handleChange = (event) => {
+    console.log(user)
     const { name, value } = event.target;
     setuser((prevState) => {
       return {
@@ -33,30 +36,27 @@ export default function NewUserReview()
     });
   }
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   
-
   const handleSubmit = async (e, userId) => {
     e.preventDefault();
+    
     const current_user_data = getCurrentUserData();
+    user.review_by = current_user_data?.id;
+    if (!current_user_data) return;
     const body = {
       review_by: current_user_data?.id,
       review_to: userId,
-     // description,
-      total_rating: 5,
-      avg_rating: 3
     }
 
     newuserreview(user)
 	    .then(res => {
 	    	if(res.status==true){
+          console.log(res.data);
           toast.success(res.message, {
             position: toast.POSITION.TOP_RIGHT,
 
           });
-          window.location.href = '/user/search';
+          //alert('Review Submitted');
+          //window.location.href = '/user/search';
 		    } else {
 		    	let errors = res.errors;
           let errorMessage = "";
@@ -71,11 +71,16 @@ export default function NewUserReview()
 	    .catch(err => {
 	        console.log(err);
 	    });
-    
-
   }
 
-
+  const handleStarClick = (num) => {
+    setuser((prevState) => {
+      return {
+        ...prevState,
+        rating: num,
+      };
+    });
+  };
     return(
         <>
      <section className="form-part ">
@@ -90,7 +95,7 @@ export default function NewUserReview()
             <input type="text" placeholder="Group Name" name="group_name" onChange={handleChange}/>
             <input type="text" placeholder="Position Title" name="position_title" onChange={handleChange}/>
             <label className="mb-2"><b>Tell us how you feel about this person…</b></label>
-            <textarea placeholder="Write your review here" className="write-review" defaultValue={""} /> 
+            <textarea placeholder="Write your review here" className="write-review"   onChange={handleChange} name="description"/> 
             <div className="row">
               <div className="col-sm-3 col-6">
                 <div className="row">
@@ -106,29 +111,36 @@ export default function NewUserReview()
               </div>
             </div>
             <div className="row">
-              <div className="col-6 text-left"> 
-                <p className="star-list blue-star">
-                  <i className="fa-solid fa-star" />
-                  <i className="fa-solid fa-star" />
-                  <i className="fa-solid fa-star" />
-                  <i className="fa-regular fa-star" />
-                  <i className="fa-regular fa-star" />
-                </p> 
-              </div> 
-              <div className="col-2" />
-              <div className="col-2">
-                <p className="uverall">Overall rating:</p>
-              </div>
-              <div className="col-2 rating-view blue-black">
-                <h4><span>3</span>/5</h4>
-              </div>
-            </div>
+             <div className="col-6 text-left">
+               <p className="star-list blue-star">
+                {[1, 2, 3, 4, 5].map((num) => (
+                <i
+              key={num}
+              className={`fa${num <= user.rating ? 's' : 'r'} fa-star`}
+              onClick={() => handleStarClick(num)}
+            />
+          ))}
+        </p>
+      </div>
+      <div className="col-2" />
+      <div className="col-2">
+        <p className="uverall">Overall rating:</p>
+      </div>
+      <div className="col-2 rating-view blue-black">
+        <h4>
+          <input type="hidden" name="total_rating"  onChange={handleChange} />
+          {/* <input type="hidden" name="total_rating" value={rating} /> */}
+
+          <span>{user.rating}</span>/5
+        </h4>
+      </div>
+    </div>
 
             <section className="edit-part section-sp">
           <div className="container">
             <div className="button-part text-right">
               <button className="edit-btn    Cancel"> Cancel</button>
-              <button type="submit" className="edit-btn Save changes"> Save changes</button>
+              <button type="submit" className="edit-btn Save-changes" >save changes</button>
             </div>
           </div>
         </section>

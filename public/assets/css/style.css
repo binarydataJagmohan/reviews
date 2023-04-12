@@ -752,6 +752,9 @@ a.btn.btn-all.header-btn.add-image-btn {
     top: -10%;
     font-size: 30px;
 }
+a#topjs {
+    top: -19%;
+}
 
 .btn.btn-all.header-btn.top-header-btn {
     margin-left: 10px;
@@ -764,6 +767,8 @@ a.btn.btn-all.header-btn.add-image-btn {
     font-size: 18px;
     font-weight: 600;
 }
+
+
 @media(max-width:767px){
     a.btn.btn-all.header-btn.add-image-btn {
         width: 70px;

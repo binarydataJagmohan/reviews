@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { removeToken, removeStorageData, getCurrentUserData, } from "../../lib/session";
 import { getSearchedResults, getLatestReviews } from "../../lib/backendapi";
 import { useRouter } from "next/router";
-import { parseISO, format } from 'date-fns';
+import { format, parseISO, isValid } from 'date-fns';
 
 export default function Search() {
   const router = useRouter()
@@ -147,7 +147,7 @@ export default function Search() {
           <h4>{result.group_name} | {result.company_name} | {result.position_title}</h4>
         </div>
         <div className="col-sm-4  col-5 text-right ">
-          <h6 className="date-time">{format(parseISO(result.created_at), 'M/d/yy HH:mm ')}ET<span> #{result.id}</span> </h6>
+          <h6 className="date-time">{isValid(parseISO(result.created_at)) ? format(parseISO(result.created_at), 'M/d/yy HH:mm ') + 'ET' : 'Invalid date'}<span> #{result.id}</span> </h6>
           <p><a href="#" className="what">What’s this?</a></p>
         </div>
       </div>

@@ -82,7 +82,7 @@ export default function Header() {
                 <a href="/Login" className="btn btn-all header-btn" > Login</a>
               </form> }
               {isAuthenticated ?    <form className="d-flex"> 
-                <div className="btn btn-all header-btn top-header-btn"> {initialName}</div>
+                <Link href="/user/MyAccount"><div className="btn btn-all header-btn top-header-btn"> {initialName}</div></Link>
               </form> :  <form className="d-flex"> 
               </form> }
                

@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { removeToken, removeStorageData, getCurrentUserData, } from "../../lib/session";
 import { saveAdminProfileData, getLatestReviews, getUserProfileData, } from "../../lib/backendapi";
 import { useRouter } from "next/router";
+import { format, parseISO, isValid } from 'date-fns';
 
 export default function ViewProfile()
 {
@@ -15,6 +16,7 @@ export default function ViewProfile()
 
   ]);
   const [reviews, SetReview] = useState([]);
+  const [initialName, setInitialName] = useState('');
 
   useEffect(() => {
     if (!userId) return; 
@@ -38,6 +40,12 @@ export default function ViewProfile()
       });
   }, []);
 
+  const { first_name, last_name } = user; 
+  const getInitials = () => {
+    if (!first_name || !last_name) return '';
+    return `${first_name.charAt(0).toUpperCase()}${last_name.charAt(0).toUpperCase()}`;
+  };
+
   
 
     return(
@@ -54,7 +62,8 @@ export default function ViewProfile()
             <div className="row">
               <div className="col-sm-8">
                 <div className="user-pro">
-                  <img src={process.env.NEXT_PUBLIC_BASE_URL+"assets/images/user.png"} alt="user" className="user" />
+                  {/* <img src={process.env.NEXT_PUBLIC_BASE_URL+"assets/images/user.png"} alt="user" className="user" /> */}
+                  <a href="" id="topjs" className="btn btn-all header-btn add-image-btn">{getInitials()}</a>
                   <h2>{user.first_name+ " "+user.last_name }</h2>
                   <h3>{user.group_name}</h3>
                   <h3>{user.company_name}</h3>
@@ -97,7 +106,7 @@ export default function ViewProfile()
                     <div className="main_box mt-5">
                     <div className="row">
                       <div className="col-sm-6 col-5  ">
-                        <h6 className="date-time"><b>3/5/23 14:35 ET |<span> #{review.id}</span> <a href="#" className="what">What’s this?</a></b> </h6>
+                        <h6 className="date-time"><b>{isValid(parseISO(review.created_at)) ? format(parseISO(review.created_at), 'M/d/yy HH:mm ') + 'ET' : 'Invalid date'} |<span> #{review.id}</span> <a href="#" className="what">What’s this?</a></b> </h6>
                         <p />
                       </div>
                       <div className="col-sm-6 col-7 text-right">
@@ -122,6 +131,9 @@ export default function ViewProfile()
                           <div className="col-lg-2 col-md-3 col-5">
                             <p className="thum thum-up"><i className="fa-solid fa-thumbs-up" /> 7</p>
                           </div> 
+                          <div className="col-lg-2 col-md-3 col-5">
+              <p className="thum thum-down"> <i className="fa-solid fa-thumbs-down" /> 2</p>
+            </div>
                         </div>
                       </div>
                     </div>

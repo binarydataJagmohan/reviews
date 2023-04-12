@@ -110,7 +110,7 @@ export default function EditProfile() {
       toast.success(res.message, {
         position: toast.POSITION.TOP_RIGHT,
       });
-      window.location.href = "/user/search";
+      window.location.href = "/user/MyAccount";
     } catch (err) {
       toast.error("Error occurred", {
         position: toast.POSITION.BOTTOM_RIGHT,
