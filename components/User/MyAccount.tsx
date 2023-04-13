@@ -214,12 +214,12 @@ export default function MyAccount() {
                 <div className="row">
                   <div className="col-lg-8 col-md-6 col-2" />
                   <div className="col-lg-2 col-md-3 col-5">
-                    <p className="thum thum-up" onClick={e => handleLike(e,1,review.id)}>
+                    <p className="thum thum-up">
                       <i className="fa-solid fa-thumbs-up" /> { review.thumbs_up }
                     </p>
                   </div>
                   <div className="col-lg-2 col-md-3 col-5">
-                    <p className="thum thum-down" onClick={e => handleLike(e,0,review.id)}>
+                    <p className="thum thum-down">
                       {" "}
                       <i className="fa-solid fa-thumbs-down" /> { review.thumbs_down }
                     </p>

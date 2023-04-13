@@ -7,6 +7,7 @@ import {removeToken,removeStorageData,getCurrentUserData,} from "../../lib/sessi
 import {saveAdminProfileData,getUserProfileData, LikeReview, deleteReviews} from "../../lib/backendapi";
 
 export default function EditProfile() {
+  const current_user_data = getCurrentUserData();
   const [initialName, setInitialName] = useState('');
   const [reviews, setreviews] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -18,6 +19,16 @@ export default function EditProfile() {
     position_title: "",
   });
 
+  // const handleLike = (e, like,id) => {
+  //   e.preventDefault();
+  //   const data = {isLiked:like,reviewId:id,userId:user.id};
+  //   // return false;
+  //   LikeReview(data).then((res)=>{
+  //     // this.review.thumbs_up(res.data.thumbs_up)
+  //     console.log(res)
+  //     setreviews(res.data);
+  //   });
+  // }
   const handleLike = (e, like,id) => {
     e.preventDefault();
     const data = {isLiked:like,reviewId:id,userId:user.id};
@@ -25,7 +36,19 @@ export default function EditProfile() {
     LikeReview(data).then((res)=>{
       // this.review.thumbs_up(res.data.thumbs_up)
       console.log(res)
-      setreviews(res.data);
+      getUserProfileData(current_user_data.id)
+        .then((res) => {
+          if (res.status === true) {
+            SetUserData(res.data);
+            setreviews(res.reviews);
+            // setreviews(res.reviews1);
+            console.log(res.reviews);
+          } else {
+            toast.error(res.message, {
+              position: toast.POSITION.TOP_RIGHT,
+            });
+          }
+        })
     });
   }
   
@@ -289,12 +312,12 @@ export default function EditProfile() {
                     <div className="row">
                       <div className="col-lg-8 col-md-6 col-2" />
                       <div className="col-lg-2 col-md-3 col-5">
-                        <p className="thum thum-up" onClick={e => handleLike(e, 1, review.review_id)}>
+                      <p className="thum thum-up" onClick={e => handleLike(e, 1, review.review_id)}>
                           <i className="fa-solid fa-thumbs-up" /> {review.thumbs_up}
                         </p>
                       </div>
                       <div className="col-lg-2 col-md-3 col-5">
-                        <p className="thum thum-down" onClick={e => handleLike(e, 0, review.review_id)}>
+                      <p className="thum thum-down" onClick={e => handleLike(e, 0, review.review_id)}>
                           {" "}
                           <i className="fa-solid fa-thumbs-down" /> {review.thumbs_down}
                         </p>

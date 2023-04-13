@@ -110,6 +110,7 @@ export default function NewUserReview()
                 Fantastic coworker
               </div>
             </div>
+
             <div className="row">
              <div className="col-6 text-left">
                <p className="star-list blue-star">
@@ -122,6 +123,7 @@ export default function NewUserReview()
           ))}
         </p>
       </div>
+
       <div className="col-2" />
       <div className="col-2">
         <p className="uverall">Overall rating:</p>
@@ -129,8 +131,6 @@ export default function NewUserReview()
       <div className="col-2 rating-view blue-black">
         <h4>
           <input type="hidden" name="total_rating"  onChange={handleChange} />
-          {/* <input type="hidden" name="total_rating" value={rating} /> */}
-
           <span>{user.rating}</span>/5
         </h4>
       </div>
