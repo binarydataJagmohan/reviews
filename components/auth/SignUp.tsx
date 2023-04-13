@@ -72,6 +72,7 @@ export default function SignUp()
             window.localStorage.setItem("first_name", res.user.first_name);
             window.localStorage.setItem("last_name", res.user.last_name);
             window.localStorage.setItem("email", res.user.email);
+            window.localStorage.setItem("user_type", res.user.user_type);
       
             toast.success(res.message, {
               position: toast.POSITION.TOP_RIGHT,

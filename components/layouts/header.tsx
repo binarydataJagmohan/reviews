@@ -11,6 +11,7 @@ export default function Header() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [initialName, setInitialName] = useState('');
   const router = useRouter();
+  const user_type = 'admin';
 
 
  // const [name, setName] = useState('');
@@ -30,6 +31,7 @@ export default function Header() {
     // alert(localStorage.getItem('id'))
     const token = localStorage.getItem('token');
     const id = localStorage.getItem('id');
+    const user_type = localStorage.getItem('user_type');
     if (token && id) {
       setIsAuthenticated(true);
       const firstName = localStorage.getItem('first_name');
@@ -55,6 +57,13 @@ export default function Header() {
                 <li className="nav-item">
                   <Link className="nav-link" href="/About">About Bungee</Link>
                 </li>
+
+                {/* {isAuthenticated && user_type == 'admin' ? 
+                <li className="nav-item">
+                <a className="nav-link active" aria-current="page" href="/admin/all-users">All Users</a>
+                </li>
+                : ''} */}
+
                
                   {isAuthenticated ?   <li className="nav-item">
                   <Link className="nav-link" href="/user/search">Search Reviews</Link>
@@ -89,8 +98,11 @@ export default function Header() {
             </div> 
             <a className="navbar-brand" href="#"><img src={process.env.NEXT_PUBLIC_BASE_URL+"assets/images/logo-white.png"} alt="logo-white" className="logo mobile-view" /></a>
             <div className="user-profile mobile-view">
-              <img src={process.env.NEXT_PUBLIC_BASE_URL+"assets/images/user.png"} alt="user" />
+              {/* <img src={process.env.NEXT_PUBLIC_BASE_URL+"assets/images/user.png"} alt="user" /> */}
+              <div className="btn btn-all header-btn top-header-btn"> {initialName}</div>
             </div>
+
+
           </nav>
         </div>
       </header>

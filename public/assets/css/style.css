@@ -623,6 +623,7 @@ button.navbar-toggler {
 }
 .button-info .btn-all { 
     font-size: 15px; 
+    padding: 8px 9px;
 }
 .section-part { 
     padding: 15% 0 15% 0; 
@@ -701,8 +702,6 @@ button.navbar-toggler {
 .footer-part ul li { 
     width: unset;
 }
-
-
 
 }
 

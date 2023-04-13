@@ -35,6 +35,8 @@ export default function NewUserReview()
       };
     });
   }
+  const router = useRouter();
+
 
   const handleSubmit = async (e, userId) => {
     e.preventDefault();
@@ -42,6 +44,14 @@ export default function NewUserReview()
     const current_user_data = getCurrentUserData();
     user.review_by = current_user_data?.id;
     if (!current_user_data) return;
+
+    if (Object.values(user).some(value => value === '')) {
+      setErrorMessage('Please fill in all fields.');
+      toast.error('Please fill in all fields.', {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      return;
+    }
     const body = {
       review_by: current_user_data?.id,
       review_to: userId,
@@ -53,8 +63,8 @@ export default function NewUserReview()
           console.log(res.data);
           toast.success(res.message, {
             position: toast.POSITION.TOP_RIGHT,
-
           });
+          router.push('/user/search');
           //alert('Review Submitted');
           //window.location.href = '/user/search';
 		    } else {

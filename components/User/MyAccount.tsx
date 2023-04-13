@@ -8,8 +8,10 @@ import {saveAdminProfileData,getUserProfileData, LikeReview,} from "../../lib/ba
 import { parseISO, format } from 'date-fns';
 export default function MyAccount() {
   
+  const current_user_data = getCurrentUserData();
   const [initialName, setInitialName] = useState('');
   const [reviews, setreviews] = useState([]);
+  const [likeds, setLiked] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, SetUserData] = useState({
     first_name: "",
@@ -26,7 +28,19 @@ export default function MyAccount() {
     LikeReview(data).then((res)=>{
       // this.review.thumbs_up(res.data.thumbs_up)
       console.log(res)
-      setreviews(res.data);
+      getUserProfileData(current_user_data.id)
+        .then((res) => {
+          if (res.status === true) {
+            SetUserData(res.data);
+            setreviews(res.reviews);
+            // setreviews(res.reviews1);
+            console.log(res.reviews);
+          } else {
+            toast.error(res.message, {
+              position: toast.POSITION.TOP_RIGHT,
+            });
+          }
+        })
     });
   }
 
@@ -214,12 +228,16 @@ export default function MyAccount() {
                 <div className="row">
                   <div className="col-lg-8 col-md-6 col-2" />
                   <div className="col-lg-2 col-md-3 col-5">
-                    <p className="thum thum-up">
-                      <i className="fa-solid fa-thumbs-up" /> { review.thumbs_up }
+                    <p className="thum thum-up" onClick={(e) =>
+                                handleLike(e, 1, review.review_id)
+                              }>
+                      <i className="fa-solid fa-thumbs-up"/> { review.thumbs_up }
                     </p>
                   </div>
                   <div className="col-lg-2 col-md-3 col-5">
-                    <p className="thum thum-down">
+                    <p className="thum thum-down" onClick={(e) =>
+                                handleLike(e, 0, review.review_id)
+                              }>
                       {" "}
                       <i className="fa-solid fa-thumbs-down" /> { review.thumbs_down }
                     </p>

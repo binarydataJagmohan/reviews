@@ -3,8 +3,8 @@ import Link from "next/link";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {removeToken,removeStorageData,getCurrentUserData,} from "../../lib/session";
-import {getSearchedResults,getLatestReviews,mostLikedReviews,LikeReview,} from "../../lib/backendapi";
+import { removeToken, removeStorageData, getCurrentUserData, } from "../../lib/session";
+import { getSearchedResults, getLatestReviews, mostLikedReviews, LikeReview, } from "../../lib/backendapi";
 import { useRouter } from "next/router";
 import { format, parseISO, isValid } from "date-fns";
 
@@ -142,38 +142,27 @@ export default function Search() {
               </datalist>
             </div>
           </div>
-
-          {q && (
-            <div className="subinput">
-              {searchResults.map((searchResult: any, index) => (
-                <div className={`bg-light p-3 border border-secondary`}>
-                  <p
-                    onClick={() =>
-                      router.push(`/user/ViewProfile?userId=${searchResult.id}`)
-                    }
-                    className="cursor-pointer text-dark m-0"
-                  >
-                    {searchResult?.first_name} {searchResult?.last_name} |{" "}
-                    {searchResult?.group_name} | {searchResult?.company_name}{" "}
-                    <span style={{ float: "right" }}>
-                      <i className="fa-solid fa-magnifying-glass" />
-                    </span>
-                  </p>
+          <div className="subinput">
+            {searchResults.length > 0 ? (
+              searchResults.map((searchResult: any, index) => (
+                <>                <div className={`bg-light p-3 border border-secondary`} key={index}>
+                  <p onClick={() => router.push(`/user/ViewProfile?userId=${searchResult.id}`)} className="cursor-pointer text-dark m-0">{searchResult?.first_name} {searchResult?.last_name} | {searchResult?.group_name} | {searchResult?.company_name} <span style={{ 'float': 'right' }}><i className="fa-solid fa-magnifying-glass" /></span></p>
                 </div>
-              ))}
-              <div className={`bg-primary p-3 border border-dark`}>
-                <p
-                  onClick={() => router.push(`/user/NewUserReview`)}
-                  className="cursor-pointer m-0 text-center fw-bold"
-                >
-                  Don’t see who you’re looking for? Add a new review
-                  <span style={{ float: "right" }}>
-                    <i className="fa-solid fa-plus" />
-                  </span>
-                </p>
-              </div>
-            </div>
-          )}
+
+                  <div className={`bg-primary p-3 border border-dark`}>
+                    <p onClick={() => router.push(`/user/NewUserReview`)} className="cursor-pointer m-0 text-center fw-bold">Don’t see who you’re looking for? Add a new review<span style={{ 'float': 'right' }}><i className="fa-solid fa-plus" /></span></p>
+                  </div>
+                </>
+              ))
+            ) : (
+              search && (
+                <div className={`bg-primary p-3 border border-dark`}>
+                  <p onClick={() => router.push(`/user/NewUserReview`)} className="cursor-pointer m-0 text-center fw-bold">Don’t see who you’re looking for? Add a new review<span style={{ 'float': 'right' }}><i className="fa-solid fa-plus" /></span></p>
+                </div>
+              )
+            )}
+          </div>
+
         </div>
       </section>
       <section className="my-reviews section-sp">
@@ -260,9 +249,9 @@ export default function Search() {
                         <h6 className="date-time">
                           {isValid(parseISO(result.created_at))
                             ? format(
-                                parseISO(result.created_at),
-                                "M/d/yy HH:mm "
-                              ) + "ET"
+                              parseISO(result.created_at),
+                              "M/d/yy HH:mm "
+                            ) + "ET"
                             : "Invalid date"}
                           <span> #{result.id}</span>{" "}
                         </h6>
@@ -377,10 +366,12 @@ export default function Search() {
                         <div className="row">
                           <div className="col-lg-8 col-md-6 col-2" />
                           <div className="col-lg-2 col-md-3 col-5">
-                            <p className="thum thum-up" onClick={e => handleLike(e, 1, liked.review_id)}><i className="fa-solid fa-thumbs-up" />{liked.thumbs_up} </p>
+                            {/* <p className="thum thum-up" onClick={e => handleLike(e, 1, liked.review_id)}><i className="fa-solid fa-thumbs-up" />{liked.thumbs_up} </p> */}
+                            <p className="thum thum-up"><i className="fa-solid fa-thumbs-up" />{liked.thumbs_up} </p>
                           </div>
                           <div className="col-lg-2 col-md-3 col-5">
-                            <p className="thum thum-down" onClick={e => handleLike(e, 0, liked.review_id)}> <i className="fa-solid fa-thumbs-down" /> {liked.thumbs_down}</p>
+                            {/* <p className="thum thum-down" onClick={e => handleLike(e, 0, liked.review_id)}> <i className="fa-solid fa-thumbs-down" /> {liked.thumbs_down}</p> */}
+                            <p className="thum thum-down"> <i className="fa-solid fa-thumbs-down" /> {liked.thumbs_down}</p>
                           </div>
                         </div>
                       </div>
@@ -397,7 +388,90 @@ export default function Search() {
               role="tabpanel"
               aria-labelledby="pills-contact-tab"
             >
-              3
+               {Array.isArray(results) && results.length > 0 ? (
+                results.map((result) => (
+                  <div className="main_box mt-4">
+                    <div className="row">
+                      <div className="col-sm-8 col-7">
+                        <h4>
+                          {result?.first_name} {result?.last_name}
+                        </h4>
+                        <h4>
+                          {result.group_name} | {result.company_name} |{" "}
+                          {result.position_title}
+                        </h4>
+                      </div>
+                      <div className="col-sm-4  col-5 text-right ">
+                        <h6 className="date-time">
+                          {isValid(parseISO(result.created_at))
+                            ? format(
+                              parseISO(result.created_at),
+                              "M/d/yy HH:mm "
+                            ) + "ET"
+                            : "Invalid date"}
+                          <span> #{result.id}</span>{" "}
+                        </h6>
+                        <p>
+                          <a href="#" className="what">
+                            What’s this?
+                          </a>
+                        </p>
+                      </div>
+                    </div>
+                    <p>{result.description}</p>
+                    <div className="row">
+                      <div className="col-6">
+                        <div className="row">
+                          <div className="col-lg-2 col-md-3 col-5 ">
+                            <h4 className="overall-rating">Overall rating:</h4>
+                          </div>
+                          <div className="col-lg-3 col-md-4 col-6 ">
+                            <p className="rating">
+                              <span>{result.avg_rating}</span>/5
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-6">
+                        <div className="row">
+                          <div className="col-lg-8 col-md-6 col-2" />
+                          {/* <div className="col-lg-2 col-md-3 col-5">
+              <p className="thum thum-up"><i className="fa-solid fa-thumbs-up" /> 14</p>
+            </div>
+            <div className="col-lg-2 col-md-3 col-5">
+              <p className="thum thum-down"> <i className="fa-solid fa-thumbs-down" /> 2</p>
+            </div> */}
+                          <div className="col-lg-2 col-md-3 col-5">
+                            <p
+                              className="thum thum-up"
+                              onClick={(e) =>
+                                handleLike(e, 1, result.review_id)
+                              }
+                            >
+                              <i className="fa-solid fa-thumbs-up" />
+                              {result.thumbs_up}{" "}
+                            </p>
+                          </div>
+                          <div className="col-lg-2 col-md-3 col-5">
+                            <p
+                              className="thum thum-down"
+                              onClick={(e) =>
+                                handleLike(e, 0, result.review_id)
+                              }
+                            >
+                              {" "}
+                              <i className="fa-solid fa-thumbs-down" />{" "}
+                              {result.thumbs_down}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <h1>No Latest Review found</h1>
+              )}
             </div>
             <div
               className="tab-pane fade"

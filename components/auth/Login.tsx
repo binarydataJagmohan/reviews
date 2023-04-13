@@ -51,12 +51,18 @@ export default function Login() {
             window.localStorage.setItem("first_name", res.user.first_name);
             window.localStorage.setItem("last_name", res.user.last_name);
             window.localStorage.setItem("email", res.user.email);
-      
+            window.localStorage.setItem("user_type", res.user.user_type);
+
+            if(window.localStorage.getItem("user_type") == 'admin'){
+              window.location.href = '/admin/all-users';
+            } else {
+              window.location.href = '/user/EditProfile';
+            }
             toast.success(res.message, {
               position: toast.POSITION.TOP_RIGHT,
             });
 
-            window.location.href = '/user/EditProfile';
+            // window.location.href = '/user/EditProfile';
 
 		      } else {
             

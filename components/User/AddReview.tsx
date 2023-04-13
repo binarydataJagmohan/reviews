@@ -99,7 +99,7 @@ export default function AddReview() {
     SetUserData((prevState) => {
       return {
         ...prevState,
-        rating: num,
+        rating: num || 0,
       };
     });
   };
@@ -151,20 +151,15 @@ export default function AddReview() {
 
       <div className="col-2" />
       <div className="col-2">
-        <p className="uverall">Overall rating:</p>
-      </div>
-      <div className="col-2 rating-view blue-black" id="bbcolor">
+      <p className="overall" style={{color: "#fff"}}>Overall rating:</p>
+</div>
+      <div className="col-2 rating-view" id="bbcolor">
         <h4>
           <input type="hidden" name="total_rating"  onChange={handleChange} />
-          <span>{user.rating}</span>/5
+          <span>{user.rating || 0}</span>/5
         </h4>
       </div>
-    </div>
-
-          
-
-           
-               
+    </div>               
               </div>
               <div className="col-sm-6">
                 <div className="form-blue">
