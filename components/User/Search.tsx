@@ -7,6 +7,9 @@ import { removeToken, removeStorageData, getCurrentUserData, } from "../../lib/s
 import { getSearchedResults, getLatestReviews, mostLikedReviews, LikeReview, } from "../../lib/backendapi";
 import { useRouter } from "next/router";
 import { format, parseISO, isValid } from "date-fns";
+import ReactTooltip from 'react-tooltip';
+import Tippy from "@tippyjs/react";
+
 
 export default function Search() {
   const router = useRouter();
@@ -14,6 +17,8 @@ export default function Search() {
   console.log("q", q);
 
   const [user_id, setCurrentUserID] = useState("");
+  const [showLine, setshowLine] = useState(false);
+
 
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -82,7 +87,6 @@ export default function Search() {
       window.location.href = "/Login";
     }
   };
-
   const handleSearch = async (e) => {
     const { value } = e.target;
     setSearch(value);
@@ -90,13 +94,16 @@ export default function Search() {
       getSearchedResults(value)
         .then((res) => {
           setSearchResults(res.results);
+          console.log(res.results);
         })
         .catch((error) => {
           console.log(error.response.data.message);
           setSearchResults([]);
         });
+      setshowLine(true);
     } else {
       setSearchResults([]);
+      setshowLine(false);
     }
   };
 
@@ -145,22 +152,22 @@ export default function Search() {
           <div className="subinput">
             {searchResults.length > 0 ? (
               searchResults.map((searchResult: any, index) => (
-                <>                <div className={`bg-light p-3 border border-secondary`} key={index}>
-                  <p onClick={() => router.push(`/user/ViewProfile?userId=${searchResult.id}`)} className="cursor-pointer text-dark m-0">{searchResult?.first_name} {searchResult?.last_name} | {searchResult?.group_name} | {searchResult?.company_name} <span style={{ 'float': 'right' }}><i className="fa-solid fa-magnifying-glass" /></span></p>
-                </div>
-
-                  <div className={`bg-primary p-3 border border-dark`}>
-                    <p onClick={() => router.push(`/user/NewUserReview`)} className="cursor-pointer m-0 text-center fw-bold">Don’t see who you’re looking for? Add a new review<span style={{ 'float': 'right' }}><i className="fa-solid fa-plus" /></span></p>
+                <>
+                  <div className={`bg-light p-3 border border-secondary`} key={index}>
+                    <p onClick={() => router.push(`/user/ViewProfile?userId=${searchResult.id}`)} className="cursor-pointer text-dark m-0">{searchResult?.first_name} {searchResult?.last_name} | {searchResult?.group_name} | {searchResult?.company_name} <span style={{ 'float': 'right' }}><i className="fa-solid fa-magnifying-glass" /></span></p>
                   </div>
                 </>
               ))
             ) : (
-              search && (
-                <div className={`bg-primary p-3 border border-dark`}>
-                  <p onClick={() => router.push(`/user/NewUserReview`)} className="cursor-pointer m-0 text-center fw-bold">Don’t see who you’re looking for? Add a new review<span style={{ 'float': 'right' }}><i className="fa-solid fa-plus" /></span></p>
-                </div>
-              )
+              ""
             )}
+            {showLine === true ?
+              <div className={`bg-primary p-3 border border-dark`}>
+                <p onClick={() => router.push(`/user/NewUserReview`)} className="cursor-pointer m-0 text-center fw-bold">Don’t see who you’re looking for? Add a new review<span style={{ 'float': 'right' }}><i className="fa-solid fa-plus" /></span></p>
+              </div>
+              :
+              ""
+            }
           </div>
 
         </div>
@@ -177,8 +184,7 @@ export default function Search() {
                 type="button"
                 role="tab"
                 aria-controls="pills-home"
-                aria-selected="true"
-              >
+                aria-selected="true">
                 Most recent
               </button>
             </li>
@@ -191,8 +197,7 @@ export default function Search() {
                 type="button"
                 role="tab"
                 aria-controls="pills-profile"
-                aria-selected="false"
-              >
+                aria-selected="false">
                 Most liked
               </button>
             </li>
@@ -219,8 +224,7 @@ export default function Search() {
                 type="button"
                 role="tab"
                 aria-controls="pills-contact2"
-                aria-selected="false"
-              >
+                aria-selected="false">
                 By Bungee score
               </button>
             </li>
@@ -230,8 +234,7 @@ export default function Search() {
               className="tab-pane fade show active"
               id="pills-home"
               role="tabpanel"
-              aria-labelledby="pills-home-tab"
-            >
+              aria-labelledby="pills-home-tab">
               {Array.isArray(results) && results.length > 0 ? (
                 results.map((result) => (
                   <div className="main_box mt-4">
@@ -256,9 +259,15 @@ export default function Search() {
                           <span> #{result.id}</span>{" "}
                         </h6>
                         <p>
-                          <a href="#" className="what">
-                            What’s this?
-                          </a>
+                        <Tippy content={
+                          <div style={{background:'black',padding: '15px',textAlign:'center',borderRadius:'5px'}}>
+                        <span style={{ color: 'white',height: '90px',fontSize:'12px' }}>
+                        This number represents the Bungee score of the author at the time of writing the review
+                        </span></div>}>
+                        <a href="#" className="what">
+                        What’s this?
+                        </a>
+                        </Tippy>
                         </p>
                       </div>
                     </div>
@@ -388,7 +397,7 @@ export default function Search() {
               role="tabpanel"
               aria-labelledby="pills-contact-tab"
             >
-               {Array.isArray(results) && results.length > 0 ? (
+              {Array.isArray(results) && results.length > 0 ? (
                 results.map((result) => (
                   <div className="main_box mt-4">
                     <div className="row">
@@ -487,3 +496,4 @@ export default function Search() {
     </>
   );
 }
+

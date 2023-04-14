@@ -3,8 +3,9 @@ import dynamic from 'next/dynamic'
 import { useRouter } from "next/router";
 import Link from 'next/link'
 import Image from 'next/image';
-
+import axios from "axios";
 import { removeToken, removeStorageData, getCurrentUserData } from "../../lib/session";
+import { getEditdata } from '@/lib/backendapi';
 
 export default function Header() {
 
@@ -12,6 +13,8 @@ export default function Header() {
   const [initialName, setInitialName] = useState('');
   const router = useRouter();
   const user_type = 'admin';
+    const [additionalData, setadditionalData] = useState([]);
+
 
 
  // const [name, setName] = useState('');
@@ -32,6 +35,7 @@ export default function Header() {
     const token = localStorage.getItem('token');
     const id = localStorage.getItem('id');
     const user_type = localStorage.getItem('user_type');
+    
     if (token && id) {
       setIsAuthenticated(true);
       const firstName = localStorage.getItem('first_name');
@@ -39,6 +43,15 @@ export default function Header() {
       setInitialName(`${firstName.charAt(0).toUpperCase()}${lastName.charAt(0).toUpperCase()}`);
     }
   }, []);
+
+  // useEffect(() => {
+  //   const user_id = localStorage.getItem('id');
+  //   getEditdata(user_id).then((res)=>{
+  //     console.log(res);
+  //    setadditionalData(res.data);
+      
+  //   });
+  // }, []);
 
     return (
         <>
@@ -91,7 +104,7 @@ export default function Header() {
                 <a href="/Login" className="btn btn-all header-btn" > Login</a>
               </form> }
               {isAuthenticated ?    <form className="d-flex"> 
-                <Link href="/user/MyAccount"><div className="btn btn-all header-btn top-header-btn"> {initialName}</div></Link>
+                <Link href="/user/MyAccount"><div className="btn btn-all header-btn top-header-btn set" > {initialName}</div></Link>
               </form> :  <form className="d-flex"> 
               </form> }
                

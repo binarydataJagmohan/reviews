@@ -3,14 +3,20 @@ import Link from "next/link";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {removeToken,removeStorageData,getCurrentUserData,} from "../../lib/session";
-import {saveAdminProfileData,getUserProfileData, LikeReview, deleteReviews} from "../../lib/backendapi";
+import { removeToken, removeStorageData, getCurrentUserData, } from "../../lib/session";
+import { saveAdminProfileData, getUserProfileData, LikeReview, deleteReviews, EditProfileData,getEditdata } from "../../lib/backendapi";
 
 export default function EditProfile() {
   const current_user_data = getCurrentUserData();
   const [initialName, setInitialName] = useState('');
   const [reviews, setreviews] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [additionalData, setadditionalData] = useState([]);
+  const [styled, setstyled] = useState({
+    'color':'',
+    'background':''
+  })
+
   const [user, SetUserData] = useState({
     first_name: "",
     last_name: "",
@@ -19,29 +25,16 @@ export default function EditProfile() {
     position_title: "",
   });
 
-  // const handleLike = (e, like,id) => {
-  //   e.preventDefault();
-  //   const data = {isLiked:like,reviewId:id,userId:user.id};
-  //   // return false;
-  //   LikeReview(data).then((res)=>{
-  //     // this.review.thumbs_up(res.data.thumbs_up)
-  //     console.log(res)
-  //     setreviews(res.data);
-  //   });
-  // }
-  const handleLike = (e, like,id) => {
+  const handleLike = (e, like, id) => {
     e.preventDefault();
-    const data = {isLiked:like,reviewId:id,userId:user.id};
-    // return false;
-    LikeReview(data).then((res)=>{
-      // this.review.thumbs_up(res.data.thumbs_up)
+    const data = { isLiked: like, reviewId: id, userId: user.id };
+    LikeReview(data).then((res) => {
       console.log(res)
       getUserProfileData(current_user_data.id)
         .then((res) => {
           if (res.status === true) {
             SetUserData(res.data);
             setreviews(res.reviews);
-            // setreviews(res.reviews1);
             console.log(res.reviews);
           } else {
             toast.error(res.message, {
@@ -51,7 +44,6 @@ export default function EditProfile() {
         })
     });
   }
-  
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -61,7 +53,6 @@ export default function EditProfile() {
       const firstName = localStorage.getItem('first_name');
       const lastName = localStorage.getItem('last_name');
       setInitialName(`${firstName.charAt(0).toUpperCase()}${lastName.charAt(0).toUpperCase()}`);
-      
     }
     const current_user_data = getCurrentUserData();
     if (current_user_data.id !== null) {
@@ -86,6 +77,14 @@ export default function EditProfile() {
     } else {
       window.location.href = "/Login";
     }
+  }, []);
+
+  useEffect(() => {
+    const user_id = localStorage.getItem('id');
+    const res = getEditdata(user_id).then((res)=>{
+      setadditionalData(res.data);
+      console.log(res);
+    });
   }, []);
 
   const handleDelete = (e, id) => {
@@ -141,7 +140,37 @@ export default function EditProfile() {
     }
   };
 
-  
+  const EditChange = (event) => {
+    const { name, value } = event.target;
+    SetUserData((prevState) => {
+      return {
+        ...prevState,
+        [name]: value,
+      };
+    });
+  };
+  const handleEdit = async (e) => {
+    const current_user_data = getCurrentUserData();
+    console.log(current_user_data.id);
+    if (!current_user_data) return;
+    const body = {
+      user_id: current_user_data.id,
+      set_name: user.set_name, // add the set_name field
+      font_color: user.font_color, // add the font_color field
+      background_color: user.background_color
+    };
+    try {
+      const res = await EditProfileData(body);
+      console.log(res);
+      toast.success(res.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    } catch (err) {
+      toast.error("Error occurred", {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+    }
+  };
 
   return (
     <>
@@ -160,15 +189,16 @@ export default function EditProfile() {
             <div className="row">
               <div className="col-sm-6">
                 <div className="user-pro">
-                <a href="#" className="btn btn-all header-btn add-image-btn">
+                  <a href="#" style={{'color':additionalData.font_color,'background':additionalData.background_color}} className="btn btn-all header-btn add-image-btn">
                     {/* <img
                       src="/assets/images/user.png"
                       alt="user"
                       className="user"
                     />{" "} */}
-                    {initialName}
-                    {/* <i className="fa-solid fa-user-pen" /> */}
+                    {additionalData.set_name != null || "" ? additionalData.set_name : initialName}
                   </a>
+                  <i data-bs-toggle="modal"
+                    data-bs-target="#EditModal" style={{ 'cursor': 'pointer' }} className="fa-solid fa-user-pen" />
                 </div>
               </div>
               <div className="col-sm-6 text-right"></div>
@@ -194,14 +224,14 @@ export default function EditProfile() {
                   <input type="text" value={user.email} readOnly />
                   <div className="show-fild">
                     <label>Change Password</label>
-                    <input type="password" value={user.view_password} readOnly/>
+                    <input type="password" value={user.view_password} readOnly />
                     <p className="show">
                       <a href="#">Show</a>
                     </p>
                   </div>
                   <div className="show-fild">
                     <label>Confirm New Password</label>
-                    <input type="password" value={user.view_password} readOnly/>
+                    <input type="password" value={user.view_password} readOnly />
                     <p className="show">
                       <a href="#">Show</a>
                     </p>
@@ -312,12 +342,12 @@ export default function EditProfile() {
                     <div className="row">
                       <div className="col-lg-8 col-md-6 col-2" />
                       <div className="col-lg-2 col-md-3 col-5">
-                      <p className="thum thum-up" onClick={e => handleLike(e, 1, review.review_id)}>
+                        <p className="thum thum-up" onClick={e => handleLike(e, 1, review.review_id)}>
                           <i className="fa-solid fa-thumbs-up" /> {review.thumbs_up}
                         </p>
                       </div>
                       <div className="col-lg-2 col-md-3 col-5">
-                      <p className="thum thum-down" onClick={e => handleLike(e, 0, review.review_id)}>
+                        <p className="thum thum-down" onClick={e => handleLike(e, 0, review.review_id)}>
                           {" "}
                           <i className="fa-solid fa-thumbs-down" /> {review.thumbs_down}
                         </p>
@@ -335,6 +365,35 @@ export default function EditProfile() {
             <h1>No reviews yet</h1>
           </div>
         </section>)}
+      <div className="modal fade" id="EditModal" tabIndex={-1} role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h4 className="modal-title" id="modalLabel2">Update Your profile</h4>
+            </div>
+            <div className="modal-body">
+              <form onSubmit={handleEdit}>
+                <div className="form-group">
+                  <label>User Name</label>
+                  <input type="text" name="set_name" onChange={EditChange} className="form-control" placeholder="Username" />
+                </div>
+                <div className="form-group">
+                  <label>font color</label>
+                  <input type="color" name="font_color" onChange={EditChange} className="form-control" />
+                </div>
+                <div className="form-group">
+                  <label>background color</label>
+                  <input type="color" name="background_color" onChange={EditChange} className="form-control" />
+                </div>
+                <div className="center">
+                  <button type="submit">update</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ToastContainer />
     </>
   );
 }

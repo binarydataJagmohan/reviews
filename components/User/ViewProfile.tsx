@@ -123,7 +123,7 @@ export default function ViewProfile() {
                           <h4 className="overall-rating">Overall rating:</h4>
                         </div>
                         <div className="col-lg-3 col-md-4 col-6 ">
-                          <p className="rating"><span>5</span>/5</p>
+                          <p className="rating"><span>{review.avg_rating}</span>/5</p>
                         </div>
                       </div>
                     </div>

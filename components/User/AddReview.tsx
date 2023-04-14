@@ -7,6 +7,8 @@ import { removeToken, removeStorageData, getCurrentUserData, } from "../../lib/s
 import { saveAdminProfileData, getUserProfileData, submitReview, } from "../../lib/backendapi";
 import { useRouter } from "next/router";
 import { log } from "console";
+import '@fortawesome/fontawesome-free/css/all.min.css';
+
 
 
 export default function AddReview() {
@@ -22,7 +24,7 @@ export default function AddReview() {
     company_name: "",
     group_name: "",
     position_title: "",
-    rating : 0,
+    rating: 0,
   });
 
   useEffect(() => {
@@ -44,15 +46,15 @@ export default function AddReview() {
       });
   }, [userId])
 
-  const { first_name, last_name } = user; 
+  const { first_name, last_name } = user;
   const getInitials = () => {
     if (!first_name || !last_name) return '';
     return `${first_name.charAt(0).toUpperCase()}${last_name.charAt(0).toUpperCase()}`;
   };
   const onSubmit = async () => {
     const current_user_data = getCurrentUserData();
-    console.log(current_user_data.id );
-    
+    console.log(current_user_data.id);
+
     if (!current_user_data) return;
     const body = {
       review_by: current_user_data?.id,
@@ -63,11 +65,12 @@ export default function AddReview() {
     }
     submitReview(body).then((res) => {
       if (res.status) {
-        alert(res.message);
+        //alert(res.message);
         toast.success(res.message, {
           position: toast.POSITION.TOP_RIGHT,
+          autoClose: 5000
         });
-        //router.push("/user/search")
+        router.push("/user/search")
       } else {
         toast.error(res.message, {
           position: toast.POSITION.TOP_RIGHT,
@@ -75,11 +78,11 @@ export default function AddReview() {
       }
     })
       .catch((err) => {
-        alert(err?.response?.data?.message)
+        //   alert(err?.response?.data?.message)
         toast.error(err?.response?.data?.message, {
           position: toast.POSITION.TOP_RIGHT,
         });
-      });;
+      });
   }
 
   const handleChange = (event) => {
@@ -94,7 +97,13 @@ export default function AddReview() {
   }
 
 
-
+  const handleStarHover = (num) => {
+    const starColor = num > 0 ? "yellow" : "gray";
+    const stars = document.querySelectorAll(".fa-star");
+    stars.forEach((star, index) => {
+      star.style.color = index < num ? starColor : "gray";
+    });
+  };
   const handleStarClick = (num) => {
     SetUserData((prevState) => {
       return {
@@ -135,9 +144,9 @@ export default function AddReview() {
                   <label>Last Name</label>
                   <input value={user.last_name} type="text" placeholder="Last Name" readOnly />
                 </div>
-                
+
                 <div className="row">
-             <div className="col-6 text-left">
+                  {/* <div className="col-6 text-left">
                <p className="star-list blue-star" id="star-color">
                 {[1, 2, 3, 4, 5].map((num) => (
                 <i
@@ -147,19 +156,33 @@ export default function AddReview() {
             />
           ))}
         </p>
-      </div>
+      </div> */}
+                  <div className="col-6 text-left">
+                    <p className="star-list blue-star" id="star-color">
+                      {[1, 2, 3, 4, 5].map((num) => (
+                        <i
+                          key={num}
+                          className={`fa${num <= (user.rating || 0) ? 's' : 'r'} fa-star`}
+                          onMouseEnter={() => handleStarHover(num)}
+                          onMouseLeave={() => handleStarHover(0)}
+                          onClick={() => handleStarClick(num)}
+                        />
+                      ))}
+                    </p>
+                  </div>
 
-      <div className="col-2" />
-      <div className="col-2">
-      <p className="overall" style={{color: "#fff"}}>Overall rating:</p>
-</div>
-      <div className="col-2 rating-view" id="bbcolor">
-        <h4>
-          <input type="hidden" name="total_rating"  onChange={handleChange} />
-          <span>{user.rating || 0}</span>/5
-        </h4>
-      </div>
-    </div>               
+
+                  <div className="col-2" />
+                  <div className="col-2">
+                    <p className="overall" style={{ color: "#fff" }}>Overall rating:</p>
+                  </div>
+                  <div className="col-2 rating-view" id="bbcolor">
+                    <h4>
+                      <input type="hidden" name="total_rating" onChange={handleChange} />
+                      <span>{user.rating || 0}</span>/5
+                    </h4>
+                  </div>
+                </div>
               </div>
               <div className="col-sm-6">
                 <div className="form-blue">
@@ -172,13 +195,14 @@ export default function AddReview() {
                 </div>
               </div>
             </div>
-            
+
             <div className="row below">
               <div className="col-lg-6 col-md-6  "><label>Please provide your feedback below</label></div>
               <div className="col-sm-12">
                 <textarea onChange={(e) => setDescription(e.target.value)} placeholder="Write your review here" className="write-review" value={description} />
               </div>
             </div>
+            <ToastContainer />
           </div>
         </section>
       </form>
