@@ -4,7 +4,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { removeToken, removeStorageData, getCurrentUserData, } from "../../lib/session";
-import { saveAdminProfileData, getUserProfileData, LikeReview, deleteReviews, EditProfileData, getEditdata } from "../../lib/backendapi";
+import { saveAdminProfileData, getUserProfileData, LikeReview, deleteReviews, EditProfileData, getEditdata, getUserProfileDatabyid } from "../../lib/backendapi";
 
 export default function EditProfile() {
   const current_user_data = getCurrentUserData();
@@ -33,7 +33,7 @@ export default function EditProfile() {
     const data = { isLiked: like, reviewId: id, userId: user.id };
     LikeReview(data).then((res) => {
       console.log(res)
-      getUserProfileData(current_user_data.id)
+      getUserProfileDatabyid(current_user_data.id)
         .then((res) => {
           if (res.status === true) {
             SetUserData(res.data);
@@ -59,7 +59,7 @@ export default function EditProfile() {
     }
     const current_user_data = getCurrentUserData();
     if (current_user_data.id !== null) {
-      getUserProfileData(current_user_data.id)
+      getUserProfileDatabyid(current_user_data.id)
         .then((res) => {
           if (res.status === true) {
             SetUserData(res.data);
@@ -88,7 +88,7 @@ export default function EditProfile() {
       console.log(res);
     });
   }, []);
-  
+
 
   const handleDelete = (e, id) => {
     e.preventDefault();
@@ -103,8 +103,6 @@ export default function EditProfile() {
         //  }
       });
   }
-
-
   const handleChange = (event) => {
     const { name, value } = event.target;
     SetUserData((prevState) => {
@@ -117,7 +115,6 @@ export default function EditProfile() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (
       !user.first_name ||
       !user.last_name ||
@@ -128,7 +125,6 @@ export default function EditProfile() {
       toast.error("Please fill in all the required fields");
       return;
     }
-
     try {
       const res = await saveAdminProfileData(user);
       console.log(res);
@@ -246,7 +242,7 @@ export default function EditProfile() {
                   <div className="show-fild">
                     <label>Confirm New Password</label>
                     <input type={shownPassword ? "text" : "password"} value={user.view_password} readOnly />
-                    <p className="show"  onClick={PasswordVisibility}><a href="javascript:void(0)">Show</a></p>
+                    <p className="show" onClick={PasswordVisibility}><a href="javascript:void(0)">Show</a></p>
                   </div>
                 </div>
               </div>
@@ -379,7 +375,7 @@ export default function EditProfile() {
         </section>)}
 
       {/* Modal */}
-      
+
       <div
         className="modal fade"
         id="EditModal"
@@ -403,28 +399,28 @@ export default function EditProfile() {
             <div className="modal-body">
               {/* <h3>Are you sure you want to delete this review?</h3> */}
               <form onSubmit={handleEdit}>
-  <div className="form-group">
-    <label>Edit Intial Letters</label>
-    <input type="text" name="set_name" onChange={EditChange} className="form-control" placeholder="" />
-  </div>
-  <div className="row">
-    <div className="col-md-6">
-      <div className="form-group mt-3">
-        <label>Font color</label>
-        <input type="color" name="font_color" onChange={EditChange} className="form-control set-size" />
-      </div>
-    </div>
-    <div className="col-md-6">
-      <div className="form-group mt-3">
-        <label>Background color</label>
-        <input type="color" name="background_color" onChange={EditChange} className="form-control set-size" />
-      </div>
-    </div>
-  </div>
-  <div className="center mt-3 text-center">
-    <button type="submit" className="btn edit-btn Save changes">Update</button>
-  </div>
-</form>
+                <div className="form-group">
+                  <label>Edit Intial Letters</label>
+                  <input type="text" name="set_name" onChange={EditChange} className="form-control" placeholder="" />
+                </div>
+                <div className="row">
+                  <div className="col-md-6">
+                    <div className="form-group mt-3">
+                      <label>Font color</label>
+                      <input type="color" name="font_color" onChange={EditChange} className="form-control set-size" />
+                    </div>
+                  </div>
+                  <div className="col-md-6">
+                    <div className="form-group mt-3">
+                      <label>Background color</label>
+                      <input type="color" name="background_color" onChange={EditChange} className="form-control set-size" />
+                    </div>
+                  </div>
+                </div>
+                <div className="center mt-3 text-center">
+                  <button type="submit" className="btn edit-btn Save changes">Update</button>
+                </div>
+              </form>
 
             </div>
           </div>

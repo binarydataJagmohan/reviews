@@ -13,8 +13,8 @@ import Tippy from "@tippyjs/react";
 
 export default function Search() {
   const router = useRouter();
-  const { q } = router.query;
-  console.log("q", q);
+  const { name } = router.query;
+  console.log("name", name);
 
   const [user_id, setCurrentUserID] = useState("");
   const [showLine, setshowLine] = useState(false);
@@ -47,9 +47,7 @@ export default function Search() {
   };
 
   useEffect(() => {
-    if (!q) return;
-    setSearch(q);
-    getSearchedResults(q)
+    getSearchedResults(name)
       .then((res) => {
         setSearchResults(res.results);
       })
@@ -57,7 +55,7 @@ export default function Search() {
         console.log(error.response.data.message);
         setSearchResults([]);
       });
-  }, [q]);
+  }, [name]);
 
   useEffect(() => {
     Promise.all([mostLikedReviews(), getLatestReviews()])
@@ -163,7 +161,9 @@ export default function Search() {
               searchResults.map((searchResult: any, index) => (
                 <>
                   <div className={`bg-light p-3 border border-secondary`} key={index}>
-                    <p onClick={() => router.push(`/user/ViewProfile?userId=${searchResult.id}`)} className="cursor-pointer text-dark m-0 text">{searchResult?.first_name} {searchResult?.last_name} | {searchResult?.group_name} | {searchResult?.company_name} <span style={{ 'float': 'right' }}><i className="fa-solid fa-magnifying-glass" /></span></p>
+                    {/* <p onClick={() => router.push(`/user/ViewProfile?userId=${searchResult.id}`)} className="cursor-pointer text-dark m-0 text">{searchResult?.first_name} {searchResult?.last_name} | {searchResult?.group_name} | {searchResult?.company_name} <span style={{ 'float': 'right' }}><i className="fa-solid fa-magnifying-glass" /></span></p> */}
+
+                    <p onClick={() => router.push(`/user/ViewProfile/?name=${searchResult.slug}`)} className="cursor-pointer text-dark m-0">{searchResult?.first_name} {searchResult?.last_name} | {searchResult?.group_name} | {searchResult?.company_name} <span style={{ 'float': 'right' }}><i className="fa-solid fa-magnifying-glass" /></span></p>
 
                   </div>
                 </>
@@ -186,69 +186,36 @@ export default function Search() {
         <div className="container FrontendTest">
           <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
             <li className="nav-item" role="presentation">
-              <button
-                className="nav-link active"
-                id="pills-home-tab"
-                data-bs-toggle="pill"
-                data-bs-target="#pills-home"
-                type="button"
-                role="tab"
-                aria-controls="pills-home"
-                aria-selected="true">
+              <button className="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">
                 Most recent
               </button>
             </li>
             <li className="nav-item" role="presentation">
-              <button
-                className="nav-link"
-                id="pills-profile-tab"
-                data-bs-toggle="pill"
-                data-bs-target="#pills-profile"
-                type="button"
-                role="tab"
-                aria-controls="pills-profile"
-                aria-selected="false">
+              <button className="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">
                 Most liked
               </button>
             </li>
             <li className="nav-item" role="presentation">
-              <button
-                className="nav-link"
-                id="pills-contact-tab"
-                data-bs-toggle="pill"
-                data-bs-target="#pills-contact"
-                type="button"
-                role="tab"
-                aria-controls="pills-contact"
-                aria-selected="false"
-              >
+              <button className="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">
                 By firm
               </button>
             </li>
             <li className="nav-item" role="presentation">
-              <button
-                className="nav-link"
-                id="pills-contact-tab2"
-                data-bs-toggle="pill"
-                data-bs-target="#pills-contact2"
-                type="button"
-                role="tab"
-                aria-controls="pills-contact2"
-                aria-selected="false">
+              <button className="nav-link" id="pills-contact-tab2" data-bs-toggle="pill" data-bs-target="#pills-contact2" type="button" role="tab" aria-controls="pills-contact2" aria-selected="false">
                 By Bungee score
               </button>
             </li>
           </ul>
           <div className="tab-content" id="pills-tabContent">
-            <div
-              className="tab-pane fade show active"
-              id="pills-home"
-              role="tabpanel"
+            <div className="tab-pane fade show active" id="pills-home" role="tabpanel"
               aria-labelledby="pills-home-tab">
               {Array.isArray(results) && results.length > 0 ? (
                 results.map((result) => (
+                  // eslint-disable-next-line react/jsx-key
                   <div className="main_box mt-4">
+                     <Link href={`/user/ViewProfile/?name=${result.slug}`}>
                     <div className="row">
+                   
                       <div className="col-sm-8 col-7">
                         <h4>
                           {result?.first_name} {result?.last_name}
@@ -258,6 +225,7 @@ export default function Search() {
                           {result.position_title}
                         </h4>
                       </div>
+                      
                       <div className="col-sm-4  col-5 text-right ">
                         <h6 className="date-time">
                           {isValid(parseISO(result.created_at))
@@ -281,11 +249,12 @@ export default function Search() {
                         </p>
                       </div>
                     </div>
+                    </Link>
                     <p>{result.description}</p>
                     <div className="row">
                       <div className="col-6">
                         <div className="row">
-                          <div className="col-lg-2 col-md-3 col-5 ">
+                          <div className="col-lg-4 col-md-3 col-5 ">
                             <h4 className="overall-rating">Overall rating:</h4>
                           </div>
                           <div className="col-lg-3 col-md-4 col-6 ">
@@ -344,7 +313,9 @@ export default function Search() {
             >
               {Array.isArray(likeds) && likeds.length > 0 ? (
                 likeds.map((liked) => (
+                  // eslint-disable-next-line react/jsx-key
                   <div className="main_box mt-4">
+                      <Link href={`/user/ViewProfile/?name=${liked.slug}`}>
                     <div className="row">
                       <div className="col-sm-8 col-7">
                         <h4>
@@ -373,11 +344,12 @@ export default function Search() {
                         </p>
                       </div>
                     </div>
+                    </Link>
                     <p>{liked.description}</p>
                     <div className="row">
                       <div className="col-6">
                         <div className="row">
-                          <div className="col-lg-2 col-md-3 col-5 ">
+                          <div className="col-lg-4 col-md-3 col-5 ">
                             <h4 className="overall-rating">Overall rating:</h4>
                           </div>
                           <div className="col-lg-3 col-md-4 col-6 ">
@@ -407,15 +379,12 @@ export default function Search() {
                 <h1>No Latest Review found</h1>
               )}
             </div>
-            <div
-              className="tab-pane fade"
-              id="pills-contact"
-              role="tabpanel"
-              aria-labelledby="pills-contact-tab"
-            >
+            <div className="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
               {Array.isArray(results) && results.length > 0 ? (
                 results.map((result) => (
+                  // eslint-disable-next-line react/jsx-key
                   <div className="main_box mt-4">
+                    <Link href={`/user/ViewProfile/?name=${result.slug}`}>
                     <div className="row">
                       <div className="col-sm-8 col-7">
                         <h4>
@@ -449,11 +418,12 @@ export default function Search() {
                         </p>
                       </div>
                     </div>
+                    </Link>
                     <p>{result.description}</p>
                     <div className="row">
                       <div className="col-6">
                         <div className="row">
-                          <div className="col-lg-2 col-md-3 col-5 ">
+                          <div className="col-lg-4 col-md-3 col-5 ">
                             <h4 className="overall-rating">Overall rating:</h4>
                           </div>
                           <div className="col-lg-3 col-md-4 col-6 ">
@@ -466,30 +436,18 @@ export default function Search() {
                       <div className="col-6">
                         <div className="row">
                           <div className="col-lg-8 col-md-6 col-2" />
-                          {/* <div className="col-lg-2 col-md-3 col-5">
-              <p className="thum thum-up"><i className="fa-solid fa-thumbs-up" /> 14</p>
-            </div>
-            <div className="col-lg-2 col-md-3 col-5">
-              <p className="thum thum-down"> <i className="fa-solid fa-thumbs-down" /> 2</p>
-            </div> */}
                           <div className="col-lg-2 col-md-3 col-5">
                             <p
-                              className="thum thum-up"
-                              onClick={(e) =>
-                                handleLike(e, 1, result.review_id)
-                              }
-                            >
+                              className="thum thum-up" onClick={(e) =>
+                                handleLike(e, 1, result.review_id)}>
                               <i className="fa-solid fa-thumbs-up" />
                               {result.thumbs_up}{" "}
                             </p>
                           </div>
                           <div className="col-lg-2 col-md-3 col-5">
-                            <p
-                              className="thum thum-down"
+                            <p className="thum thum-down"
                               onClick={(e) =>
-                                handleLike(e, 0, result.review_id)
-                              }
-                            >
+                                handleLike(e, 0, result.review_id)}>
                               {" "}
                               <i className="fa-solid fa-thumbs-down" />{" "}
                               {result.thumbs_down}
@@ -512,7 +470,9 @@ export default function Search() {
             >
               {Array.isArray(score) && score.length > 0 ? (
                 score.map((result) => (
+                  // eslint-disable-next-line react/jsx-key
                   <div className="main_box mt-4">
+                  <Link href={`/user/ViewProfile/?name=${result.slug}`}>
                     <div className="row">
                       <div className="col-sm-8 col-7">
                         <h4>
@@ -546,11 +506,12 @@ export default function Search() {
                         </p>
                       </div>
                     </div>
+                    </Link>
                     <p>{result.description}</p>
                     <div className="row">
                       <div className="col-6">
                         <div className="row">
-                          <div className="col-lg-2 col-md-3 col-5 ">
+                          <div className="col-lg-4 col-md-3 col-5 ">
                             <h4 className="overall-rating">Overall rating:</h4>
                           </div>
                           <div className="col-lg-3 col-md-4 col-6 ">

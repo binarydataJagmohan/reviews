@@ -167,7 +167,7 @@ p.account {
     font-size: 14px;
 }
 .section-sp{
-    padding: 50px 0;
+    padding: 70px 0;
 }
 .about-section h1 {
     color: #0b38f5;
@@ -247,6 +247,7 @@ hr {
 .main_box p.rating {
     font-size: 30px;
     font-weight: 600;
+    margin-left: -29px;
 }
 .main_box p.rating span {
     color: #0b38f5;
@@ -323,6 +324,7 @@ hr {
     background-image: url(../images/banner.jpg);
     background-size: cover;
     background-repeat: no-repeat;
+    background-position: center;
 }
 .search-part p {
     color: #fff;
@@ -788,7 +790,15 @@ a#topjs {
 .subinput {
     width: 70%;
     margin: 0 auto;
+    /* height: 174px; */
+    /* overflow-y: scroll; */
 }
+/* width */
+/* .subinput::-webkit-scrollbar {
+    width: 10px;
+    background-color: transparent
+  } */
+  
 
                         
 /* p.tip-text {
@@ -888,7 +898,7 @@ h1.title.Meter {
     position: relative;
 }
 
-.bar-wrap::before {
+/* .bar-wrap::before {
     content: '';
     position: absolute;
     border-width: 3px solid #000;
@@ -898,8 +908,8 @@ h1.title.Meter {
     top: 70%;
     left: 43%;
     transform: rotate(315deg);
-}
-.bar-wrap::after {
+} */
+/* .bar-wrap::after {
     position: absolute;
     content: '';
     width: 13px;
@@ -908,14 +918,14 @@ h1.title.Meter {
     height: 100%;
     background: white;
     border: 2px solid;
-}
+} */
 .i-tool-tip {
     width: 30px;
     height: 30px;
     border-radius: 30px;
     background: #000;
     position: absolute;
-    top: 19%;
+    top: 10%;
     right: 10%;
     display: flex;
     justify-content: center;
@@ -942,9 +952,8 @@ i.fa-solid.fa-user-pen.setpen {
   }
   
   .bg-light:hover p {
-    color: white;
-  }
-  
+    color: white !important;
+}
 
 .bg-primary:hover {
     background-color: #000 !important;

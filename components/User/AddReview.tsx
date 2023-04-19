@@ -13,9 +13,12 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 
 export default function AddReview() {
   const router = useRouter();
-  const { userId } = router.query;
+  const { slug } = router.query;
+
   const [description, setDescription] = useState('')
   const [loading, setLoading] = useState(false);
+  const [userId, setuserId] = useState("");
+
   const [initialName, setInitialName] = useState('');
 
   const [user, SetUserData] = useState({
@@ -28,11 +31,12 @@ export default function AddReview() {
   });
 
   useEffect(() => {
-    if (!userId) return;
-    getUserProfileData(userId)
+    if (!slug) return;
+    getUserProfileData(slug)
       .then((res) => {
         if (res.status) {
           SetUserData(res.data);
+          setuserId(res.data.id);
         } else {
           toast.error(res.message, {
             position: toast.POSITION.TOP_RIGHT,
@@ -44,16 +48,18 @@ export default function AddReview() {
           position: toast.POSITION.BOTTOM_RIGHT,
         });
       });
-  }, [userId])
+  }, [slug])
+
 
   const { first_name, last_name } = user;
   const getInitials = () => {
     if (!first_name || !last_name) return '';
     return `${first_name.charAt(0).toUpperCase()}${last_name.charAt(0).toUpperCase()}`;
   };
+
   const onSubmit = async () => {
     const current_user_data = getCurrentUserData();
-    console.log(current_user_data.id);
+    console.log(current_user_data);
 
     if (!current_user_data) return;
     const body = {
@@ -63,7 +69,10 @@ export default function AddReview() {
       total_rating: user.rating,
       //avg_rating: 3
     }
+    console.log(body);
     submitReview(body).then((res) => {
+
+
       if (res.status) {
         //alert(res.message);
         toast.success(res.message, {
@@ -104,7 +113,7 @@ export default function AddReview() {
       star.style.color = index < num ? starColor : "gray";
     });
   };
-  
+
   const handleStarClick = (num) => {
     SetUserData((prevState) => {
       return {
@@ -171,8 +180,6 @@ export default function AddReview() {
                       ))}
                     </p>
                   </div>
-
-
                   <div className="col-2" />
                   <div className="col-2">
                     <p className="overall" style={{ color: "#fff" }}>Overall rating:</p>
@@ -196,7 +203,6 @@ export default function AddReview() {
                 </div>
               </div>
             </div>
-
             <div className="row below">
               <div className="col-lg-6 col-md-6  "><label>Please provide your feedback below</label></div>
               <div className="col-sm-12">
