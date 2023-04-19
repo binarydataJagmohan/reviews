@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { getUserProfileData, LikeReview } from "../../lib/backendapi";
+import { getUserProfileDatabyid, LikeReview } from "../../lib/backendapi";
 import { removeToken, removeStorageData, getCurrentUserData, } from "../../lib/session";
 import { parseISO, format } from 'date-fns';
 import { useRouter } from "next/router";
@@ -33,7 +33,7 @@ export default function SingleProfile() {
 
     useEffect(() => {
         if (!userId) return;
-        getUserProfileData(userId)
+        getUserProfileDatabyid(userId)
             .then((res) => {
                 if (res.status === true) {
                     const firstName = res.data.first_name;
@@ -44,7 +44,7 @@ export default function SingleProfile() {
                     setInitialName(`${firstName.charAt(0).toUpperCase()}${lastName.charAt(0).toUpperCase()}`);
                 }
             })
-    }, []);
+    }, [userId]);
 
     function handleLogout(e: any) {
         e.preventDefault();
@@ -80,8 +80,9 @@ export default function SingleProfile() {
             </section>
             <section className="my-reviews section-sp">
                 <div className="container">
-                    <h1>My reviews</h1>
+                    <h1>User Reviews</h1>
                     {reviews.map((review) => (
+                        // eslint-disable-next-line react/jsx-key
                         <div className="main_box mt-4">
                             <div className="row">
                                 <div className="col-sm-8 col-7">
@@ -148,7 +149,7 @@ export default function SingleProfile() {
                             <div className="row">
                                 <div className="col-6">
                                     <div className="row">
-                                        <div className="col-lg-2 col-md-3 col-5 ">
+                                        <div className="col-lg-4 col-md-3 col-5 ">
                                             <h4 className="overall-rating">Overall rating:</h4>
                                         </div>
                                         <div className="col-lg-3 col-md-4 col-6 ">
@@ -162,12 +163,12 @@ export default function SingleProfile() {
                                     <div className="row">
                                         <div className="col-lg-8 col-md-6 col-2" />
                                         <div className="col-lg-2 col-md-3 col-5">
-                                            <p className="thum thum-up" onClick={e => handleLike(e, 1, review.id)}>
+                                            <p className="thum thum-up">
                                                 <i className="fa-solid fa-thumbs-up" /> {review.thumbs_up}
                                             </p>
                                         </div>
                                         <div className="col-lg-2 col-md-3 col-5">
-                                            <p className="thum thum-down" onClick={e => handleLike(e, 0, review.id)}>
+                                            <p className="thum thum-down">
                                                 {" "}
                                                 <i className="fa-solid fa-thumbs-down" /> {review.thumbs_down}
                                             </p>

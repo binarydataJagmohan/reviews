@@ -42,6 +42,7 @@ export default function AddReview() {
                                             <tbody>
                                            
                                                 {allusers.map((data) => (
+                                                    // eslint-disable-next-line react/jsx-key
                                                     <tr>
                                                         <td> {data.first_name} {data.last_name}</td>
                                                         <td> {data.email}</td>

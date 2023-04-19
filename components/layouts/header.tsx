@@ -71,11 +71,11 @@ export default function Header() {
                   <Link className="nav-link" href="/About">About Bungee</Link>
                 </li>
 
-                {/* {isAuthenticated && user_type == 'admin' ? 
+                {isAuthenticated && user_type == 'admin' ? 
                 <li className="nav-item">
                 <a className="nav-link active" aria-current="page" href="/admin/all-users">All Users</a>
                 </li>
-                : ''} */}
+                : ''}
 
                
                   {isAuthenticated ?   <li className="nav-item">
