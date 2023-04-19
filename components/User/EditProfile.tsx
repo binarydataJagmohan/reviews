@@ -4,7 +4,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { removeToken, removeStorageData, getCurrentUserData, } from "../../lib/session";
-import { saveAdminProfileData, getUserProfileData, LikeReview, deleteReviews, EditProfileData,getEditdata } from "../../lib/backendapi";
+import { saveAdminProfileData, getUserProfileData, LikeReview, deleteReviews, EditProfileData, getEditdata } from "../../lib/backendapi";
 
 export default function EditProfile() {
   const current_user_data = getCurrentUserData();
@@ -12,9 +12,12 @@ export default function EditProfile() {
   const [reviews, setreviews] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [additionalData, setadditionalData] = useState([]);
+  const [editData, seteditData] = useState([]);
+  const [showPassword, setShowPassword] = useState(false);
+  const [shownPassword, setShownPassword] = useState(false);
   const [styled, setstyled] = useState({
-    'color':'',
-    'background':''
+    'color': '',
+    'background': ''
   })
 
   const [user, SetUserData] = useState({
@@ -61,7 +64,6 @@ export default function EditProfile() {
           if (res.status === true) {
             SetUserData(res.data);
             setreviews(res.reviews);
-            // setreviews(res.reviews1);
             console.log(res.reviews);
           } else {
             toast.error(res.message, {
@@ -81,11 +83,12 @@ export default function EditProfile() {
 
   useEffect(() => {
     const user_id = localStorage.getItem('id');
-    const res = getEditdata(user_id).then((res)=>{
+    const res = getEditdata(user_id).then((res) => {
       setadditionalData(res.data);
       console.log(res);
     });
   }, []);
+  
 
   const handleDelete = (e, id) => {
     e.preventDefault();
@@ -132,7 +135,7 @@ export default function EditProfile() {
       toast.success(res.message, {
         position: toast.POSITION.TOP_RIGHT,
       });
-      window.location.href = "/user/MyAccount";
+      window.location.href = "/user/EditProfile";
     } catch (err) {
       toast.error("Error occurred", {
         position: toast.POSITION.BOTTOM_RIGHT,
@@ -153,6 +156,13 @@ export default function EditProfile() {
     const current_user_data = getCurrentUserData();
     console.log(current_user_data.id);
     if (!current_user_data) return;
+    if (user.set_name && user.set_name.length > 2) {
+      toast.error("Name should be only two letters.", {
+        position: toast.POSITION.BOTTOM_RIGHT,
+        autoClose: 5000 // set duration to 5 seconds
+      });
+      return;
+    }
     const body = {
       user_id: current_user_data.id,
       set_name: user.set_name, // add the set_name field
@@ -171,6 +181,12 @@ export default function EditProfile() {
       });
     }
   };
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  }
+  const PasswordVisibility = () => {
+    setShownPassword(!shownPassword);
+  }
 
   return (
     <>
@@ -189,7 +205,7 @@ export default function EditProfile() {
             <div className="row">
               <div className="col-sm-6">
                 <div className="user-pro">
-                  <a href="#" style={{'color':additionalData.font_color,'background':additionalData.background_color}} className="btn btn-all header-btn add-image-btn">
+                  <a href="#" style={{ 'color': additionalData.font_color, 'background': additionalData.background_color }} className="btn btn-all header-btn add-image-btn">
                     {/* <img
                       src="/assets/images/user.png"
                       alt="user"
@@ -198,7 +214,7 @@ export default function EditProfile() {
                     {additionalData.set_name != null || "" ? additionalData.set_name : initialName}
                   </a>
                   <i data-bs-toggle="modal"
-                    data-bs-target="#EditModal" style={{ 'cursor': 'pointer' }} className="fa-solid fa-user-pen" />
+                    data-bs-target="#EditModal" style={{ 'cursor': 'pointer' }} className="fa-solid fa-user-pen setpen" />
                 </div>
               </div>
               <div className="col-sm-6 text-right"></div>
@@ -224,17 +240,13 @@ export default function EditProfile() {
                   <input type="text" value={user.email} readOnly />
                   <div className="show-fild">
                     <label>Change Password</label>
-                    <input type="password" value={user.view_password} readOnly />
-                    <p className="show">
-                      <a href="#">Show</a>
-                    </p>
+                    <input type={showPassword ? "text" : "password"} value={user.view_password} readOnly />
+                    <p className="show" onClick={togglePasswordVisibility}><a href="javascript:void(0)">Show</a></p>
                   </div>
                   <div className="show-fild">
                     <label>Confirm New Password</label>
-                    <input type="password" value={user.view_password} readOnly />
-                    <p className="show">
-                      <a href="#">Show</a>
-                    </p>
+                    <input type={shownPassword ? "text" : "password"} value={user.view_password} readOnly />
+                    <p className="show"  onClick={PasswordVisibility}><a href="javascript:void(0)">Show</a></p>
                   </div>
                 </div>
               </div>
@@ -365,30 +377,55 @@ export default function EditProfile() {
             <h1>No reviews yet</h1>
           </div>
         </section>)}
-      <div className="modal fade" id="EditModal" tabIndex={-1} role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+
+      {/* Modal */}
+      
+      <div
+        className="modal fade"
+        id="EditModal"
+        tabIndex={-1}
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h4 className="modal-title" id="modalLabel2">Update Your profile</h4>
+              <h5 className="modal-title" id="exampleModalLabel">
+                {" Update your Profile"}
+              </h5>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              />
             </div>
             <div className="modal-body">
+              {/* <h3>Are you sure you want to delete this review?</h3> */}
               <form onSubmit={handleEdit}>
-                <div className="form-group">
-                  <label>User Name</label>
-                  <input type="text" name="set_name" onChange={EditChange} className="form-control" placeholder="Username" />
-                </div>
-                <div className="form-group">
-                  <label>font color</label>
-                  <input type="color" name="font_color" onChange={EditChange} className="form-control" />
-                </div>
-                <div className="form-group">
-                  <label>background color</label>
-                  <input type="color" name="background_color" onChange={EditChange} className="form-control" />
-                </div>
-                <div className="center">
-                  <button type="submit">update</button>
-                </div>
-              </form>
+  <div className="form-group">
+    <label>Edit Intial Letters</label>
+    <input type="text" name="set_name" onChange={EditChange} className="form-control" placeholder="" />
+  </div>
+  <div className="row">
+    <div className="col-md-6">
+      <div className="form-group mt-3">
+        <label>Font color</label>
+        <input type="color" name="font_color" onChange={EditChange} className="form-control set-size" />
+      </div>
+    </div>
+    <div className="col-md-6">
+      <div className="form-group mt-3">
+        <label>Background color</label>
+        <input type="color" name="background_color" onChange={EditChange} className="form-control set-size" />
+      </div>
+    </div>
+  </div>
+  <div className="center mt-3 text-center">
+    <button type="submit" className="btn edit-btn Save changes">Update</button>
+  </div>
+</form>
+
             </div>
           </div>
         </div>

@@ -190,7 +190,7 @@ hr {
     margin: 30px 0;
 }
 .edit-btn {
-    background: #000;
+    background: blue;
     color: #fff;
     border: none;
     padding: 15px 20px;
@@ -203,7 +203,7 @@ hr {
 }
 .profile-part {
     background: #0b38f5;
-    padding: 3% 0;
+    padding: 6% 0;
     position: relative;
 }
 .profile-part h2 {
@@ -780,7 +780,7 @@ a#topjs {
     a.btn.btn-all.header-btn.add-image-btn {
         width: 70px;
         height: 70px;
-        top: -5%;
+        top: -15%;
         font-size: 20px;
     }
     
@@ -803,3 +803,155 @@ span.tool-text {
     color: #fff;
 } */
 
+/* i.fa-solid.fa-user-pen {
+    font-size: 30px;
+    padding-left: 100px;
+} */
+
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans&family=Montserrat:wght@600&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  /* font-size: 62.5%; */
+  --bar-color: #38b000;
+  --body-color: #222;
+  --text-color: white;
+  --bar-wrap-back-color: white;
+}
+
+
+.status-info {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.bar-wrap {
+  padding: 6px;
+  border-radius: 100px;
+  background-color: var(--bar-wrap-back-color);
+}
+
+.bar {
+  width: 0%;
+  height: 15px;
+  transition: width .15s ease-out;
+  border-radius: 100px;
+  box-shadow: inset -1px -1px 10px rgb(0 0 0 / .5);
+
+background: #f4d730; /* Old browsers */
+background: -moz-linear-gradient(left,  #f4d730 22%, #21b243 50%, #4d8e58 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(left,  #f4d730 22%,#21b243 50%,#4d8e58 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to right,  #f4d730 22%,#21b243 50%,#4d8e58 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4d730', endColorstr='#4d8e58',GradientType=1 ); /* IE6-9 */
+
+}
+
+.percentage {
+    align-self: center;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    color: var(--text-color);
+    font-weight: 600;
+    margin-top: 20px;
+}
+
+.line {
+  margin: 0;
+  font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+  color: var(--text-color);
+}
+
+.number {
+  margin-left: 8px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(1.8rem, 3vw, 2.2rem);
+}
+
+.btn-wrap {
+  align-self: center;
+}
+h1.title.Meter {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.width-same{
+    margin: 0px 10px;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 600;
+}
+.bar-wrap{
+    position: relative;
+}
+
+.bar-wrap::before {
+    content: '';
+    position: absolute;
+    border-width: 3px solid #000;
+    border-top: 25px solid transparent;
+    border-bottom: 3px solid transparent;
+    border-left: 25px solid white;
+    top: 70%;
+    left: 43%;
+    transform: rotate(315deg);
+}
+.bar-wrap::after {
+    position: absolute;
+    content: '';
+    width: 13px;
+    top: 0;
+    left: 45%;
+    height: 100%;
+    background: white;
+    border: 2px solid;
+}
+.i-tool-tip {
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
+    background: #000;
+    position: absolute;
+    top: 19%;
+    right: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-size: 20px;
+}
+
+
+i.fa-solid.fa-user-pen.setpen {
+    position: absolute;
+    top: 40px;
+    left: 16%;
+}
+.bg-light {
+    cursor: pointer;
+}
+.bg-primary.p-3.border.border-dark.set-cur {
+    cursor: pointer;
+}
+
+.bg-light:hover {
+    background-color: #0d6efd !important;
+  }
+  
+  .bg-light:hover p {
+    color: white;
+  }
+  
+
+.bg-primary:hover {
+    background-color: #000 !important;
+}
+a.edit-btn.Save.changes.chng {
+    color: #fff;
+}
+a.edit-btn.chng {
+    color: #fff;
+}

@@ -104,6 +104,7 @@ export default function AddReview() {
       star.style.color = index < num ? starColor : "gray";
     });
   };
+  
   const handleStarClick = (num) => {
     SetUserData((prevState) => {
       return {

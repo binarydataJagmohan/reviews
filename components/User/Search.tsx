@@ -4,7 +4,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { removeToken, removeStorageData, getCurrentUserData, } from "../../lib/session";
-import { getSearchedResults, getLatestReviews, mostLikedReviews, LikeReview, } from "../../lib/backendapi";
+import { getSearchedResults, getLatestReviews, mostLikedReviews, LikeReview, getbunjeeScore } from "../../lib/backendapi";
 import { useRouter } from "next/router";
 import { format, parseISO, isValid } from "date-fns";
 import ReactTooltip from 'react-tooltip';
@@ -23,6 +23,7 @@ export default function Search() {
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [results, setResults] = useState([]);
+  const [score, setScore] = useState([]);
   const [likeds, setLiked] = useState([]);
 
   const handleLike = (e, like, id) => {
@@ -74,6 +75,14 @@ export default function Search() {
 
   useEffect(() => {
     getUserData();
+  }, []);
+
+  useEffect(() => {
+    // const user_id = localStorage.getItem('id');
+    const res = getbunjeeScore().then((res) => {
+      setScore(res.data);
+      console.log(res);
+    });
   }, []);
 
   const getUserData = async () => {
@@ -154,7 +163,8 @@ export default function Search() {
               searchResults.map((searchResult: any, index) => (
                 <>
                   <div className={`bg-light p-3 border border-secondary`} key={index}>
-                    <p onClick={() => router.push(`/user/ViewProfile?userId=${searchResult.id}`)} className="cursor-pointer text-dark m-0">{searchResult?.first_name} {searchResult?.last_name} | {searchResult?.group_name} | {searchResult?.company_name} <span style={{ 'float': 'right' }}><i className="fa-solid fa-magnifying-glass" /></span></p>
+                    <p onClick={() => router.push(`/user/ViewProfile?userId=${searchResult.id}`)} className="cursor-pointer text-dark m-0 text">{searchResult?.first_name} {searchResult?.last_name} | {searchResult?.group_name} | {searchResult?.company_name} <span style={{ 'float': 'right' }}><i className="fa-solid fa-magnifying-glass" /></span></p>
+
                   </div>
                 </>
               ))
@@ -162,7 +172,7 @@ export default function Search() {
               ""
             )}
             {showLine === true ?
-              <div className={`bg-primary p-3 border border-dark`}>
+              <div className={`bg-primary p-3 border border-dark set-cur`}>
                 <p onClick={() => router.push(`/user/NewUserReview`)} className="cursor-pointer m-0 text-center fw-bold">Don’t see who you’re looking for? Add a new review<span style={{ 'float': 'right' }}><i className="fa-solid fa-plus" /></span></p>
               </div>
               :
@@ -256,18 +266,18 @@ export default function Search() {
                               "M/d/yy HH:mm "
                             ) + "ET"
                             : "Invalid date"}
-                          <span> #{result.id}</span>{" "}
+                          <span> #{result.bunjee_score}</span>{" "}
                         </h6>
                         <p>
-                        <Tippy content={
-                          <div style={{background:'black',padding: '15px',textAlign:'center',borderRadius:'5px'}}>
-                        <span style={{ color: 'white',height: '90px',fontSize:'12px' }}>
-                        This number represents the Bungee score of the author at the time of writing the review
-                        </span></div>}>
-                        <a href="#" className="what">
-                        What’s this?
-                        </a>
-                        </Tippy>
+                          <Tippy content={
+                            <div style={{ background: 'black', padding: '15px', textAlign: 'center', borderRadius: '5px' }}>
+                              <span style={{ color: 'white', height: '90px', fontSize: '12px' }}>
+                                This number represents the Bungee score of the author at the time of writing the review
+                              </span></div>}>
+                            <a href="#" className="what">
+                              What’s this?
+                            </a>
+                          </Tippy>
                         </p>
                       </div>
                     </div>
@@ -348,12 +358,18 @@ export default function Search() {
                       <div className="col-sm-4  col-5 text-right ">
                         <h6 className="date-time">
                           {liked.created_at}
-                          <span> #{liked.id}</span>{" "}
+                          <span> #{liked.bunjee_score}</span>{" "}
                         </h6>
                         <p>
-                          <a href="#" className="what">
-                            What’s this?
-                          </a>
+                          <Tippy content={
+                            <div style={{ background: 'black', padding: '15px', textAlign: 'center', borderRadius: '5px' }}>
+                              <span style={{ color: 'white', height: '90px', fontSize: '12px' }}>
+                                This number represents the Bungee score of the author at the time of writing the review
+                              </span></div>}>
+                            <a href="#" className="what">
+                              What’s this?
+                            </a>
+                          </Tippy>
                         </p>
                       </div>
                     </div>
@@ -418,12 +434,18 @@ export default function Search() {
                               "M/d/yy HH:mm "
                             ) + "ET"
                             : "Invalid date"}
-                          <span> #{result.id}</span>{" "}
+                          <span> #{result.bunjee_score}</span>{" "}
                         </h6>
                         <p>
-                          <a href="#" className="what">
-                            What’s this?
-                          </a>
+                          <Tippy content={
+                            <div style={{ background: 'black', padding: '15px', textAlign: 'center', borderRadius: '5px' }}>
+                              <span style={{ color: 'white', height: '90px', fontSize: '12px' }}>
+                                This number represents the Bungee score of the author at the time of writing the review
+                              </span></div>}>
+                            <a href="#" className="what">
+                              What’s this?
+                            </a>
+                          </Tippy>
                         </p>
                       </div>
                     </div>
@@ -488,7 +510,96 @@ export default function Search() {
               role="tabpanel"
               aria-labelledby="pills-contact-tab2"
             >
-              4
+              {Array.isArray(score) && score.length > 0 ? (
+                score.map((result) => (
+                  <div className="main_box mt-4">
+                    <div className="row">
+                      <div className="col-sm-8 col-7">
+                        <h4>
+                          {result?.first_name} {result?.last_name}
+                        </h4>
+                        <h4>
+                          {result.group_name} | {result.company_name} |{" "}
+                          {result.position_title}
+                        </h4>
+                      </div>
+                      <div className="col-sm-4  col-5 text-right ">
+                        <h6 className="date-time">
+                          {isValid(parseISO(result.created_at))
+                            ? format(
+                              parseISO(result.created_at),
+                              "M/d/yy HH:mm "
+                            ) + "ET"
+                            : "Invalid date"}
+                          <span> #{result.bunjee_score}</span>{" "}
+                        </h6>
+                        <p>
+                          <Tippy content={
+                            <div style={{ background: 'black', padding: '15px', textAlign: 'center', borderRadius: '5px' }}>
+                              <span style={{ color: 'white', height: '90px', fontSize: '12px' }}>
+                                This number represents the Bungee score of the author at the time of writing the review
+                              </span></div>}>
+                            <a href="#" className="what">
+                              What’s this?
+                            </a>
+                          </Tippy>
+                        </p>
+                      </div>
+                    </div>
+                    <p>{result.description}</p>
+                    <div className="row">
+                      <div className="col-6">
+                        <div className="row">
+                          <div className="col-lg-2 col-md-3 col-5 ">
+                            <h4 className="overall-rating">Overall rating:</h4>
+                          </div>
+                          <div className="col-lg-3 col-md-4 col-6 ">
+                            <p className="rating">
+                              <span>{result.avg_rating}</span>/5
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-6">
+                        <div className="row">
+                          <div className="col-lg-8 col-md-6 col-2" />
+                          {/* <div className="col-lg-2 col-md-3 col-5">
+              <p className="thum thum-up"><i className="fa-solid fa-thumbs-up" /> 14</p>
+            </div>
+            <div className="col-lg-2 col-md-3 col-5">
+              <p className="thum thum-down"> <i className="fa-solid fa-thumbs-down" /> 2</p>
+            </div> */}
+                          <div className="col-lg-2 col-md-3 col-5">
+                            <p
+                              className="thum thum-up"
+                              onClick={(e) =>
+                                handleLike(e, 1, result.review_id)
+                              }
+                            >
+                              <i className="fa-solid fa-thumbs-up" />
+                              {result.thumbs_up}{" "}
+                            </p>
+                          </div>
+                          <div className="col-lg-2 col-md-3 col-5">
+                            <p
+                              className="thum thum-down"
+                              onClick={(e) =>
+                                handleLike(e, 0, result.review_id)
+                              }
+                            >
+                              {" "}
+                              <i className="fa-solid fa-thumbs-down" />{" "}
+                              {result.thumbs_down}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <h1>No Latest Review found</h1>
+              )}
             </div>
           </div>
         </div>

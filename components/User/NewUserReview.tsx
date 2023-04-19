@@ -40,26 +40,35 @@ export default function NewUserReview()
 
   const handleSubmit = async (e, userId) => {
     e.preventDefault();
-    
+  
     const current_user_data = getCurrentUserData();
     user.review_by = current_user_data?.id;
     if (!current_user_data) return;
 
-    if (Object.values(user).some(value => value === '')) {
-      setErrorMessage('Please fill in all fields.');
-      toast.error('Please fill in all fields.', {
+  if (user.first_name === '') {
+    toast.error('Please enter your name.', {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+    return};
+    if (user.last_name === '') {
+      toast.error('Please enter your last name.', {
         position: toast.POSITION.TOP_RIGHT,
       });
-      return;
-    }
+      return};
+      if (user.description === '') {
+        toast.error('Please enter your description.', {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        return};
+  
     const body = {
       review_by: current_user_data?.id,
       review_to: userId,
     }
-
+  
     newuserreview(user)
-	    .then(res => {
-	    	if(res.status==true){
+      .then(res => {
+        if (res.status == true) {
           console.log(res.data);
           toast.success(res.message, {
             position: toast.POSITION.TOP_RIGHT,
@@ -67,8 +76,8 @@ export default function NewUserReview()
           router.push('/user/search');
           //alert('Review Submitted');
           //window.location.href = '/user/search';
-		    } else {
-		    	let errors = res.errors;
+        } else {
+          let errors = res.errors;
           let errorMessage = "";
           for (let error in errors) {
             errorMessage += errors[error];
@@ -76,12 +85,13 @@ export default function NewUserReview()
           toast.error(errorMessage, {
             position: toast.POSITION.TOP_RIGHT,
           });
-		      }
-	    })
-	    .catch(err => {
-	        console.log(err);
-	    });
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
+    
 
   const handleStarClick = (num) => {
     setuser((prevState) => {

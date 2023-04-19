@@ -4,19 +4,23 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { removeToken, removeStorageData, getCurrentUserData, } from "../../lib/session";
-import { saveAdminProfileData, getLatestReviews, getUserProfileData, LikeReview } from "../../lib/backendapi";
+import { saveAdminProfileData, getLatestReviews, getUserProfileData, LikeReview, getbunjeeScore } from "../../lib/backendapi";
 import { useRouter } from "next/router";
 import { format, parseISO, isValid } from 'date-fns';
 
 export default function ViewProfile() {
   const router = useRouter();
   const { userId } = router.query;
+  const [score, setScore] = useState([]);
+
   const [user, SetUserData] = useState([
 
   ]);
   const [reviews, SetReview] = useState([]);
   const [likeds, setLiked] = useState([]);
   const [initialName, setInitialName] = useState('');
+
+
 
   useEffect(() => {
     if (!userId) return;
@@ -38,6 +42,14 @@ export default function ViewProfile() {
           position: toast.POSITION.BOTTOM_RIGHT,
         });
       });
+  }, [userId]);
+
+  useEffect(() => {
+    const user_id = localStorage.getItem('id');
+    const res = getbunjeeScore(user_id).then((res) => {
+      setScore(res.data);
+      console.log(res);
+    });
   }, []);
 
   const { first_name, last_name } = user;
@@ -46,12 +58,16 @@ export default function ViewProfile() {
     return `${first_name.charAt(0).toUpperCase()}${last_name.charAt(0).toUpperCase()}`;
   };
 
+  const highestBunjeeScore = Math.max(...reviews.map((review) => review.bunjee_score));
+  const topReviews = reviews.filter((review) => review.bunjee_score === highestBunjeeScore);
+  const remainingReviews = reviews.filter((review) => review.bunjee_score < highestBunjeeScore);
+
   return (
     <>
       <section className="edit-part section-sp">
         <div className="container">
           <div className="button-part text-right">
-            <a href={`/user/AddReview?userId=${userId}`} className="edit-btn Save changes" ><i className="fa-solid fa-user-pen" /> Add review</a>
+            <a href={`/user/AddReview?userId=${userId}`} className="edit-btn Save changes chng" ><i className="fa-solid fa-user-pen" /> Add review</a>
           </div>
         </div>
       </section>
@@ -67,25 +83,37 @@ export default function ViewProfile() {
                 <h3>{user.position_title}</h3>
               </div>
             </div>
-            {reviews.map((review) => (
-              <div className="col-sm-4 text-right">
-                <div className="rating-view text-center mt-4">
-                  <h4><span>{review.avg_rating}</span> / 5</h4>
-                  <p className="star-list">
-                    {[...Array(Math.floor(review.avg_rating))].map((_, i) => (
-                      <i key={i} className="fa-solid fa-star" />
-                    ))}
-                    {review.avg_rating % 1 !== 0 && (
-                      <i className="fa-solid fa-star-half-stroke" />
-                    )}
-                    {[...Array(Math.floor(5 - review.avg_rating))].map((_, i) => (
-                      <i key={i + Math.floor(review.avg_rating)} className="fa-regular fa-star" />
-                    ))}
-                  </p>
-                  <p>Based on {review.num_of_ratings} total reviews</p>
-                </div>
+            <div className="col-sm-4 text-right">
+              <div className="rating-view text-center mt-4">
+                {reviews && reviews.length > 0 ? (
+                  <>
+                    <h4><span>{reviews[0].avg_rating}</span> / 5</h4>
+                    <p className="star-list">
+                      {[...Array(Math.floor(reviews[0].avg_rating))].map((_, i) => (
+                        <i key={i} className="fa-solid fa-star" />
+                      ))}
+                      {reviews[0].avg_rating % 1 !== 0 && (
+                        <i className="fa-solid fa-star-half-stroke" />
+                      )}
+                      {[...Array(Math.floor(5 - reviews[0].avg_rating))].map((_, i) => (
+                        <i key={i + Math.floor(reviews[0].avg_rating)} className="fa-regular fa-star" />
+                      ))}
+                    </p>
+                    <p>Based on {reviews[0].num_of_ratings} total reviews</p>
+                  </>
+                ) : (
+                  <>
+                    <h4><span>0</span> / 5</h4>
+                    <p className="star-list">
+                      {[...Array(5)].map((_, i) => (
+                        <i key={i} className="fa-regular fa-star" />
+                      ))}
+                    </p>
+                    <p>No reviews yet</p>
+                  </>
+                )}
               </div>
-            ))}
+            </div>
           </div>
         </div>
       </section>
@@ -108,7 +136,7 @@ export default function ViewProfile() {
                 <div className="main_box mt-5">
                   <div className="row">
                     <div className="col-sm-6 col-5  ">
-                      <h6 className="date-time"><b>{isValid(parseISO(review.created_at)) ? format(parseISO(review.created_at), 'M/d/yy HH:mm ') + 'ET' : 'Invalid date'} |<span> #{review.id}</span> <a href="#" className="what">What’s this?</a></b> </h6>
+                      <h6 className="date-time"><b>{isValid(parseISO(review.created_at)) ? format(parseISO(review.created_at), 'M/d/yy HH:mm ') + 'ET' : 'Invalid date'} |<span> #{review.bunjee_score}</span> <a href="#" className="what">What’s this?</a></b> </h6>
                       <p />
                     </div>
                     <div className="col-sm-6 col-7 text-right">
@@ -148,7 +176,7 @@ export default function ViewProfile() {
                   <div className="main_box mt-5">
                     <div className="row">
                       <div className="col-sm-6 col-5  ">
-                        <h6 className="date-time"><b>{isValid(parseISO(review.created_at)) ? format(parseISO(review.created_at), 'M/d/yy HH:mm ') + 'ET' : 'Invalid date'} |<span> #{review.id}</span> <a href="#" className="what">What’s this?</a></b> </h6>
+                        <h6 className="date-time"><b>{isValid(parseISO(review.created_at)) ? format(parseISO(review.created_at), 'M/d/yy HH:mm ') + 'ET' : 'Invalid date'} |<span> #{review.bunjee_score}</span> <a href="#" className="what">What’s this?</a></b> </h6>
                         <p />
                       </div>
                       <div className="col-sm-6 col-7 text-right">
@@ -183,7 +211,82 @@ export default function ViewProfile() {
                 ))}
               </div>
             </div>
-            <div className="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">3</div>
+            <div className="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+              {topReviews.map((review) => (
+                <div className="main_box mt-5">
+                  <div className="row">
+                    <div className="col-sm-6 col-5  ">
+                      <h6 className="date-time"><b>{isValid(parseISO(review.created_at)) ? format(parseISO(review.created_at), 'M/d/yy HH:mm ') + 'ET' : 'Invalid date'} |<span> #{review.bunjee_score}</span> <a href="#" className="what">What’s this?</a></b> </h6>
+                      <p />
+                    </div>
+                    <div className="col-sm-6 col-7 text-right">
+                      <p>{review.first_name} | {review.group_name} | {review.company_name} | {review.position_title}</p>
+                    </div>
+                  </div>
+                  <p>{review.description}</p>
+                  <div className="row">
+                    <div className="col-6">
+                      <div className="row">
+                        <div className="col-lg-2 col-md-3 col-5 ">
+                          <h4 className="overall-rating">Overall rating:</h4>
+                        </div>
+                        <div className="col-lg-3 col-md-4 col-6 ">
+                          <p className="rating"><span>5</span>/5</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-6">
+                      <div className="row">
+                        <div className="col-lg-8 col-md-6 col-2" />
+                        <div className="col-lg-2 col-md-3 col-5">
+                          <p className="thum thum-up"><i className="fa-solid fa-thumbs-up" />{review.thumbs_up}</p>
+                        </div>
+                        <div className="col-lg-2 col-md-3 col-5">
+                          <p className="thum thum-down"> <i className="fa-solid fa-thumbs-down" /> {review.thumbs_down}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+              {remainingReviews.map((review) => (
+                <div className="main_box mt-5">
+                  <div className="row">
+                    <div className="col-sm-6 col-5  ">
+                      <h6 className="date-time"><b>{isValid(parseISO(review.created_at)) ? format(parseISO(review.created_at), 'M/d/yy HH:mm ') + 'ET' : 'Invalid date'} |<span> #{review.bunjee_score}</span> <a href="#" className="what">What’s this?</a></b> </h6>
+                      <p />
+                    </div>
+                    <div className="col-sm-6 col-7 text-right">
+                      <p>{review.first_name} | {review.group_name} | {review.company_name} | {review.position_title}</p>
+                    </div>
+                  </div>
+                  <p>{review.description}</p>
+                  <div className="row">
+                    <div className="col-6">
+                      <div className="row">
+                        <div className="col-lg-2 col-md-3 col-5 ">
+                          <h4 className="overall-rating">Overall rating:</h4>
+                        </div>
+                        <div className="col-lg-3 col-md-4 col-6 ">
+                          <p className="rating"><span>5</span>/5</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-6">
+                      <div className="row">
+                        <div className="col-lg-8 col-md-6 col-2" />
+                        <div className="col-lg-2 col-md-3 col-5">
+                          <p className="thum thum-up"><i className="fa-solid fa-thumbs-up" />{review.thumbs_up}</p>
+                        </div>
+                        <div className="col-lg-2 col-md-3 col-5">
+                          <p className="thum thum-down"> <i className="fa-solid fa-thumbs-down" /> {review.thumbs_down}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
             <div className="tab-pane fade" id="pills-contact2" role="tabpanel" aria-labelledby="pills-contact-tab2">4</div>
           </div>
         </div>

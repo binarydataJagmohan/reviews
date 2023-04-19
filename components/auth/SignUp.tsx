@@ -78,7 +78,7 @@ export default function SignUp()
               position: toast.POSITION.TOP_RIGHT,
             });
 
-             window.location.href = '/user/EditProfile';
+             window.location.href = '/user/MyAccount';
 
 
 		      } else {
@@ -130,7 +130,7 @@ export default function SignUp()
             </div>
             {/* <a href="#" className="btn-send">Sign up now</a> */}
             <button type="submit" className="btn-send">Sign up now</button>
-            <p className="account">Already have an account?</p>
+            <Link href="/Login"><p className="account">Already have an account?</p></Link>
             <Link href="/Login" className="btn-send black">Login now</Link>
           </form>
         </div>

@@ -52,11 +52,12 @@ export default function Login() {
             window.localStorage.setItem("last_name", res.user.last_name);
             window.localStorage.setItem("email", res.user.email);
             window.localStorage.setItem("user_type", res.user.user_type);
+            window.localStorage.setItem("set_name", res.user.set_name);
 
             if(window.localStorage.getItem("user_type") == 'admin'){
               window.location.href = '/admin/all-users';
             } else {
-              window.location.href = '/user/EditProfile';
+              window.location.href = '/user/MyAccount';
             }
             toast.success(res.message, {
               position: toast.POSITION.TOP_RIGHT,
