@@ -139,7 +139,7 @@ export default function AddReview() {
             <div className="row">
               <div className="col-sm-6">
                 <div className="user-pro">
-                  {/* <a href="#" className="edit-img"><img src="/assets/images/user.png" alt="user" className="user" /> </a> */}
+                
                   <a href="" className="btn btn-all header-btn add-image-btn">{getInitials()}</a>
                 </div>
               </div>
@@ -150,23 +150,11 @@ export default function AddReview() {
               <div className="col-sm-6">
                 <div className="form-blue">
                   <label>First Name</label>
-                  <input value={user.first_name} type="text" placeholder="First Name" readOnly />
+                  <input value={user.first_name || ''} type="text" placeholder="First Name" readOnly />
                   <label>Last Name</label>
-                  <input value={user.last_name} type="text" placeholder="Last Name" readOnly />
+                  <input value={user.last_name || ''} type="text" placeholder="Last Name" readOnly />
                 </div>
-
                 <div className="row">
-                  {/* <div className="col-6 text-left">
-               <p className="star-list blue-star" id="star-color">
-                {[1, 2, 3, 4, 5].map((num) => (
-                <i
-              key={num}
-              className={`fa${num <= user.rating ? 's' : 'r'} fa-star`}
-              onClick={() => handleStarClick(num)}
-            />
-          ))}
-        </p>
-      </div> */}
                   <div className="col-6 text-left">
                     <p className="star-list blue-star" id="star-color">
                       {[1, 2, 3, 4, 5].map((num) => (
@@ -195,11 +183,12 @@ export default function AddReview() {
               <div className="col-sm-6">
                 <div className="form-blue">
                   <label>Company Name</label>
-                  <input type="text" placeholder="Credit Suisse" value={user.group_name} readOnly />
+                  <input type="text" placeholder="Credit Suisse" value={user.group_name || ''} readOnly />
                   <label>Group Name</label>
-                  <input type="text" value={user.company_name} placeholder="IBCM Technology" readOnly />
+                  <input type="text" value={user.company_name || ''} placeholder="IBCM Technology" readOnly />
+
                   <label>Position Title</label>
-                  <input type="text" value={user.position_title} readOnly />
+                  <input type="text" value={user.position_title || ''} readOnly />
                 </div>
               </div>
             </div>

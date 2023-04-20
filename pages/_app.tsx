@@ -3,6 +3,7 @@ import type { AppProps } from 'next/app'
 import { useRouter } from "next/router";
 import Head from 'next/head';
 import FrontendLayout from '../components/layouts/layout';
+import BackendLayout from '../components/Admin/layouts/layout';
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -14,9 +15,9 @@ export default function App({ Component, pageProps }: AppProps) {
           <meta charSet="utf-8"/>
           <meta name="viewport" content="width=device-width, initial-scale=1"/>    
         </Head>
-        <FrontendLayout>
+        <BackendLayout>
         <Component {...pageProps} />
-        </FrontendLayout>
+        </BackendLayout>
       </>
     ) 
   // } else if (router.pathname.startsWith("/user")) {

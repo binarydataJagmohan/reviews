@@ -45,12 +45,12 @@ export default function ViewProfile() {
     if (!name) return;
     getUserProfileData(name)
       .then((res) => {
-        console.log(res)
+        //console.log(res)
         setslug(name)
         if (res.status === true) {
           SetUserData(res.data);
           SetReview(res.reviews);
-          console.log(reviews)
+          //console.log(reviews)
         } else {
           toast.error(res.message, {
             position: toast.POSITION.TOP_RIGHT,
@@ -68,7 +68,7 @@ export default function ViewProfile() {
     const user_id = localStorage.getItem('id');
     const res = getbunjeeScore(user_id).then((res) => {
       setScore(res.data);
-      console.log(res);
+     // console.log(res);
     });
   }, []);
 
@@ -154,9 +154,9 @@ export default function ViewProfile() {
           <div className="tab-content" id="pills-tabContent">
             <div className="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
             {reviews.length > 0 ? (
-              reviews.map((review) => (
+              reviews.map((review,index) => (
                 // eslint-disable-next-line react/jsx-key
-                <div className="main_box mt-5">
+                <div key={index} className="main_box mt-5">
                   <div className="row">
                     <div className="col-sm-6 col-5  ">
                       <h6 className="date-time"><b>{isValid(parseISO(review.created_at)) ? format(parseISO(review.created_at), 'M/d/yy HH:mm ') + 'ET' : 'Invalid date'} |<span> #{review.bunjee_score}</span> <a href="#" className="what">What’s this?</a></b> </h6>

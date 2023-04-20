@@ -31,6 +31,23 @@ export default function SingleProfile() {
         });
       }
 
+
+      
+    // useEffect(() => {
+    //     if (!userId) return;
+    //     getUserProfileDatabyid(userId)
+    //         .then((res) => {
+    //             if (res.status === true) {
+    //                 const firstName = res.data.first_name;
+    //                 const lastName = res.data.last_name;
+    //                 console.log(res.data);
+    //                 SetUserData(res.data);
+    //                 setReviews(res.reviews);
+    //                 setInitialName(`${firstName.charAt(0).toUpperCase()}${lastName.charAt(0).toUpperCase()}`);
+    //             }
+    //         })
+    // }, [userId]);
+
     useEffect(() => {
         if (!userId) return;
         getUserProfileDatabyid(userId)
@@ -38,13 +55,31 @@ export default function SingleProfile() {
                 if (res.status === true) {
                     const firstName = res.data.first_name;
                     const lastName = res.data.last_name;
-                    console.log(res.data);
                     SetUserData(res.data);
-                    setReviews(res.reviews);
                     setInitialName(`${firstName.charAt(0).toUpperCase()}${lastName.charAt(0).toUpperCase()}`);
+    
+                    // retrieve reviews data
+                    const reviewsData = res.reviews;
+                    const reviewPromises = [];
+    
+                    // create an array of promises to fetch user information for review_to field
+                    reviewsData.forEach((review) => {
+                        const promise = getUserProfileDatabyid(review.review_to);
+                        reviewPromises.push(promise);
+                    });
+    
+                    // resolve all promises and set state with updated reviews data
+                    Promise.all(reviewPromises).then((reviewResponses) => {
+                        const updatedReviews = reviewsData.map((review, index) => {
+                            const reviewedUser = reviewResponses[index].data;
+                            return { ...review, reviewed_user: reviewedUser };
+                        });
+                        setReviews(updatedReviews);
+                    });
                 }
-            })
+            });
     }, [userId]);
+    
 
     function handleLogout(e: any) {
         e.preventDefault();
@@ -78,7 +113,7 @@ export default function SingleProfile() {
                     </div>
                 </div>
             </section>
-            <section className="my-reviews section-sp">
+            {/* <section className="my-reviews section-sp">
                 <div className="container">
                     <h1>User Reviews</h1>
                     {reviews.map((review) => (
@@ -179,7 +214,49 @@ export default function SingleProfile() {
                         </div>
                     ))}
                 </div>
-            </section>
+            </section> */}
+             <div className="container pt-4">
+                <div className="content-page">
+                    <div className="content">
+                        <div className="container-fluid">
+                            <div className="row">
+                                <div className="col-12">
+                                    <div className="card-box">
+                                        <h4 className="mt-0 header-title  pb-3">User Data</h4>
+                                        <table id="datatable" className="table table-bordered dt-responsive nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th>Review By</th>
+                                                    <th>Review To</th>
+                                                    <th>Description</th>
+                                                    <th>Total Rating</th>
+                                                    <th>Average Rating</th>
+                                                    <th>Thumbs Up</th>
+                                                    <th>Thumbs Down</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {reviews.map((review) => (
+                                                    // eslint-disable-next-line react/jsx-key
+                                                    <tr>
+                                                        <td> {review.first_name} </td>
+                                                        <td>{review.reviewed_user.first_name}</td>
+                                                        <td> {review.description}</td>
+                                                        <td> {review.total_rating}</td>
+                                                        <td> {review.avg_rating}</td>
+                                                        <td> {review.thumbs_up}</td>
+                                                        <td> {review.thumbs_down}</td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </>
     )
 }

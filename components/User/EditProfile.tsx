@@ -23,6 +23,8 @@ export default function EditProfile() {
   const [user, SetUserData] = useState({
     first_name: "",
     last_name: "",
+    email: "",
+    view_password: "",
     company_name: "",
     group_name: "",
     position_title: "",
@@ -32,13 +34,13 @@ export default function EditProfile() {
     e.preventDefault();
     const data = { isLiked: like, reviewId: id, userId: user.id };
     LikeReview(data).then((res) => {
-      console.log(res)
+      //console.log(res)
       getUserProfileDatabyid(current_user_data.id)
         .then((res) => {
           if (res.status === true) {
             SetUserData(res.data);
             setreviews(res.reviews);
-            console.log(res.reviews);
+           // console.log(res.reviews);
           } else {
             toast.error(res.message, {
               position: toast.POSITION.TOP_RIGHT,
@@ -64,7 +66,7 @@ export default function EditProfile() {
           if (res.status === true) {
             SetUserData(res.data);
             setreviews(res.reviews);
-            console.log(res.reviews);
+           // console.log(res.reviews);
           } else {
             toast.error(res.message, {
               position: toast.POSITION.TOP_RIGHT,
@@ -85,7 +87,7 @@ export default function EditProfile() {
     const user_id = localStorage.getItem('id');
     const res = getEditdata(user_id).then((res) => {
       setadditionalData(res.data);
-      console.log(res);
+      //console.log(res);
     });
   }, []);
 
@@ -94,7 +96,7 @@ export default function EditProfile() {
     e.preventDefault();
     deleteReviews(id)
       .then(res => {
-        console.log(res);
+      //  console.log(res);
         window.location.reload();
         // if (res.status === true) {
         //    window.location.reload();
@@ -127,7 +129,7 @@ export default function EditProfile() {
     }
     try {
       const res = await saveAdminProfileData(user);
-      console.log(res);
+     // console.log(res);
       toast.success(res.message, {
         position: toast.POSITION.TOP_RIGHT,
       });
@@ -150,7 +152,7 @@ export default function EditProfile() {
   };
   const handleEdit = async (e) => {
     const current_user_data = getCurrentUserData();
-    console.log(current_user_data.id);
+   // console.log(current_user_data.id);
     if (!current_user_data) return;
     if (user.set_name && user.set_name.length > 2) {
       toast.error("Name should be only two letters.", {
@@ -167,7 +169,7 @@ export default function EditProfile() {
     };
     try {
       const res = await EditProfileData(body);
-      console.log(res);
+     // console.log(res);
       toast.success(res.message, {
         position: toast.POSITION.TOP_RIGHT,
       });
@@ -177,12 +179,16 @@ export default function EditProfile() {
       });
     }
   };
-  const togglePasswordVisibility = () => {
+  const togglePasswordVisibility = (e:any) => {
+    e.preventDefault();
     setShowPassword(!showPassword);
-  }
-  const PasswordVisibility = () => {
+  };
+
+  const PasswordVisibility = (e:any) => {
+    e.preventDefault();
     setShownPassword(!shownPassword);
-  }
+  };
+  
 
   return (
     <>
@@ -202,11 +208,7 @@ export default function EditProfile() {
               <div className="col-sm-6">
                 <div className="user-pro">
                   <a href="#" style={{ 'color': additionalData.font_color, 'background': additionalData.background_color }} className="btn btn-all header-btn add-image-btn">
-                    {/* <img
-                      src="/assets/images/user.png"
-                      alt="user"
-                      className="user"
-                    />{" "} */}
+                   
                     {additionalData.set_name != null || "" ? additionalData.set_name : initialName}
                   </a>
                   <i data-bs-toggle="modal"
@@ -237,19 +239,26 @@ export default function EditProfile() {
                   <div className="show-fild">
                     <label>Change Password</label>
                     <input type={showPassword ? "text" : "password"} value={user.view_password} readOnly />
-                    <p className="show" onClick={togglePasswordVisibility}><a href="javascript:void(0)">Show</a></p>
+                    
+                    <p className="show" onClick={togglePasswordVisibility}><a href="#">Show</a></p>
+
+                    
                   </div>
                   <div className="show-fild">
                     <label>Confirm New Password</label>
                     <input type={shownPassword ? "text" : "password"} value={user.view_password} readOnly />
-                    <p className="show" onClick={PasswordVisibility}><a href="javascript:void(0)">Show</a></p>
+                   
+                    <p className="show" onClick={PasswordVisibility}><a href="#">Show</a></p>
+
                   </div>
                 </div>
               </div>
               <div className="col-sm-6">
                 <div className="form-blue">
                   <label>Edit Company Name</label>
+             
                   <input type="text" onChange={handleChange} name="company_name" value={user.company_name} />
+
                   <label>Edit Group Name</label>
                   <input type="text" onChange={handleChange} name="group_name" value={user.group_name} />
                   <label>Edit Position Title</label>
@@ -266,69 +275,15 @@ export default function EditProfile() {
           <div className="container">
             <h1>My reviews</h1>
             {reviews.map((review, index) => (
-              <div className={`main_box mt-4 review-${review.id}`}>
+              // eslint-disable-next-line react/jsx-key
+              <div key={index} className={`main_box mt-4 review-${review.id}`}>
                 <div className="row">
                   <div className="col-sm-8 col-7">
                     <h4>{review.first_name}</h4>
                     <h4>{review.group_name} | {review.company_name} </h4>
                     <h4>{review.position_title} </h4>
                   </div>
-                  <div className="col-sm-4 col-5 text-right ">
-                    <div className="del-icon">
-                      <a
-                        href="#"
-                        data-bs-toggle="modal"
-                        data-bs-target="#exampleModal"
-                      >
-                        <i className="fa-solid fa-trash" />
-                      </a>
-                    </div>
-                    {/* Modal */}
-                    <div
-                      className="modal fade"
-                      id="exampleModal"
-                      tabIndex={-1}
-                      aria-labelledby="exampleModalLabel"
-                      aria-hidden="true"
-                    >
-                      <div className="modal-dialog">
-                        <div className="modal-content">
-                          <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">
-                              {" "}
-                            </h5>
-                            <button
-                              type="button"
-                              className="btn-close"
-                              data-bs-dismiss="modal"
-                              aria-label="Close"
-                            />
-                          </div>
-                          <div className="modal-body pop-des">
-                            <h3>Are you sure you want to delete this review?</h3>
-                            <p>
-                              {" "}
-                              If deleted, this review will not be able to be
-                              recovered. Deleting reviews does not impact your
-                              bungee score.{" "}
-                            </p>
-                          </div>
-                          <div className="modal-footer j-cebter">
-                            <button
-                              type="button"
-                              className="btn edit-btn  Save changes"
-                              data-bs-dismiss="modal"
-                              onClick={e => handleDelete(e, review.review_id)} >
-                              Yes
-                            </button>
-                            <button type="button" className="btn edit-btn  Cancel" >
-                              No
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  
                 </div>
                 <p>
                   {review.description}
@@ -397,7 +352,6 @@ export default function EditProfile() {
               />
             </div>
             <div className="modal-body">
-              {/* <h3>Are you sure you want to delete this review?</h3> */}
               <form onSubmit={handleEdit}>
                 <div className="form-group">
                   <label>Edit Intial Letters</label>

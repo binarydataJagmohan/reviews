@@ -1,10 +1,11 @@
 import React from 'react'
-import Users from '../../components/Admin/AllUsers';
+import Account from '../../components/Admin/MyAccount';
+
 export default function users()
 {
     return(
         <>
-            <Users />
+            <Account />
         </>
     )
 }
