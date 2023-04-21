@@ -30,26 +30,6 @@ export default function EditProfile() {
     position_title: "",
   });
 
-  const handleLike = (e, like, id) => {
-    e.preventDefault();
-    const data = { isLiked: like, reviewId: id, userId: user.id };
-    LikeReview(data).then((res) => {
-      //console.log(res)
-      getUserProfileDatabyid(current_user_data.id)
-        .then((res) => {
-          if (res.status === true) {
-            SetUserData(res.data);
-            setreviews(res.reviews);
-           // console.log(res.reviews);
-          } else {
-            toast.error(res.message, {
-              position: toast.POSITION.TOP_RIGHT,
-            });
-          }
-        })
-    });
-  }
-
   useEffect(() => {
     const token = localStorage.getItem('token');
     const id = localStorage.getItem('id');
@@ -92,19 +72,6 @@ export default function EditProfile() {
   }, []);
 
 
-  const handleDelete = (e, id) => {
-    e.preventDefault();
-    deleteReviews(id)
-      .then(res => {
-      //  console.log(res);
-        window.location.reload();
-        // if (res.status === true) {
-        //    window.location.reload();
-        //  } else {
-        //    alert('Failed to delete review');
-        //  }
-      });
-  }
   const handleChange = (event) => {
     const { name, value } = event.target;
     SetUserData((prevState) => {
@@ -133,7 +100,7 @@ export default function EditProfile() {
       toast.success(res.message, {
         position: toast.POSITION.TOP_RIGHT,
       });
-      window.location.href = "/user/EditProfile";
+      window.location.href = "/admin/edit-profile";
     } catch (err) {
       toast.error("Error occurred", {
         position: toast.POSITION.BOTTOM_RIGHT,
@@ -141,7 +108,7 @@ export default function EditProfile() {
     }
   };
 
-  const EditChange = (event) => {
+   const EditChange = (event) => {
     const { name, value } = event.target;
     SetUserData((prevState) => {
       return {
@@ -201,7 +168,6 @@ export default function EditProfile() {
             </div>
           </div>
         </section>
-
         <section className="profile-part">
           <div className="container">
             <div className="row">
@@ -270,119 +236,6 @@ export default function EditProfile() {
           <ToastContainer />
         </section>
       </form>
-      {reviews.length ? (
-        <section className="my-reviews section-sp">
-          <div className="container">
-            <h1>My reviews</h1>
-            {reviews.map((review, index) => (
-              // eslint-disable-next-line react/jsx-key
-              <div key={index} className={`main_box mt-4 review-${review.id}`}>
-                <div className="row">
-                  <div className="col-sm-8 col-7">
-                    <h4>{review.first_name}</h4>
-                    <h4>{review.group_name} | {review.company_name} </h4>
-                    <h4>{review.position_title} </h4>
-                  </div>
-                  <div className="col-sm-4 col-5 text-right ">
-                    <div className="del-icon">
-                      <a
-                        href="#"
-                        data-bs-toggle="modal"
-                        data-bs-target="#exampleModal"
-                      >
-                        <i className="fa-solid fa-trash" />
-                      </a>
-                    </div>
-                     {/* Modal */}
-                     <div
-                      className="modal fade"
-                      id="exampleModal"
-                      tabIndex={-1}
-                      aria-labelledby="exampleModalLabel"
-                      aria-hidden="true"
-                    >
-                      <div className="modal-dialog">
-                        <div className="modal-content">
-                          <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">
-                              {" "}
-                            </h5>
-                            <button
-                              type="button"
-                              className="btn-close"
-                              data-bs-dismiss="modal"
-                              aria-label="Close"
-                            />
-                          </div>
-                          <div className="modal-body pop-des">
-                            <h3>Are you sure you want to delete this review?</h3>
-                            <p>
-                              {" "}
-                              If deleted, this review will not be able to be
-                              recovered. Deleting reviews does not impact your
-                              bungee score.{" "}
-                            </p>
-                          </div>
-                          <div className="modal-footer j-cebter">
-                            <button
-                              type="button"
-                              className="btn edit-btn  Save changes"
-                              data-bs-dismiss="modal"
-                              onClick={e => handleDelete(e, review.review_id)} >
-                              Yes
-                            </button>
-                            <button type="button" className="btn edit-btn  Cancel" >
-                              No
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>                  
-                </div>
-                <p>
-                  {review.description}
-                </p>
-                <div className="row">
-                  <div className="col-6">
-                    <div className="row">
-                      <div className="col-lg-2 col-md-3 col-5 ">
-                        <h4 className="overall-rating">Overall rating:</h4>
-                      </div>
-                      <div className="col-lg-3 col-md-4 col-6 ">
-                        <p className="rating">
-                          <span>{review.avg_rating}</span>/5
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-6">
-                    <div className="row">
-                      <div className="col-lg-8 col-md-6 col-2" />
-                      <div className="col-lg-2 col-md-3 col-5">
-                        <p className="thum thum-up" onClick={e => handleLike(e, 1, review.review_id)}>
-                          <i className="fa-solid fa-thumbs-up" /> {review.thumbs_up}
-                        </p>
-                      </div>
-                      <div className="col-lg-2 col-md-3 col-5">
-                        <p className="thum thum-down" onClick={e => handleLike(e, 0, review.review_id)}>
-                          {" "}
-                          <i className="fa-solid fa-thumbs-down" /> {review.thumbs_down}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-      ) : (
-        <section className="my-reviews section-sp">
-          <div className="container">
-            <h1>No reviews yet</h1>
-          </div>
-        </section>)}
 
       {/* Modal */}
 
@@ -435,6 +288,7 @@ export default function EditProfile() {
           </div>
         </div>
       </div>
+     
       <ToastContainer />
     </>
   );

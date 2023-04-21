@@ -20,19 +20,17 @@ export default function SingleProfile() {
         position_title: "",
     });
 
-    const handleLike = (e, like,id) => {
+    const handleLike = (e, like, id) => {
         e.preventDefault();
-        const data = {isLiked:like,reviewId:id,userId:user.id};
+        const data = { isLiked: like, reviewId: id, userId: user.id };
         // return false;
-        LikeReview(data).then((res)=>{
-          // this.review.thumbs_up(res.data.thumbs_up)
-          console.log(res)
-          setReviews(res.data);
+        LikeReview(data).then((res) => {
+            // this.review.thumbs_up(res.data.thumbs_up)
+            console.log(res)
+            setReviews(res.data);
         });
-      }
+    }
 
-
-      
     // useEffect(() => {
     //     if (!userId) return;
     //     getUserProfileDatabyid(userId)
@@ -57,17 +55,17 @@ export default function SingleProfile() {
                     const lastName = res.data.last_name;
                     SetUserData(res.data);
                     setInitialName(`${firstName.charAt(0).toUpperCase()}${lastName.charAt(0).toUpperCase()}`);
-    
+
                     // retrieve reviews data
                     const reviewsData = res.reviews;
                     const reviewPromises = [];
-    
+
                     // create an array of promises to fetch user information for review_to field
                     reviewsData.forEach((review) => {
                         const promise = getUserProfileDatabyid(review.review_to);
                         reviewPromises.push(promise);
                     });
-    
+
                     // resolve all promises and set state with updated reviews data
                     Promise.all(reviewPromises).then((reviewResponses) => {
                         const updatedReviews = reviewsData.map((review, index) => {
@@ -79,7 +77,7 @@ export default function SingleProfile() {
                 }
             });
     }, [userId]);
-    
+
 
     function handleLogout(e: any) {
         e.preventDefault();
@@ -92,7 +90,7 @@ export default function SingleProfile() {
             <section className="edit-part section-sp">
                 <div className="container">
                     <div className="button-part text-right">
-                        <button className="edit-btn" onClick={handleLogout}><i className="fa-solid fa-right-from-bracket" /> Log out</button>
+                        {/* <button className="edit-btn" onClick={handleLogout}><i className="fa-solid fa-right-from-bracket" /> Log out</button> */}
                     </div>
                 </div>
             </section>
@@ -215,41 +213,46 @@ export default function SingleProfile() {
                     ))}
                 </div>
             </section> */}
-             <div className="container pt-4">
+            <div className="container pt-4">
                 <div className="content-page">
                     <div className="content">
                         <div className="container-fluid">
                             <div className="row">
                                 <div className="col-12">
                                     <div className="card-box">
-                                        <h4 className="mt-0 header-title  pb-3">User Data</h4>
-                                        <table id="datatable" className="table table-bordered dt-responsive nowrap">
-                                            <thead>
-                                                <tr>
-                                                    <th>Review By</th>
-                                                    <th>Review To</th>
-                                                    <th>Description</th>
-                                                    <th>Total Rating</th>
-                                                    <th>Average Rating</th>
-                                                    <th>Thumbs Up</th>
-                                                    <th>Thumbs Down</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {reviews.map((review) => (
-                                                    // eslint-disable-next-line react/jsx-key
-                                                    <tr>
-                                                        <td> {review.first_name} </td>
-                                                        <td>{review.reviewed_user.first_name}</td>
-                                                        <td> {review.description}</td>
-                                                        <td> {review.total_rating}</td>
-                                                        <td> {review.avg_rating}</td>
-                                                        <td> {review.thumbs_up}</td>
-                                                        <td> {review.thumbs_down}</td>
-                                                    </tr>
-                                                ))}
-                                            </tbody>
-                                        </table>
+                                        {reviews.length > 0 ? (
+                                            <div>
+                                                <h4 className="mt-0 header-title pb-3">User Data</h4>
+                                                <table id="datatable" className="table table-bordered dt-responsive nowrap">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Review By</th>
+                                                            <th>Review To</th>
+                                                            <th>Description</th>
+                                                            <th>Total Rating</th>
+                                                            <th>Average Rating</th>
+                                                            <th>Thumbs Up</th>
+                                                            <th>Thumbs Down</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {reviews.map((review) => (
+                                                            <tr key={review.id}>
+                                                                <td>{review.first_name}</td>
+                                                                <td>{review.reviewed_user.first_name}</td>
+                                                                <td>{review.description}</td>
+                                                                <td>{review.total_rating}</td>
+                                                                <td>{review.avg_rating}</td>
+                                                                <td>{review.thumbs_up}</td>
+                                                                <td>{review.thumbs_down}</td>
+                                                            </tr>
+                                                        ))}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        ) : (
+                                            <p>There are no reviews yet.</p>
+                                        )}
                                     </div>
                                 </div>
                             </div>
@@ -257,6 +260,7 @@ export default function SingleProfile() {
                     </div>
                 </div>
             </div>
+
         </>
     )
 }

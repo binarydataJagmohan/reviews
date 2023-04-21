@@ -149,7 +149,7 @@ export default function Search() {
                 {searchResults.map((searchResult: any, index) => (
                   <option
                     key={index}
-                    value={`${searchResult?.first_name} ${searchResult?.last_name} | ${searchResult?.group_name} | ${searchResult?.company_name}`}
+                    value={`${searchResult?.review_to_name} ${searchResult?.last_name} | ${searchResult?.group_name} | ${searchResult?.company_name}`}
                   />
                 ))}
               </datalist> */}
@@ -157,7 +157,7 @@ export default function Search() {
                 {searchResults.map((searchResult: any) => (
                   <option
                     key={searchResult.id}
-                    value={`${searchResult?.first_name} ${searchResult?.last_name} | ${searchResult?.group_name} | ${searchResult?.company_name}`}
+                    value={`${searchResult?.review_to_name} ${searchResult?.last_name} | ${searchResult?.group_name} | ${searchResult?.company_name}`}
                   />
                 ))}
               </datalist>
@@ -169,9 +169,9 @@ export default function Search() {
               searchResults.map((searchResult: any, index) => (
                 <>
                   <div className={`bg-light p-3 border border-secondary`} key={searchResult.id}>
-                    {/* <p onClick={() => router.push(`/user/ViewProfile?userId=${searchResult.id}`)} className="cursor-pointer text-dark m-0 text">{searchResult?.first_name} {searchResult?.last_name} | {searchResult?.group_name} | {searchResult?.company_name} <span style={{ 'float': 'right' }}><i className="fa-solid fa-magnifying-glass" /></span></p> */}
+                    {/* <p onClick={() => router.push(`/user/ViewProfile?userId=${searchResult.id}`)} className="cursor-pointer text-dark m-0 text">{searchResult?.review_to_name} {searchResult?.last_name} | {searchResult?.group_name} | {searchResult?.company_name} <span style={{ 'float': 'right' }}><i className="fa-solid fa-magnifying-glass" /></span></p> */}
 
-                    <p onClick={() => router.push(`/user/ViewProfile/?name=${searchResult.slug}`)} className="cursor-pointer text-dark m-0">{searchResult?.first_name} {searchResult?.last_name} | {searchResult?.group_name} | {searchResult?.company_name} <span style={{ 'float': 'right' }}><i className="fa-solid fa-magnifying-glass" /></span></p>
+                    <p onClick={() => router.push(`/user/ViewProfile/?name=${searchResult.slug}`)} className="cursor-pointer text-dark m-0">{searchResult?.review_to_name} {searchResult?.last_name} | {searchResult?.group_name} | {searchResult?.company_name} <span style={{ 'float': 'right' }}><i className="fa-solid fa-magnifying-glass" /></span></p>
 
                   </div>
                 </>
@@ -226,7 +226,7 @@ export default function Search() {
 
                         <div className="col-sm-8 col-7">
                           <h4>
-                            {result?.first_name} {result?.last_name}
+                            {result?.review_to_name} {result?.last_name}
                           </h4>
                           <h4>
                             {result.group_name} | {result.company_name} |{" "}
@@ -324,7 +324,7 @@ export default function Search() {
                       <div className="row">
                         <div className="col-sm-8 col-7">
                           <h4>
-                            {liked?.first_name} {liked?.last_name}
+                            {liked?.review_to_name} {liked?.last_name}
                           </h4>
                           <h4>
                             {liked.group_name} | {liked.company_name} |{" "}
@@ -395,7 +395,7 @@ export default function Search() {
                       <div className="row">
                         <div className="col-sm-8 col-7">
                           <h4>
-                            {result?.first_name} {result?.last_name}
+                            {result?.review_to_name} {result?.last_name}
                           </h4>
                           <h4>
                             {result.group_name} | {result.company_name} |{" "}
@@ -485,7 +485,7 @@ export default function Search() {
                       <div className="row">
                         <div className="col-sm-8 col-7">
                           <h4>
-                            {result?.first_name} {result?.last_name}
+                            {result?.review_to_name} {result?.last_name}
                           </h4>
                           <h4>
                             {result.group_name} | {result.company_name} |{" "}
@@ -539,9 +539,6 @@ export default function Search() {
                           <div className="col-lg-2 col-md-3 col-5">
                             <p
                               className="thum thum-up"
-                              onClick={(e) =>
-                                handleLike(e, 1, result.review_id)
-                              }
                             >
                               <i className="fa-solid fa-thumbs-up" />
                               {result.thumbs_up}{" "}
@@ -550,9 +547,6 @@ export default function Search() {
                           <div className="col-lg-2 col-md-3 col-5">
                             <p
                               className="thum thum-down"
-                              onClick={(e) =>
-                                handleLike(e, 0, result.review_id)
-                              }
                             >
                               {" "}
                               <i className="fa-solid fa-thumbs-down" />{" "}

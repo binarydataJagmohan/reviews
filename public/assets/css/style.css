@@ -964,3 +964,9 @@ a.edit-btn.Save.changes.chng {
 a.edit-btn.chng {
     color: #fff;
 }
+i.fa-solid.fa-trash.del {
+    font-size: 16px;
+}
+.del-icon.delt {
+    margin-top: -6px;
+}

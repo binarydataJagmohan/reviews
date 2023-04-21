@@ -276,3 +276,47 @@
     transform: rotate(0deg);
   }
 }
+
+.pagination {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  list-style: none;
+ }
+ 
+ .pageLink {
+  cursor: pointer;
+ }
+ 
+ /* pagination pageItem */
+ .pageItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2rem;
+  height: 2rem;
+  /*border: 1px solid #eaeaea;*/
+  border: 1px solid #062B60;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  margin: 5px;
+ }
+ 
+ /* pagination page item when active */
+ .pageItemActive {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid #062B60;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  background-color: #062B60;
+  margin: 5px;
+ }
+ .pageItemActive a{
+     color: #fff;
+     padding: 5px 10px 5px 10px;
+ }
+ 

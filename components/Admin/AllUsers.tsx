@@ -1,24 +1,58 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { getallUsers } from "../../lib/backendapi";
+import { getallUsers, deleteUser } from "../../lib/backendapi";
 import { useRouter } from "next/router";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Pagination from "../PaginationComponent/pagination";
+import {paginate} from "../../helpers/paginate"
+
 
 export default function AddReview() {
   const router = useRouter();
-  const [allusers, setAllUsers] = useState({
-    first_name: "",
-    last_name: "",
-    email: "",
-  });
+  const [allusers, setAllUsers] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 5;
+
+
 
   useEffect(() => {
     getallUsers().then((res) => {
       if (res.status) {
         setAllUsers(res.data);
-        console.log(res.data);
+      // console.log(res.data);
+        
       }
     });
   }, []);
+
+  const onPageChange = (page) => {
+    setCurrentPage(page);
+  
+};
+
+  const handleDelete = (e, id) => {
+    e.preventDefault();
+    deleteUser(id)
+      .then((res) => {
+        toast.success('User has been deleted successfully!', {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 3000, // in milliseconds
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 3000); // wait for 3 seconds before reloading the page
+      })
+      .catch((error) => {
+        toast.error('Error occurred while deleting user!', {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 3000, // in milliseconds
+        });
+      });
+  };
+  const paginatedUsers = paginate(allusers, currentPage, pageSize);
+
+  
 
   return (
     <>
@@ -37,7 +71,7 @@ export default function AddReview() {
                       <thead>
                         <tr>
                           <th>First Name</th>
-                          <th>Email</th>
+                          {/* <th>Email</th> */}
                           <th>Company Name</th>
                           <th>Group Name</th>
                           <th>Position Title</th>
@@ -45,14 +79,14 @@ export default function AddReview() {
                         </tr>
                       </thead>
                       <tbody>
-                        {allusers.map((data) => (
+                        {paginatedUsers.map((data, index) => (
                           // eslint-disable-next-line react/jsx-key
-                          <tr>
+                          <tr key={index}>
                             <td>
                               {" "}
                               {data.first_name} {data.last_name}
                             </td>
-                            <td> {data.email}</td>
+                            {/* <td> {data.email}</td> */}
                             <td>
                               {" "}
                               {data.company_name
@@ -69,102 +103,90 @@ export default function AddReview() {
                                 ? data.position_title
                                 : "No record"}
                             </td>
-                            <div className="row align-items-center">
-                              <div className="col-sm-6">
-                                <p
-                                  onClick={() =>
-                                    router.push(
-                                      `/admin/single-profile?userId=${data.id}`
-                                    )
-                                  }
-                                >
-                                  <td className="text-center">
-                                    <i
-                                      className="fa fa-eye"
-                                      aria-hidden="true"
-                                    ></i>
-                                  </td>
-                                </p>
-                              </div>
-                              <div className="col-sm-6 col-5 text-right ">
-                                <div className="del-icon">
-                                  <a
-                                    href="#"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal"
-                                  >
-                                    <i className="fa-solid fa-trash" />
-                                  </a>
+                              <div className="row align-items-center">
+                                <div className="col-sm-6">
+                                    <td className="text-center">
+                                      <i
+                                        className="fa fa-eye set-eye"
+                                        aria-hidden="true"
+                                        onClick={() =>
+                                          router.push(
+                                            `/admin/single-profile?userId=${data.id}`
+                                          )
+                                        }
+                                      ></i>
+                                    </td>
                                 </div>
-                                {/* Modal */}
-                                <div
-                                  className="modal fade"
-                                  id="exampleModal"
-                                  tabIndex={-1}
-                                  aria-labelledby="exampleModalLabel"
-                                  aria-hidden="true"
-                                >
-                                  <div className="modal-dialog">
-                                    <div className="modal-content">
-                                      <div className="modal-header">
-                                        <h5
-                                          className="modal-title"
-                                          id="exampleModalLabel"
-                                        >
-                                          {" "}
-                                        </h5>
-                                        <button
-                                          type="button"
-                                          className="btn-close"
-                                          data-bs-dismiss="modal"
-                                          aria-label="Close"
-                                        />
-                                      </div>
-                                      <div className="modal-body pop-des">
-                                        <h3>
-                                          Are you sure you want to delete this
-                                          review?
-                                        </h3>
-                                        <p>
-                                          {" "}
-                                          If deleted, this review will not be
-                                          able to be recovered. Deleting reviews
-                                          does not impact your bungee score.{" "}
-                                        </p>
-                                      </div>
-                                      <div className="modal-footer j-cebter">
-                                        <button
-                                          type="button"
-                                          className="btn edit-btn  Save changes"
-                                          data-bs-dismiss="modal"
-                                          onClick={(e) =>
-                                            handleDelete(e, review.review_id)
-                                          }
-                                        >
-                                          Yes
-                                        </button>
-                                        <button
-                                          type="button"
-                                          className="btn edit-btn  Cancel"
-                                        >
-                                          No
-                                        </button>
+                                <div className="col-sm-6 col-5">
+                                  <div className="del-icon delt">
+                                    <a
+                                      href="#"
+                                      data-bs-toggle="modal"
+                                      data-bs-target={`#exampleModal${data.id}`}
+                                    >
+                                      <i className="fa-solid fa-trash del" />
+                                    </a>
+                                  </div>
+                                  <div
+                                    className="modal fade"
+                                    id={`exampleModal${data.id}`}
+                                    tabIndex={-1}
+                                    aria-labelledby="exampleModalLabel"
+                                    aria-hidden="true"
+                                  >
+                                    <div className="modal-dialog">
+                                      <div className="modal-content">
+                                        <div className="modal-header">
+                                          <h5 className="modal-title" id="exampleModalLabel"></h5>
+                                          <button
+                                            type="button"
+                                            className="btn-close"
+                                            data-bs-dismiss="modal"
+                                            aria-label="Close"
+                                          />
+                                        </div>
+                                        <div className="modal-body pop-des">
+                                          <h3>Are you sure you want to delete this review?</h3>
+                                          <p>
+                                            If deleted, this review will not be able to be recovered. Deleting
+                                            reviews does not impact your bungee score.
+                                          </p>
+                                        </div>
+                                        <div className="modal-footer j-cebter">
+                                          <button
+                                            type="button"
+                                            className="btn edit-btn Save changes"
+                                            data-bs-dismiss="modal"
+                                            onClick={(e) => handleDelete(e, data.id)}
+                                          >
+                                            Yes
+                                          </button>
+                                          <button type="button" className="btn edit-btn Cancel">
+                                            No
+                                          </button>
+                                        </div>
                                       </div>
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
                           </tr>
-                        ))}
+                        ))} 
                       </tbody>
                     </table>
+                    <Pagination
+                            items={allusers.length} 
+                            currentPage={currentPage}
+                            pageSize={pageSize}
+                            onPageChange={onPageChange}
+                            />  
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+        <ToastContainer />
       </div>
     </>
   );
