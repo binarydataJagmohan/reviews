@@ -9,7 +9,7 @@ export default function AllReview() {
     const router = useRouter();
     const [allreviews, setAllReviews] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const pageSize = 2;
+    const pageSize = 10;
 
 
     useEffect(() => {

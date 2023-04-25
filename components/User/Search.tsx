@@ -171,7 +171,7 @@ export default function Search() {
                   <div className={`bg-light p-3 border border-secondary`} key={searchResult.id}>
                     {/* <p onClick={() => router.push(`/user/ViewProfile?userId=${searchResult.id}`)} className="cursor-pointer text-dark m-0 text">{searchResult?.review_to_name} {searchResult?.last_name} | {searchResult?.group_name} | {searchResult?.company_name} <span style={{ 'float': 'right' }}><i className="fa-solid fa-magnifying-glass" /></span></p> */}
 
-                    <p onClick={() => router.push(`/user/ViewProfile/?name=${searchResult.slug}`)} className="cursor-pointer text-dark m-0">{searchResult?.review_to_name} {searchResult?.last_name} | {searchResult?.group_name} | {searchResult?.company_name} <span style={{ 'float': 'right' }}><i className="fa-solid fa-magnifying-glass" /></span></p>
+                    <p onClick={() => router.push(`/user/ViewProfile/?name=${searchResult.slug}`)} className="cursor-pointer text-dark m-0">{searchResult?.first_name} {searchResult?.last_name} | {searchResult?.group_name} | {searchResult?.company_name} <span style={{ 'float': 'right' }}><i className="fa-solid fa-magnifying-glass" /></span></p>
 
                   </div>
                 </>
@@ -229,8 +229,8 @@ export default function Search() {
                             {result?.review_to_name} {result?.last_name}
                           </h4>
                           <h4>
-                            {result.group_name} | {result.company_name} |{" "}
-                            {result.position_title}
+                            {result.group_name}
+                            {result.company_name && (result.position_title ? ` | ${result.company_name} | ${result.position_title}` : ` | ${result.company_name}`)}
                           </h4>
                         </div>
 
@@ -327,8 +327,8 @@ export default function Search() {
                             {liked?.review_to_name} {liked?.last_name}
                           </h4>
                           <h4>
-                            {liked.group_name} | {liked.company_name} |{" "}
-                            {liked.position_title}
+                            {liked.group_name}
+                            {liked.company_name && (liked.position_title ? ` | ${liked.company_name} | ${liked.position_title}` : ` | ${liked.company_name}`)}
                           </h4>
                         </div>
                         <div className="col-sm-4  col-5 text-right ">
@@ -398,9 +398,10 @@ export default function Search() {
                             {result?.review_to_name} {result?.last_name}
                           </h4>
                           <h4>
-                            {result.group_name} | {result.company_name} |{" "}
-                            {result.position_title}
+                            {result.group_name}
+                            {result.company_name && (result.position_title ? ` | ${result.company_name} | ${result.position_title}` : ` | ${result.company_name}`)}
                           </h4>
+
                         </div>
                         <div className="col-sm-4  col-5 text-right ">
                           <h6 className="date-time">
@@ -488,8 +489,8 @@ export default function Search() {
                             {result?.review_to_name} {result?.last_name}
                           </h4>
                           <h4>
-                            {result.group_name} | {result.company_name} |{" "}
-                            {result.position_title}
+                            {result.group_name}
+                            {result.company_name && (result.position_title ? ` | ${result.company_name} | ${result.position_title}` : ` | ${result.company_name}`)}
                           </h4>
                         </div>
                         <div className="col-sm-4  col-5 text-right ">

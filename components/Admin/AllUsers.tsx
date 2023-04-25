@@ -12,9 +12,7 @@ export default function AddReview() {
   const router = useRouter();
   const [allusers, setAllUsers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 5;
-
-
+  const pageSize = 10;
 
   useEffect(() => {
     getallUsers().then((res) => {
@@ -146,10 +144,9 @@ export default function AddReview() {
                                           />
                                         </div>
                                         <div className="modal-body pop-des">
-                                          <h3>Are you sure you want to delete this review?</h3>
+                                          <h3>Are you sure you want to delete this user?</h3>
                                           <p>
-                                            If deleted, this review will not be able to be recovered. Deleting
-                                            reviews does not impact your bungee score.
+                                            If deleted, this user will not be able to be recovered.
                                           </p>
                                         </div>
                                         <div className="modal-footer j-cebter">

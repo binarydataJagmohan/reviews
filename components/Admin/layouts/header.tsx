@@ -59,6 +59,12 @@ export default function Header() {
                   </li>
                   : ''}
 
+                {isAuthenticated && user_type == 'admin' ?
+                  <li className="nav-item">
+                    <a className="nav-link active" aria-current="page" href="/admin/user-merge">User Merge</a>
+                  </li>
+                  : ''}
+
               </ul>
               {isAuthenticated && user_type == 'admin' ? <form className="d-flex">
               </form> : <form className="d-flex">
