@@ -21,7 +21,7 @@ export default function Login() {
     removeStorageData();
   }, []);
 
-  const handleChange = (event) => {
+  const handleChange = (event:any) => {
     const { name, value } = event.target;
     setUser((prevState) => {
       return {
@@ -34,7 +34,7 @@ export default function Login() {
     setShowPassword(!showPassword);
   } 
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e:any) => {
     e.preventDefault();
 
     if (!user.email || !user.password) {

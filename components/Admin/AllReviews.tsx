@@ -21,7 +21,7 @@ export default function AllReview() {
         });
     }, []);
 
-    const onPageChange = (page) => {
+    const onPageChange = (page:any) => {
         setCurrentPage(page);
       
     };
@@ -57,7 +57,7 @@ export default function AllReview() {
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        {paginatedUsers.map((review) => (
+                                                        {paginatedUsers.map((review:any) => (
                                                             <tr key={review.id}>
                                                                 <td>{review.review_by_name}</td>
                                                                 <td>{review.review_to_name}</td>
@@ -70,7 +70,7 @@ export default function AllReview() {
                                                         ))}
                                                     </tbody>
                                                 </table><Pagination
-                                                        items={allreviews.length}
+                                                        items={allreviews}
                                                         currentPage={currentPage}
                                                         pageSize={pageSize}
                                                         onPageChange={onPageChange} /></> 

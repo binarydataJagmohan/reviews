@@ -14,7 +14,7 @@ export default function ResetPassword() {
   const router = useRouter();
   const { token } = router.query;
 
-  const handleReset = async (e) => {
+  const handleReset = async (e:any) => {
     e.preventDefault();
 
     if (!email || !password || !passwordConfirm) {

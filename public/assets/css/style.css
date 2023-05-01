@@ -970,3 +970,7 @@ i.fa-solid.fa-trash.del {
 .del-icon.delt {
     margin-top: -6px;
 }
+a.edit-btn.st.Cancel {
+    background: red;
+    color: #fff;
+}

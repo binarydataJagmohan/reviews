@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable @next/next/no-html-link-for-pages */
 /* eslint-disable react/jsx-no-comment-textnodes */
 import React, {useState, useEffect} from 'react';
@@ -25,7 +26,7 @@ export default function Header() {
   function redirectToLogin() {
       window.location.href = '/Login';
   }
-  function handleLogout(e) {
+  function handleLogout(e:any) {
       e.preventDefault();
       removeToken();
       removeStorageData();
@@ -42,8 +43,11 @@ export default function Header() {
       setIsAuthenticated(true);
       const firstName = localStorage.getItem('first_name');
       const lastName = localStorage.getItem('last_name');
+      if (firstName !== null && lastName !== null ) {
+
       setInitialName(`${firstName.charAt(0).toUpperCase()}${lastName.charAt(0).toUpperCase()}`);
     }
+  }
   }, []);
 
   // useEffect(() => {
@@ -78,24 +82,30 @@ export default function Header() {
                 <a className="nav-link active" aria-current="page" href="/admin/all-users">All Users</a>
                 </li>
                 : ''} */}
-
-               
                   {isAuthenticated ?   <li className="nav-item">
                   <Link className="nav-link" href="/user/search">Search Reviews</Link>
                 </li>  : '' }
               </ul>
               <ul className="navbar-nav ms-auto mb-lg-0 tab-mobile-menu">
                 <li className="nav-item">
-                  <a className="nav-link active" aria-current="page" href="#"><i className="fa-solid fa-house" /> Home</a>
+                  <Link className="nav-link active" aria-current="page" href="/index">
+                  <i className="fa-solid fa-house" /> 
+                    Home</Link>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="search-reviews.html"><i className="fa-solid fa-magnifying-glass" /> Search Reviews</a>
+                  <Link className="nav-link" href="/user/search">
+                  <i className="fa-solid fa-magnifying-glass" /> 
+                  Search Reviews</Link>
                 </li> 
                 <li className="nav-item">
-                  <a className="nav-link" href="about-bungee.html"><i className="fa-solid fa-question" /> About Bungee</a>
+                  <Link className="nav-link"  href="/About">
+                  <i className="fa-solid fa-question" />
+                  About Bungee</Link>
                 </li> 
                 <li className="nav-item">
-                  <a className="nav-link" href="view-profile.html"> <i className="fa-solid fa-user" /> View your profile </a>
+                  <Link className="nav-link"  href="/user/MyAccount">
+                  <i className="fa-solid fa-user" />
+                  View your profile</Link>
                 </li>  
               </ul> 
              

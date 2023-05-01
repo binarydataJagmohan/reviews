@@ -5,16 +5,20 @@ import axios from 'axios';
 import { forgetPassword } from '../../lib/frontendapi';
 import { useRouter } from 'next/router';
 
+interface FormData {
+  email: string;
+  // other properties
+}
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState('');
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<Partial<FormData>>({});
 
   const validateForm = () => {
     let valid = true;
-    const newErrors = {};
+    const newErrors: Partial<FormData> = {};
 
     if (!email) {
       newErrors.email = 'Email is required';
@@ -26,7 +30,8 @@ export default function ForgotPassword() {
     setErrors(newErrors);
     return valid;
   };
-  const handleSubmit = async (e) => {
+  
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!validateForm()) {
       return;

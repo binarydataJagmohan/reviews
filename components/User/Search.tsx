@@ -10,25 +10,69 @@ import { format, parseISO, isValid } from "date-fns";
 import ReactTooltip from 'react-tooltip';
 import Tippy from "@tippyjs/react";
 
+interface Review {
+  review_id: number;
+  review_to_name: string;
+  last_name: string;
+  group_name: string;
+  company_name?: string;
+  position_title?: string;
+  description: string;
+  avg_rating: number;
+  thumbs_up: number;
+  thumbs_down: number;
+  bunjee_score: number;
+  created_at: string;
+  slug: string;
+}
+interface Liked {
+  review_id: number;
+  review_to_name: string;
+  last_name: string;
+  group_name: string;
+  company_name?: string;
+  position_title?: string;
+  description: string;
+  avg_rating: number;
+  thumbs_up: number;
+  thumbs_down: number;
+  bunjee_score: number;
+  created_at: string;
+  slug: string;
+}
+interface Score {
+  review_id: number;
+  review_to_name: string;
+  last_name: string;
+  group_name: string;
+  company_name?: string;
+  position_title?: string;
+  description: string;
+  avg_rating: number;
+  thumbs_up: number;
+  thumbs_down: number;
+  bunjee_score: number;
+  created_at: string;
+  slug: string;
+}
 
 export default function Search() {
   const router = useRouter();
   const { name } = router.query;
-  //  console.log("name", name);
-
   const [user_id, setCurrentUserID] = useState("");
   const [showLine, setshowLine] = useState(false);
-
-
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const [results, setResults] = useState([]);
-  const [score, setScore] = useState([]);
-  const [likeds, setLiked] = useState([]);
+  // const [results, setResults] = useState([]);
+  const [results, setResults] = useState<Review[] | null>(null);
+
+  // const [score, setScore] = useState([]);
+  // const [likeds, setLiked] = useState([]);
+  const [score, setScore] = useState<Score[] | null>(null);
+  const [likeds, setLiked] = useState<Liked[] | null>(null);
 
 
-
-  const handleLike = (e: any, like, id) => {
+  const handleLike = (e: any, like: any, id: any) => {
     e.preventDefault();
     const userId = localStorage.getItem('id');
     const data = { isLiked: like, reviewId: id, userId: userId };
@@ -59,8 +103,6 @@ export default function Search() {
   useEffect(() => {
     Promise.all([mostLikedReviews(), getLatestReviews()])
       .then((responses) => {
-        //console.log("mostLikedReviews response", responses[0]);
-        //console.log("getLatestReviews response", responses[1]);
         setLiked(responses[0].data);
         setResults(responses[1].data);
       })
@@ -75,25 +117,34 @@ export default function Search() {
   }, []);
 
   useEffect(() => {
-    // const user_id = localStorage.getItem('id');
     const res = getbunjeeScore().then((res) => {
       setScore(res.data);
-      // console.log(res);
     });
   }, []);
+  // const getUserData = async () => {
+  //   //const current_user_data = getCurrentUserData();
+  //   const current_user_data = getCurrentUserData() || { id: "" };
 
+  //   if ('id' in current_user_data) {
+  //     current_user_data.id
+  //       ? setCurrentUserID('id' in current_user_data)
+  //       : setCurrentUserID("");
+  //   } else {
+  //     window.location.href = "/Login";
+  //   }
+  // };
   const getUserData = async () => {
-    const current_user_data = getCurrentUserData();
+    const current_user_data = getCurrentUserData() || { id: "" };
 
-    if (current_user_data.id != null) {
-      current_user_data.id
-        ? setCurrentUserID(current_user_data.id)
-        : setCurrentUserID("");
+    if ('id' in current_user_data) {
+      const userId = current_user_data.id ? String(current_user_data.id) : "";
+      setCurrentUserID(userId);
     } else {
       window.location.href = "/Login";
     }
   };
-  const handleSearch = async (e) => {
+
+  const handleSearch = async (e: any) => {
     const { value } = e.target;
     setSearch(value);
     if (value) {
@@ -113,7 +164,7 @@ export default function Search() {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     router.push(`/search`, {
       query: {
@@ -140,7 +191,7 @@ export default function Search() {
                   list="searchResults"
                 />
                 <span className="input-group-text" id="basic-addon2">
-                  <span type="submit" onClick={handleSubmit}>
+                  <span onClick={handleSubmit}>
                     <i className="fa-solid fa-magnifying-glass" />
                   </span>
                 </span>
@@ -219,6 +270,7 @@ export default function Search() {
               aria-labelledby="pills-home-tab">
               {Array.isArray(results) && results.length > 0 ? (
                 results.map((result, index) => (
+                  // results.map((result: { slug: string; /* add other properties here */ }, index) => (
                   // eslint-disable-next-line react/jsx-key
                   <div key={index} className="main_box mt-4">
                     <Link href={`/user/ViewProfile/?name=${result.slug}`}>

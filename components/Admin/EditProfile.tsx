@@ -6,12 +6,19 @@ import "react-toastify/dist/ReactToastify.css";
 import { removeToken, removeStorageData, getCurrentUserData, } from "../../lib/session";
 import { saveAdminProfileData, getUserProfileData, LikeReview, deleteReviews, EditProfileData, getEditdata, getUserProfileDatabyid } from "../../lib/backendapi";
 
+
+interface EditData {
+  font_color: string;
+  background_color: string;
+  set_name?: string | null;
+}
 export default function EditProfile() {
   const current_user_data = getCurrentUserData();
   const [initialName, setInitialName] = useState('');
   const [reviews, setreviews] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [additionalData, setadditionalData] = useState([]);
+  // const [additionalData, setadditionalData] = useState([]);
+  const [additionalData, setadditionalData] = useState<EditData>({ font_color: '', background_color: '', set_name: '' });
   const [editData, seteditData] = useState([]);
   const [showPassword, setShowPassword] = useState(false);
   const [shownPassword, setShownPassword] = useState(false);
@@ -28,6 +35,10 @@ export default function EditProfile() {
     company_name: "",
     group_name: "",
     position_title: "",
+    set_name: "",
+    font_color: "",
+    background_color: "",
+    id: ""
   });
 
   useEffect(() => {
@@ -37,16 +48,18 @@ export default function EditProfile() {
       setIsAuthenticated(true);
       const firstName = localStorage.getItem('first_name');
       const lastName = localStorage.getItem('last_name');
-      setInitialName(`${firstName.charAt(0).toUpperCase()}${lastName.charAt(0).toUpperCase()}`);
+      if (firstName !== null && lastName !== null) {
+        setInitialName(`${firstName.substring(0, 1).toUpperCase()}${lastName.substring(0, 1).toUpperCase()}`);
+      }
     }
     const current_user_data = getCurrentUserData();
-    if (current_user_data.id !== null) {
+    if ('id' in current_user_data && current_user_data.id !== null) {
       getUserProfileDatabyid(current_user_data.id)
         .then((res) => {
           if (res.status === true) {
             SetUserData(res.data);
             setreviews(res.reviews);
-           // console.log(res.reviews);
+            // console.log(res.reviews);
           } else {
             toast.error(res.message, {
               position: toast.POSITION.TOP_RIGHT,
@@ -70,9 +83,15 @@ export default function EditProfile() {
       //console.log(res);
     });
   }, []);
+  const style = {
+    color: additionalData?.font_color ?? '',
+    background: additionalData?.background_color ?? ''
+  };
 
 
-  const handleChange = (event) => {
+
+
+  const handleChange = (event: any) => {
     const { name, value } = event.target;
     SetUserData((prevState) => {
       return {
@@ -81,8 +100,7 @@ export default function EditProfile() {
       };
     });
   };
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (
       !user.first_name ||
@@ -96,7 +114,7 @@ export default function EditProfile() {
     }
     try {
       const res = await saveAdminProfileData(user);
-     // console.log(res);
+      // console.log(res);
       toast.success(res.message, {
         position: toast.POSITION.TOP_RIGHT,
       });
@@ -108,7 +126,7 @@ export default function EditProfile() {
     }
   };
 
-   const EditChange = (event) => {
+  const EditChange = (event: any) => {
     const { name, value } = event.target;
     SetUserData((prevState) => {
       return {
@@ -117,9 +135,9 @@ export default function EditProfile() {
       };
     });
   };
-  const handleEdit = async (e) => {
+  const handleEdit = async (e: any) => {
     const current_user_data = getCurrentUserData();
-   // console.log(current_user_data.id);
+    // console.log(current_user_data.id);
     if (!current_user_data) return;
     if (user.set_name && user.set_name.length > 2) {
       toast.error("Name should be only two letters.", {
@@ -129,14 +147,14 @@ export default function EditProfile() {
       return;
     }
     const body = {
-      user_id: current_user_data.id,
-      set_name: user.set_name, // add the set_name field
-      font_color: user.font_color, // add the font_color field
+      user_id: 'id' in current_user_data ? current_user_data.id : null,
+      set_name: user.set_name,
+      font_color: user.font_color,
       background_color: user.background_color
     };
     try {
       const res = await EditProfileData(body);
-     // console.log(res);
+      // console.log(res);
       toast.success(res.message, {
         position: toast.POSITION.TOP_RIGHT,
       });
@@ -146,16 +164,16 @@ export default function EditProfile() {
       });
     }
   };
-  const togglePasswordVisibility = (e:any) => {
+  const togglePasswordVisibility = (e: any) => {
     e.preventDefault();
     setShowPassword(!showPassword);
   };
 
-  const PasswordVisibility = (e:any) => {
+  const PasswordVisibility = (e: any) => {
     e.preventDefault();
     setShownPassword(!shownPassword);
   };
-  
+
 
   return (
     <>
@@ -163,7 +181,10 @@ export default function EditProfile() {
         <section className="edit-part section-sp">
           <div className="container">
             <div className="button-part text-right">
-              <button className="edit-btn    Cancel"> Cancel</button>
+              {/* <button className="edit-btn Cancel"> Cancel</button> */}
+              <Link href="/admin/edit-profile"
+                className="edit-btn st Cancel">Cancel
+              </Link>
               <button className="edit-btn Save changes"> Save changes</button>
             </div>
           </div>
@@ -173,9 +194,8 @@ export default function EditProfile() {
             <div className="row">
               <div className="col-sm-6">
                 <div className="user-pro">
-                  <a href="#" style={{ 'color': additionalData.font_color, 'background': additionalData.background_color }} className="btn btn-all header-btn add-image-btn">
-                   
-                    {additionalData.set_name != null || "" ? additionalData.set_name : initialName}
+                  <a href="#" style={style} className="btn btn-all header-btn add-image-btn">
+                    {additionalData?.set_name ?? initialName}
                   </a>
                   <i data-bs-toggle="modal"
                     data-bs-target="#EditModal" style={{ 'cursor': 'pointer' }} className="fa-solid fa-user-pen setpen" />
@@ -205,15 +225,15 @@ export default function EditProfile() {
                   <div className="show-fild">
                     <label>Change Password</label>
                     <input type={showPassword ? "text" : "password"} value={user.view_password} readOnly />
-                    
+
                     <p className="show" onClick={togglePasswordVisibility}><a href="#">Show</a></p>
 
-                    
+
                   </div>
                   <div className="show-fild">
                     <label>Confirm New Password</label>
                     <input type={shownPassword ? "text" : "password"} value={user.view_password} readOnly />
-                   
+
                     <p className="show" onClick={PasswordVisibility}><a href="#">Show</a></p>
 
                   </div>
@@ -222,7 +242,7 @@ export default function EditProfile() {
               <div className="col-sm-6">
                 <div className="form-blue">
                   <label>Edit Company Name</label>
-             
+
                   <input type="text" onChange={handleChange} name="company_name" value={user.company_name} />
 
                   <label>Edit Group Name</label>
@@ -288,7 +308,7 @@ export default function EditProfile() {
           </div>
         </div>
       </div>
-     
+
       <ToastContainer />
     </>
   );

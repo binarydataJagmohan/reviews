@@ -10,6 +10,11 @@ import { log } from "console";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 
+type CurrentUserData = {
+  id: number; // Or whatever type `id` is
+  // Add any other properties that `current_user_data` might have
+}
+
 
 export default function AddReview() {
   const router = useRouter();
@@ -28,6 +33,7 @@ export default function AddReview() {
     group_name: "",
     position_title: "",
     rating: 0,
+    id:"",
   });
 
   useEffect(() => {
@@ -58,8 +64,8 @@ export default function AddReview() {
   };
 
   const onSubmit = async () => {
-    const current_user_data = getCurrentUserData();
-    console.log(current_user_data);
+    // const current_user_data = getCurrentUserData();
+    const current_user_data = getCurrentUserData() as { id: string };
 
     if (!current_user_data) return;
     const body = {
@@ -71,8 +77,6 @@ export default function AddReview() {
     }
     console.log(body);
     submitReview(body).then((res) => {
-
-
       if (res.status) {
         //alert(res.message);
         toast.success(res.message, {
@@ -94,7 +98,7 @@ export default function AddReview() {
       });
   }
 
-  const handleChange = (event) => {
+  const handleChange = (event:any) => {
     console.log(user)
     const { name, value } = event.target;
     SetUserData((prevState) => {
@@ -106,15 +110,16 @@ export default function AddReview() {
   }
 
 
-  const handleStarHover = (num) => {
+  const handleStarHover = (num: number) => {
     const starColor = num > 0 ? "yellow" : "gray";
     const stars = document.querySelectorAll(".fa-star");
     stars.forEach((star, index) => {
-      star.style.color = index < num ? starColor : "gray";
+      (star as HTMLElement).style.color = index < num ? starColor : "gray";
     });
   };
+  
 
-  const handleStarClick = (num) => {
+  const handleStarClick = (num:number) => {
     SetUserData((prevState) => {
       return {
         ...prevState,

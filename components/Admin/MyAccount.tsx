@@ -7,6 +7,13 @@ import { removeToken, removeStorageData, getCurrentUserData, } from "../../lib/s
 import { saveAdminProfileData, getUserProfileDatabyid, LikeReview, getEditdata } from "../../lib/backendapi";
 import Tippy from "@tippyjs/react";
 import { parseISO, format } from 'date-fns';
+
+interface EditData {
+  font_color: string;
+  background_color: string;
+  set_name?: string | null;
+}
+
 export default function MyAccount() {
 
   const current_user_data = getCurrentUserData();
@@ -14,7 +21,8 @@ export default function MyAccount() {
   const [reviews, setreviews] = useState([]);
   const [likeds, setLiked] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [additionalData, setadditionalData] = useState([]);
+  // const [additionalData, setadditionalData] = useState([]);
+  const [additionalData, setadditionalData] = useState<EditData>({ font_color: '', background_color: '', set_name: '' });
   const barRef = useRef(null);
   const percentageTagRef = useRef(null);
   const differenceTagRef = useRef(null);
@@ -25,21 +33,19 @@ export default function MyAccount() {
     company_name: "",
     group_name: "",
     position_title: "",
+    id:""
   });
+  
 
-  const handleLike = (e, like, id) => {
+  const handleLike = (e:any, like:any, id:any) => {
     e.preventDefault();
     const data = { isLiked: like, reviewId: id, userId: user.id };
-    // return false;
     LikeReview(data).then((res) => {
-      // this.review.thumbs_up(res.data.thumbs_up)
-      console.log(res)
-      getUserProfileDatabyid(current_user_data.id)
+      getUserProfileDatabyid(id)
         .then((res) => {
           if (res.status === true) {
             SetUserData(res.data);
             setreviews(res.reviews);
-            // setreviews(res.reviews1);
             console.log(res.reviews);
           } else {
             toast.error(res.message, {
@@ -49,6 +55,7 @@ export default function MyAccount() {
         })
     });
   }
+  
   useEffect(() => {
     const token = localStorage.getItem('token');
     const id = localStorage.getItem('id');
@@ -61,10 +68,12 @@ export default function MyAccount() {
       setIsAuthenticated(true);
       const firstName = localStorage.getItem('first_name');
       const lastName = localStorage.getItem('last_name');
+      if (firstName !== null && lastName !== null) {
       setInitialName(`${firstName.charAt(0).toUpperCase()}${lastName.charAt(0).toUpperCase()}`);
+      }
     }
     const current_user_data = getCurrentUserData();
-    if (current_user_data.id !== null) {
+    if ('id' in current_user_data && current_user_data.id !== null) {
       getUserProfileDatabyid(current_user_data.id)
         .then((res) => {
           // console.log(res.data);
@@ -73,8 +82,10 @@ export default function MyAccount() {
             SetUserData(res.data);
             setreviews(res.reviews);
             console.log(res.reviews);
-            barRef.current.style.width = (res.data.bunjee_score || 0) + '%';
-            percentageTagRef.current.innerHTML = res.data.bunjee_score || 0
+            // if (barRef.current !== null) {
+            //   barRef.current.style.width = (res.data.bunjee_score || 0) + '%';
+            //   percentageTagRef.current.innerHTML = res.data.bunjee_score || 0;
+            // }            
 
           } else {
             toast.error(res.message, {
@@ -99,12 +110,16 @@ export default function MyAccount() {
       console.log(res);
     });
   }, []);
+  const style = {
+    color: additionalData?.font_color ?? '',
+    background: additionalData?.background_color ?? ''
+  };
 
   function redirectToLogin() {
     window.location.href = '/Login';
   }
 
-  function handleLogout(e) {
+  function handleLogout(e:any) {
     e.preventDefault();
     removeToken();
     removeStorageData();
@@ -126,19 +141,13 @@ export default function MyAccount() {
           <div className="row">
             <div className="col-sm-7">
               <div className="user-pro account-big">
-                <a href="#" style={{ 'color': additionalData.font_color, 'background': additionalData.background_color }} className="btn btn-all header-btn add-image-btn">
-                  {/* <img
-                      src="/assets/images/user.png"
-                      alt="user"
-                      className="user"
-                    />{" "} */}
-                  {additionalData.set_name != null || "" ? additionalData.set_name : initialName}
-                  {/* <i className="fa-solid fa-user-pen" /> */}
-                </a>
+              <a href="#" style={style} className="btn btn-all header-btn add-image-btn">
+                    {additionalData?.set_name ?? initialName}
+                  </a>
                 {/* <img src="/assets/images/user.png" alt="user" className="user" /> */}
                 <h2>{user.first_name + ' ' + user.last_name} </h2>
                 <h3>{user.group_name}</h3>
-                <h3>{user.compnay_name}</h3>
+                <h3>{user.company_name}</h3>
                 <h3>{user.position_title}</h3>
               </div>
             </div>

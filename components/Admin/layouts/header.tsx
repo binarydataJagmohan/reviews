@@ -31,8 +31,10 @@ export default function Header() {
       setIsAuthenticated(true);
       const firstName = localStorage.getItem('first_name');
       const lastName = localStorage.getItem('last_name');
+      if(firstName !== null && lastName !== null){
       setInitialName(`${firstName.charAt(0).toUpperCase()}${lastName.charAt(0).toUpperCase()}`);
     }
+  }
   }, []);
 
   return (
@@ -59,11 +61,11 @@ export default function Header() {
                   </li>
                   : ''}
 
-                {isAuthenticated && user_type == 'admin' ?
+                {/* {isAuthenticated && user_type == 'admin' ?
                   <li className="nav-item">
                     <a className="nav-link active" aria-current="page" href="/admin/user-merge">User Merge</a>
                   </li>
-                  : ''}
+                  : ''} */}
 
               </ul>
               {isAuthenticated && user_type == 'admin' ? <form className="d-flex">

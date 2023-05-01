@@ -24,12 +24,11 @@ export default function AddReview() {
     });
   }, []);
 
-  const onPageChange = (page) => {
+  const onPageChange = (page:any) => {
     setCurrentPage(page);
-  
 };
 
-  const handleDelete = (e, id) => {
+  const handleDelete = (e:any, id:any) => {
     e.preventDefault();
     deleteUser(id)
       .then((res) => {
@@ -49,8 +48,6 @@ export default function AddReview() {
       });
   };
   const paginatedUsers = paginate(allusers, currentPage, pageSize);
-
-  
 
   return (
     <>
@@ -77,7 +74,7 @@ export default function AddReview() {
                         </tr>
                       </thead>
                       <tbody>
-                        {paginatedUsers.map((data, index) => (
+                        {paginatedUsers.map((data:any, index:any) => (
                           // eslint-disable-next-line react/jsx-key
                           <tr key={index}>
                             <td>
@@ -172,7 +169,7 @@ export default function AddReview() {
                       </tbody>
                     </table>
                     <Pagination
-                            items={allusers.length} 
+                            items={allusers} 
                             currentPage={currentPage}
                             pageSize={pageSize}
                             onPageChange={onPageChange}

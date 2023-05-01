@@ -1,11 +1,11 @@
-import React from 'react'
-import AdminEditProfile from '../../components/Admin/EditProfile';
+// EditProfile.js
+import EditProfile from '@/components/Admin/EditProfile';
+import React from 'react';
 
-export default function EditProfile()
-{
-    return(
-        <>
-            <AdminEditProfile />
-        </>
-    )
+export default function EditProfilee() {
+  return (
+    <>
+      <EditProfile />
+    </>
+  );
 }

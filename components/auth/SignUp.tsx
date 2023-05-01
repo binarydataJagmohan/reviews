@@ -34,7 +34,7 @@ export default function SignUp()
   }
 
 
-  const handleChange = (event) => {
+  const handleChange = (event:any) => {
     const { name, value } = event.target;
     setuser((prevState) => {
       return {
@@ -44,7 +44,7 @@ export default function SignUp()
     });
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e:any) => {
     e.preventDefault();
 
     if (!user.first_name || !user.last_name || !user.email || !user.password || !user.password_confirmation) {

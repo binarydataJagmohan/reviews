@@ -4,13 +4,29 @@ import { getUserProfileDatabyid, LikeReview } from "../../lib/backendapi";
 import { removeToken, removeStorageData, getCurrentUserData, } from "../../lib/session";
 import { parseISO, format } from 'date-fns';
 import { useRouter } from "next/router";
+import { AxiosResponse } from 'axios';
 
+type Review = {
+    id: number;
+    first_name: string;
+    reviewed_user: {
+      first_name: string;
+    };
+    description: string;
+    total_rating: number; // Add this property
+    avg_rating: number; 
+    thumbs_up: number; 
+    thumbs_down: number; 
+  };
+  
 export default function SingleProfile() {
 
     const router = useRouter();
     const { userId } = router.query;
     const [initialName, setInitialName] = useState('');
-    const [reviews, setReviews] = useState([]);
+    // const [reviews, setReviews] = useState([]);
+    const [reviews, setReviews] = useState<Review[]>([]);
+
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [user, SetUserData] = useState({
         first_name: "",
@@ -18,9 +34,10 @@ export default function SingleProfile() {
         company_name: "",
         group_name: "",
         position_title: "",
+        id:"",
     });
 
-    const handleLike = (e, like, id) => {
+    const handleLike = (e:any, like:any, id:any) => {
         e.preventDefault();
         const data = { isLiked: like, reviewId: id, userId: user.id };
         // return false;
@@ -31,20 +48,6 @@ export default function SingleProfile() {
         });
     }
 
-    // useEffect(() => {
-    //     if (!userId) return;
-    //     getUserProfileDatabyid(userId)
-    //         .then((res) => {
-    //             if (res.status === true) {
-    //                 const firstName = res.data.first_name;
-    //                 const lastName = res.data.last_name;
-    //                 console.log(res.data);
-    //                 SetUserData(res.data);
-    //                 setReviews(res.reviews);
-    //                 setInitialName(`${firstName.charAt(0).toUpperCase()}${lastName.charAt(0).toUpperCase()}`);
-    //             }
-    //         })
-    // }, [userId]);
 
     useEffect(() => {
         if (!userId) return;
@@ -58,22 +61,37 @@ export default function SingleProfile() {
 
                     // retrieve reviews data
                     const reviewsData = res.reviews;
-                    const reviewPromises = [];
+                    //const reviewPromises = [];
+                    const reviewPromises: Promise<string>[] = [];
+
 
                     // create an array of promises to fetch user information for review_to field
-                    reviewsData.forEach((review) => {
+                    reviewsData.forEach((review:any) => {
                         const promise = getUserProfileDatabyid(review.review_to);
                         reviewPromises.push(promise);
                     });
 
                     // resolve all promises and set state with updated reviews data
-                    Promise.all(reviewPromises).then((reviewResponses) => {
-                        const updatedReviews = reviewsData.map((review, index) => {
+                    // Promise.all(reviewPromises).then((reviewResponses) => {
+                    //     const updatedReviews = reviewsData.map((review:any, index:any) => {
+                    //         const reviewedUser = reviewResponses[index].data;
+                    //         return { ...review, reviewed_user: reviewedUser };
+                    //     });
+                    //     setReviews(updatedReviews);
+                    // });
+                    Promise.all(reviewPromises).then((reviewResponses: any[]) => {
+                        const updatedReviews = reviewsData.map((review: any, index: any) => {
+                          if (typeof reviewResponses[index] === 'object') {
                             const reviewedUser = reviewResponses[index].data;
                             return { ...review, reviewed_user: reviewedUser };
+                          } else {
+                            // Handle the case where reviewResponses[index] is not an object
+                            return review;
+                          }
                         });
                         setReviews(updatedReviews);
-                    });
+                      });
+                    
                 }
             });
     }, [userId]);
@@ -111,108 +129,6 @@ export default function SingleProfile() {
                     </div>
                 </div>
             </section>
-            {/* <section className="my-reviews section-sp">
-                <div className="container">
-                    <h1>User Reviews</h1>
-                    {reviews.map((review) => (
-                        // eslint-disable-next-line react/jsx-key
-                        <div className="main_box mt-4">
-                            <div className="row">
-                                <div className="col-sm-8 col-7">
-                                    <h4>{review.first_name}</h4>
-                                    <h4>{review.group_name} | {review.company_name}</h4>
-                                    <h4>{review.position_title}</h4>
-                                </div>
-                                <div className="col-sm-4  col-5 text-right ">
-                                    <h6 className="date-time">{format(parseISO(review.created_at), 'M/d/yy HH:mm ')}ET<span> #{review.id}</span> </h6>
-                                    <p><a href="#" className="what">What’s this?</a></p>
-                                </div>
-                                <div className="col-sm-4 col-5 text-right ">
-                                    <div className="del-icon">
-                                    </div>
-                                    <div
-                                        className="modal fade"
-                                        id="exampleModal"
-                                        tabIndex={-1}
-                                        aria-labelledby="exampleModalLabel"
-                                        aria-hidden="true"
-                                    >
-                                        <div className="modal-dialog">
-                                            <div className="modal-content">
-                                                <div className="modal-header">
-                                                    <h5 className="modal-title" id="exampleModalLabel">
-                                                        {" "}
-                                                    </h5>
-                                                    <button
-                                                        type="button"
-                                                        className="btn-close"
-                                                        data-bs-dismiss="modal"
-                                                        aria-label="Close"
-                                                    />
-                                                </div>
-                                                <div className="modal-body pop-des">
-                                                    <h3>Are you sure you want to delete this review?</h3>
-                                                    <p>
-                                                        {" "}
-                                                        If deleted, this review will not be able to be
-                                                        recovered. Deleting reviews does not impact your
-                                                        bungee score.{" "}
-                                                    </p>
-                                                </div>
-                                                <div className="modal-footer j-cebter">
-                                                    <button
-                                                        type="button"
-                                                        className="btn edit-btn  Save changes"
-                                                        data-bs-dismiss="modal"
-                                                    >
-                                                        Yes
-                                                    </button>
-                                                    <button type="button" className="btn edit-btn  Cancel">
-                                                        No
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <p>
-                                {review.description}
-                            </p>
-                            <div className="row">
-                                <div className="col-6">
-                                    <div className="row">
-                                        <div className="col-lg-4 col-md-3 col-5 ">
-                                            <h4 className="overall-rating">Overall rating:</h4>
-                                        </div>
-                                        <div className="col-lg-3 col-md-4 col-6 ">
-                                            <p className="rating">
-                                                <span>{review.avg_rating}</span>/5
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-6">
-                                    <div className="row">
-                                        <div className="col-lg-8 col-md-6 col-2" />
-                                        <div className="col-lg-2 col-md-3 col-5">
-                                            <p className="thum thum-up">
-                                                <i className="fa-solid fa-thumbs-up" /> {review.thumbs_up}
-                                            </p>
-                                        </div>
-                                        <div className="col-lg-2 col-md-3 col-5">
-                                            <p className="thum thum-down">
-                                                {" "}
-                                                <i className="fa-solid fa-thumbs-down" /> {review.thumbs_down}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </section> */}
             <div className="container pt-4">
                 <div className="content-page">
                     <div className="content">

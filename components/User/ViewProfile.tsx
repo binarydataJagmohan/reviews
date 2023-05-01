@@ -8,45 +8,65 @@ import { saveAdminProfileData, getLatestReviews, getUserProfileData, LikeReview,
 import { useRouter } from "next/router";
 import { format, parseISO, isValid } from 'date-fns';
 
+
+type Review = {
+  bunjee_score: number;
+  // other properties of a review
+};
+
+interface Reviewn {
+  id: number;
+  review_to_name: string;
+  first_name: string;
+  last_name: string;
+  group_name: string;
+  company_name?: string;
+  position_title?: string;
+  description: string;
+  avg_rating: number;
+  thumbs_up: number;
+  thumbs_down: number;
+  bunjee_score: number;
+  created_at: string;
+  slug: string;
+  num_of_ratings: number;
+}
+
+
 export default function ViewProfile() {
   const router = useRouter();
   // const { userId } = router.query;
   const { name } = router.query;
   const [score, setScore] = useState([]);
-  const [user, SetUserData] = useState([]);
-  const [reviews, SetReview] = useState([]);
+  // const [user, SetUserData] = useState([]);
+  // const [reviews, SetReview] = useState([]);
+  const [reviews, SetReview] = useState<Reviewn[] | null>(null);
   const [slug, setslug] = useState('');
   const [likeds, setLiked] = useState([]);
   const [initialName, setInitialName] = useState('');
+  const initialReviews: Review[] = [];
+  const [user, SetUserData] = useState({
+    first_name: "",
+    last_name: "",
+    email: "",
+    view_password: "",
+    company_name: "",
+    group_name: "",
+    position_title: "",
+    id: "",
+    set_name: "",
+    font_color: "",
+    background_color: "",
+  });
 
 
-  // useEffect(() => {
-  //   if (!userId) return;
-  //   getUserProfileData(userId)
-  //     .then((res) => {
-  //       console.log(res)
-  //       if (res.status === true) {
-  //         SetUserData(res.data);
-  //         SetReview(res.reviews);
-  //         console.log(reviews)
-  //       } else {
-  //         toast.error(res.message, {
-  //           position: toast.POSITION.TOP_RIGHT,
-  //         });
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       toast.error(err.message, {
-  //         position: toast.POSITION.BOTTOM_RIGHT,
-  //       });
-  //     });
-  // }, [userId]);
+
   useEffect(() => {
     if (!name) return;
     getUserProfileData(name)
       .then((res) => {
         //console.log(res)
-        setslug(name)
+        setslug(String(name));
         if (res.status === true) {
           SetUserData(res.data);
           SetReview(res.reviews);
@@ -64,30 +84,50 @@ export default function ViewProfile() {
       });
   }, [name]);
 
+
   useEffect(() => {
-    const user_id = localStorage.getItem('id');
-    const res = getbunjeeScore(user_id).then((res) => {
-      setScore(res.data);
-     // console.log(res);
-    });
+    const user_id = String(localStorage.getItem('id'));
+    if (user_id) {
+      getbunjeeScore()
+        .then((res) => {
+          setScore(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }, []);
 
   const { first_name, last_name } = user;
+  // const { first_name, last_name } = user.length ? user[0] : {};
   const getInitials = () => {
     if (!first_name || !last_name) return '';
     return `${first_name.charAt(0).toUpperCase()}${last_name.charAt(0).toUpperCase()}`;
   };
 
-  const highestBunjeeScore = Math.max(...reviews.map((review) => review.bunjee_score));
-  const topReviews = reviews.filter((review) => review.bunjee_score === highestBunjeeScore);
-  const remainingReviews = reviews.filter((review) => review.bunjee_score < highestBunjeeScore);
+
+  function App() {
+    const [reviews, setReviews] = useState(initialReviews);
+
+    // function to add new review
+    const addReview = (review: Review) => {
+      setReviews([...reviews, review]);
+    }
+
+    // function to get top reviews and remaining reviews
+    const getTopAndRemainingReviews = () => {
+      const highestBunjeeScore = Math.max(...reviews.map((review) => review.bunjee_score));
+      const topReviews = reviews.filter((review) => review.bunjee_score === highestBunjeeScore);
+      const remainingReviews = reviews.filter((review) => review.bunjee_score < highestBunjeeScore);
+      return { topReviews, remainingReviews };
+    }
+  }
 
   return (
     <>
       <section className="edit-part section-sp">
         <div className="container">
           <div className="button-part text-right">
-            {/* <a href={`/user/AddReview?userId=${userId}`} className="edit-btn Save changes chng" ><i className="fa-solid fa-user-pen" /> Add review</a> */}
             <a href={`/user/AddReview?slug=${slug}`} className="edit-btn Save changes chng" ><i className="fa-solid fa-user-pen" /> Add review</a>
           </div>
         </div>
@@ -153,7 +193,7 @@ export default function ViewProfile() {
           </ul>
           <div className="tab-content" id="pills-tabContent">
             <div className="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-            {reviews.length > 0 ? (
+              {/* {reviews.length > 0 ? (
               reviews.map((review,index) => (
                 // eslint-disable-next-line react/jsx-key
                 <div key={index} className="main_box mt-5">
@@ -193,32 +233,43 @@ export default function ViewProfile() {
                 </div>
               ))):(
                 <p>No reviews yet</p>
-              )}
-            </div>
-            <div className="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-              <div className="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                {reviews.length>0 ? (
+              )} */}
+              {reviews ? (
                 reviews.map((review) => (
-                  // eslint-disable-next-line react/jsx-key
-                  <div className="main_box mt-5">
+                  <div className="main_box mt-5" key={review.id}>
                     <div className="row">
-                      <div className="col-sm-6 col-5  ">
-                        <h6 className="date-time"><b>{isValid(parseISO(review.created_at)) ? format(parseISO(review.created_at), 'M/d/yy HH:mm ') + 'ET' : 'Invalid date'} |<span> #{review.bunjee_score}</span> <a href="#" className="what">What’s this?</a></b> </h6>
+                      <div className="col-sm-6 col-5">
+                        <h6 className="date-time">
+                          <b>
+                            {isValid(parseISO(review.created_at))
+                              ? format(parseISO(review.created_at), "M/d/yy HH:mm ") + "ET"
+                              : "Invalid date"} |
+                            <span> #{review.bunjee_score}</span>{" "}
+                            <a href="#" className="what">
+                              What’s this?
+                            </a>
+                          </b>{" "}
+                        </h6>
                         <p />
                       </div>
                       <div className="col-sm-6 col-7 text-right">
-                        <p>{review.first_name} | {review.group_name} | {review.company_name} | {review.position_title}</p>
+                        <p>
+                          {review.first_name} | {review.group_name} | {review.company_name} |{" "}
+                          {review.position_title}
+                        </p>
                       </div>
                     </div>
                     <p>{review.description}</p>
                     <div className="row">
                       <div className="col-6">
                         <div className="row">
-                          <div className="col-lg-4 col-md-3 col-5 ">
+                          <div className="col-lg-4 col-md-3 col-5">
                             <h4 className="overall-rating">Overall rating:</h4>
                           </div>
-                          <div className="col-lg-3 col-md-4 col-6 ">
-                            <p className="rating"><span>5</span>/5</p>
+                          <div className="col-lg-3 col-md-4 col-6">
+                            <p className="rating">
+                              <span>5</span>/5
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -226,23 +277,75 @@ export default function ViewProfile() {
                         <div className="row">
                           <div className="col-lg-8 col-md-6 col-2" />
                           <div className="col-lg-2 col-md-3 col-5">
-                            <p className="thum thum-up"><i className="fa-solid fa-thumbs-up" />{review.thumbs_up}</p>
+                            <p className="thum thum-up">
+                              <i className="fa-solid fa-thumbs-up" />
+                              {review.thumbs_up}
+                            </p>
                           </div>
                           <div className="col-lg-2 col-md-3 col-5">
-                            <p className="thum thum-down"> <i className="fa-solid fa-thumbs-down" /> {review.thumbs_down}</p>
+                            <p className="thum thum-down">
+                              {" "}
+                              <i className="fa-solid fa-thumbs-down" /> {review.thumbs_down}
+                            </p>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                ))):(
+                ))
+              ) : (
+                <p>No reviews yet</p>
+              )}
+
+            </div>
+            <div className="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+              <div className="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                {reviews? (
+                  reviews.map((review) => (
+                    // eslint-disable-next-line react/jsx-key
+                    <div className="main_box mt-5">
+                      <div className="row">
+                        <div className="col-sm-6 col-5  ">
+                          <h6 className="date-time"><b>{isValid(parseISO(review.created_at)) ? format(parseISO(review.created_at), 'M/d/yy HH:mm ') + 'ET' : 'Invalid date'} |<span> #{review.bunjee_score}</span> <a href="#" className="what">What’s this?</a></b> </h6>
+                          <p />
+                        </div>
+                        <div className="col-sm-6 col-7 text-right">
+                          <p>{review.first_name} | {review.group_name} | {review.company_name} | {review.position_title}</p>
+                        </div>
+                      </div>
+                      <p>{review.description}</p>
+                      <div className="row">
+                        <div className="col-6">
+                          <div className="row">
+                            <div className="col-lg-4 col-md-3 col-5 ">
+                              <h4 className="overall-rating">Overall rating:</h4>
+                            </div>
+                            <div className="col-lg-3 col-md-4 col-6 ">
+                              <p className="rating"><span>5</span>/5</p>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col-6">
+                          <div className="row">
+                            <div className="col-lg-8 col-md-6 col-2" />
+                            <div className="col-lg-2 col-md-3 col-5">
+                              <p className="thum thum-up"><i className="fa-solid fa-thumbs-up" />{review.thumbs_up}</p>
+                            </div>
+                            <div className="col-lg-2 col-md-3 col-5">
+                              <p className="thum thum-down"> <i className="fa-solid fa-thumbs-down" /> {review.thumbs_down}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))) : (
                   <p>No reviews yet</p>
                 )}
 
               </div>
             </div>
             <div className="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-            {reviews.length>0 ? (
+              {reviews ? (
                 reviews.map((review) => (
                   // eslint-disable-next-line react/jsx-key
                   <div className="main_box mt-5">
@@ -280,9 +383,9 @@ export default function ViewProfile() {
                       </div>
                     </div>
                   </div>
-                ))):(
-                  <p>No reviews yet</p>
-                )}
+                ))) : (
+                <p>No reviews yet</p>
+              )}
             </div>
             <div className="tab-pane fade" id="pills-contact2" role="tabpanel" aria-labelledby="pills-contact-tab2">4</div>
           </div>

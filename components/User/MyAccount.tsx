@@ -7,6 +7,23 @@ import { removeToken, removeStorageData, getCurrentUserData, } from "../../lib/s
 import { saveAdminProfileData, getUserProfileDatabyid, LikeReview, getEditdata } from "../../lib/backendapi";
 import Tippy from "@tippyjs/react";
 import { parseISO, format } from 'date-fns';
+
+
+
+interface Review {
+  first_name: string;
+  group_name: string;
+  company_name: string;
+  position_title: string;
+  description: string;
+  avg_rating: number;
+  thumbs_up: number;
+  thumbs_down: number;
+  review_id: number;
+  created_at:string;
+  bunjee_score:number;
+}
+
 export default function MyAccount() {
 
   const current_user_data = getCurrentUserData();
@@ -14,26 +31,36 @@ export default function MyAccount() {
   const [reviews, setreviews] = useState([]);
   const [likeds, setLiked] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [additionalData, setadditionalData] = useState([]);
-  const barRef = useRef(null);
-  const percentageTagRef = useRef(null);
+  const [additionalData, setadditionalData] = useState<{ set_name: string, font_color: string, background_color: string }[]>([]);
+  // const barRef = useRef(null);
+  const barRef = useRef<HTMLDivElement>(null);
+  const percentageTagRef = useRef<HTMLDivElement>(null);
+
+  // const percentageTagRef = useRef(null);
   const differenceTagRef = useRef(null);
   const [difference, setDifference] = useState(0);
+  
   const [user, SetUserData] = useState({
     first_name: "",
     last_name: "",
     company_name: "",
     group_name: "",
     position_title: "",
+    id:"",
+    set_name:"",
+    font_color:"",
+    background_color:""
+
   });
 
-  const handleLike = (e, like, id) => {
+  const handleLike = (e:any, like:any, id:any) => {
     e.preventDefault();
     const data = { isLiked: like, reviewId: id, userId: user.id };
     // return false;
     LikeReview(data).then((res) => {
       // this.review.thumbs_up(res.data.thumbs_up)
-      console.log(res)
+      //console.log(res)
+      if ('id' in current_user_data) {
       getUserProfileDatabyid(current_user_data.id)
         .then((res) => {
           if (res.status === true) {
@@ -47,35 +74,37 @@ export default function MyAccount() {
             });
           }
         })
+      }
     });
   }
   useEffect(() => {
     const token = localStorage.getItem('token');
     const id = localStorage.getItem('id');
     if (token && id) {
-      // getlikedislike(id).then(data => {
-      //     barRef.current.style.width = data.per + '%';
-      //     percentageTagRef.current.innerHTML = data.difference;
-
-      // });
       setIsAuthenticated(true);
       const firstName = localStorage.getItem('first_name');
       const lastName = localStorage.getItem('last_name');
+      if (firstName !== null && lastName !== null) {
       setInitialName(`${firstName.charAt(0).toUpperCase()}${lastName.charAt(0).toUpperCase()}`);
+      }
     }
     const current_user_data = getCurrentUserData();
-    if (current_user_data.id !== null) {
+    if ('id' in current_user_data) {
       getUserProfileDatabyid(current_user_data.id)
         .then((res) => {
-          // console.log(res.data);
-
           if (res.status === true) {
             SetUserData(res.data);
             setreviews(res.reviews);
             console.log(res.reviews);
-            barRef.current.style.width = (res.data.bunjee_score || 0) + '%';
-            percentageTagRef.current.innerHTML = res.data.bunjee_score || 0
-
+            if (barRef.current) {
+              barRef.current.style.width = (res.data.bunjee_score || 0) + '%';
+              if (percentageTagRef.current) {
+                percentageTagRef.current.innerHTML = res.data.bunjee_score || 0;
+              }
+            }
+                   
+            // barRef.current.style.width = (res.data.bunjee_score || 0) + '%';
+            // percentageTagRef.current.innerHTML = res.data.bunjee_score || 0
           } else {
             toast.error(res.message, {
               position: toast.POSITION.TOP_RIGHT,
@@ -104,7 +133,7 @@ export default function MyAccount() {
     window.location.href = '/Login';
   }
 
-  function handleLogout(e) {
+  function handleLogout(e:any) {
     e.preventDefault();
     removeToken();
     removeStorageData();
@@ -126,19 +155,15 @@ export default function MyAccount() {
           <div className="row">
             <div className="col-sm-7">
               <div className="user-pro account-big">
-                <a href="#" style={{ 'color': additionalData.font_color, 'background': additionalData.background_color }} className="btn btn-all header-btn add-image-btn">
-                  {/* <img
-                      src="/assets/images/user.png"
-                      alt="user"
-                      className="user"
-                    />{" "} */}
+                {/* <a href="#" style={{ 'color': additionalData.font_color, 'background': additionalData.background_color }} className="btn btn-all header-btn add-image-btn">
                   {additionalData.set_name != null || "" ? additionalData.set_name : initialName}
-                  {/* <i className="fa-solid fa-user-pen" /> */}
-                </a>
-                {/* <img src="/assets/images/user.png" alt="user" className="user" /> */}
+                </a> */}
+                 <a href="#" style={{ 'color': additionalData.length > 0 ? additionalData[0].font_color : '', 'background': additionalData.length > 0 ? additionalData[0].background_color : '' }} className="btn btn-all header-btn add-image-btn">
+                    {additionalData.length > 0 && additionalData[0].set_name != null && additionalData[0].set_name !== "" ? additionalData[0].set_name : initialName}
+                  </a>
                 <h2>{user.first_name + ' ' + user.last_name} </h2>
                 <h3>{user.group_name}</h3>
-                <h3>{user.compnay_name}</h3>
+                <h3>{user.company_name}</h3>
                 <h3>{user.position_title}</h3>
               </div>
             </div>
@@ -172,8 +197,9 @@ export default function MyAccount() {
       <section className="my-reviews section-sp">
         <div className="container">
           <h1>My reviews</h1>
-          {reviews.length > 0 ? (
-            reviews.map((review) => (
+          {/* {reviews.length > 0 ? (
+            reviews.map((review) => ( */}
+          {reviews && reviews.length > 0 && reviews.map((review: Review, index: number) => (
               // eslint-disable-next-line react/jsx-key
               <div className="main_box mt-4">
                 <div className="row">
@@ -281,9 +307,8 @@ export default function MyAccount() {
                   </div>
                 </div>
               </div>
-            ))) : (
-            <p>No reviews yet</p>
-          )}
+            ))}
+            
         </div>
       </section>
     </>

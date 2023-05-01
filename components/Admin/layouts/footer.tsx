@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import Link from 'next/link'
 import Image from 'next/image';
 
-import { removeToken, removeStorageData, getCurrentUserData } from "../../lib/session";
+import { removeToken, removeStorageData, getCurrentUserData } from "../../../lib/session";
 
 export default function Footer() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -27,19 +27,19 @@ export default function Footer() {
              {isAuthenticated ? ( <footer className="footer-part">
         <div className="container">
           <ul>
-            <li><a href="/index">Home</a></li>
-            <li><a href="/user/MyAccount">My Account</a></li>
-            <li><a href="/user/search">Search Review</a></li>
-            <li><a href="/About">About us</a></li>
+            <li><Link href="/index">Home</Link></li>
+            <li><Link href="/user/MyAccount">My Account</Link></li>
+            <li><Link href="/user/search">Search Review</Link></li>
+            <li><Link href="/About">About us</Link></li>
           </ul>
         </div>
       </footer>): ( <footer className="footer-part">
         <div className="container">
           <ul>
-            <li><a href="/index">Home</a></li>
-            <li><a href="/Login">Login</a></li>
-            <li><a href="/SignUp">Sign up</a></li>
-            <li><a href="/About">About us</a></li>
+            <li><Link href="/index">Home</Link></li>
+            <li><Link href="/Login">Login</Link></li>
+            <li><Link href="/SignUp">Sign up</Link></li>
+            <li><Link href="/About">About us</Link></li>
           </ul>
         </div>
       </footer>)
