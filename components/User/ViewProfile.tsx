@@ -65,12 +65,10 @@ export default function ViewProfile() {
     if (!name) return;
     getUserProfileData(name)
       .then((res) => {
-        //console.log(res)
         setslug(String(name));
         if (res.status === true) {
           SetUserData(res.data);
           SetReview(res.reviews);
-          //console.log(reviews)
         } else {
           toast.error(res.message, {
             position: toast.POSITION.TOP_RIGHT,
@@ -99,12 +97,10 @@ export default function ViewProfile() {
   }, []);
 
   const { first_name, last_name } = user;
-  // const { first_name, last_name } = user.length ? user[0] : {};
   const getInitials = () => {
     if (!first_name || !last_name) return '';
     return `${first_name.charAt(0).toUpperCase()}${last_name.charAt(0).toUpperCase()}`;
   };
-
 
   function App() {
     const [reviews, setReviews] = useState(initialReviews);
@@ -113,7 +109,6 @@ export default function ViewProfile() {
     const addReview = (review: Review) => {
       setReviews([...reviews, review]);
     }
-
     // function to get top reviews and remaining reviews
     const getTopAndRemainingReviews = () => {
       const highestBunjeeScore = Math.max(...reviews.map((review) => review.bunjee_score));
@@ -268,7 +263,7 @@ export default function ViewProfile() {
                           </div>
                           <div className="col-lg-3 col-md-4 col-6">
                             <p className="rating">
-                              <span>5</span>/5
+                              <span>{review.avg_rating}</span>/5
                             </p>
                           </div>
                         </div>
@@ -321,7 +316,7 @@ export default function ViewProfile() {
                               <h4 className="overall-rating">Overall rating:</h4>
                             </div>
                             <div className="col-lg-3 col-md-4 col-6 ">
-                              <p className="rating"><span>5</span>/5</p>
+                              <p className="rating"><span>{review.avg_rating}</span>/5</p>
                             </div>
                           </div>
                         </div>
@@ -366,7 +361,7 @@ export default function ViewProfile() {
                             <h4 className="overall-rating">Overall rating:</h4>
                           </div>
                           <div className="col-lg-3 col-md-4 col-6 ">
-                            <p className="rating"><span>5</span>/5</p>
+                            <p className="rating"><span>{review.avg_rating}</span>/5</p>
                           </div>
                         </div>
                       </div>

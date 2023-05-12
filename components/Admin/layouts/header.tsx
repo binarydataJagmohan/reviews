@@ -61,12 +61,29 @@ export default function Header() {
                   </li>
                   : ''}
 
-                {/* {isAuthenticated && user_type == 'admin' ?
+                {isAuthenticated && user_type == 'admin' ?
                   <li className="nav-item">
                     <a className="nav-link active" aria-current="page" href="/admin/user-merge">User Merge</a>
                   </li>
-                  : ''} */}
+                  : ''}
 
+              </ul>
+              <ul className="navbar-nav ms-auto mb-lg-0 tab-mobile-menu">
+                <li className="nav-item">
+                  <Link className="nav-link active" aria-current="page" href="/admin/all-users">
+                    <i className="fa-solid fa-house" />
+                    All Users</Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" href="/admin/all-review">
+                    <i className="fa-solid fa-question" />
+                    All Reviews</Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" href="/admin/user-merge">
+                    <i className="fa-solid fa-user" />
+                    User Merge</Link>
+                </li>
               </ul>
               {isAuthenticated && user_type == 'admin' ? <form className="d-flex">
               </form> : <form className="d-flex">
@@ -82,8 +99,17 @@ export default function Header() {
             </div>
             <a className="navbar-brand" href="#"><img src={process.env.NEXT_PUBLIC_BASE_URL + "assets/images/logo-white.png"} alt="logo-white" className="logo mobile-view" /></a>
             <div className="user-profile mobile-view">
-              {/* <img src={process.env.NEXT_PUBLIC_BASE_URL+"assets/images/user.png"} alt="user" /> */}
-              <div className="btn btn-all header-btn top-header-btn"> {initialName}</div>
+              {isAuthenticated ? (
+                <a href="my-account" className="btn btn-all header-btn top-header-btn">
+                  {initialName}
+                </a>
+              ) : (
+                <form className="d-flex">
+                  <a href="/Login" className="btn btn-all header-btn top-header-btn" style={{ fontSize: "12px" }}>
+                    Login
+                  </a>
+                </form>
+              )}
             </div>
           </nav>
         </div>

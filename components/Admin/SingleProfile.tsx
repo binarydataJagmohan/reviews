@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { getUserProfileDatabyid, LikeReview } from "../../lib/backendapi";
+import { getUserProfileDatabyid, getAdminProfileDatabyid, LikeReview } from "../../lib/backendapi";
 import { removeToken, removeStorageData, getCurrentUserData, } from "../../lib/session";
 import { parseISO, format } from 'date-fns';
 import { useRouter } from "next/router";
@@ -10,15 +10,16 @@ type Review = {
     id: number;
     first_name: string;
     reviewed_user: {
-      first_name: string;
+        first_name: string;
     };
     description: string;
     total_rating: number; // Add this property
-    avg_rating: number; 
-    thumbs_up: number; 
-    thumbs_down: number; 
-  };
-  
+    avg_rating: number;
+    thumbs_up: number;
+    thumbs_down: number;
+    review_id:number;
+};
+
 export default function SingleProfile() {
 
     const router = useRouter();
@@ -34,29 +35,21 @@ export default function SingleProfile() {
         company_name: "",
         group_name: "",
         position_title: "",
-        id:"",
+        id: "",
     });
 
-    const handleLike = (e:any, like:any, id:any) => {
-        e.preventDefault();
-        const data = { isLiked: like, reviewId: id, userId: user.id };
-        // return false;
-        LikeReview(data).then((res) => {
-            // this.review.thumbs_up(res.data.thumbs_up)
-            console.log(res)
-            setReviews(res.data);
-        });
-    }
 
 
     useEffect(() => {
         if (!userId) return;
-        getUserProfileDatabyid(userId)
+        getAdminProfileDatabyid(userId)
             .then((res) => {
                 if (res.status === true) {
                     const firstName = res.data.first_name;
                     const lastName = res.data.last_name;
                     SetUserData(res.data);
+                    console.log(res.data);
+                    
                     setInitialName(`${firstName.charAt(0).toUpperCase()}${lastName.charAt(0).toUpperCase()}`);
 
                     // retrieve reviews data
@@ -66,32 +59,22 @@ export default function SingleProfile() {
 
 
                     // create an array of promises to fetch user information for review_to field
-                    reviewsData.forEach((review:any) => {
-                        const promise = getUserProfileDatabyid(review.review_to);
+                    reviewsData.forEach((review: any) => {
+                        const promise = getAdminProfileDatabyid(review.review_to);
                         reviewPromises.push(promise);
                     });
-
-                    // resolve all promises and set state with updated reviews data
-                    // Promise.all(reviewPromises).then((reviewResponses) => {
-                    //     const updatedReviews = reviewsData.map((review:any, index:any) => {
-                    //         const reviewedUser = reviewResponses[index].data;
-                    //         return { ...review, reviewed_user: reviewedUser };
-                    //     });
-                    //     setReviews(updatedReviews);
-                    // });
                     Promise.all(reviewPromises).then((reviewResponses: any[]) => {
                         const updatedReviews = reviewsData.map((review: any, index: any) => {
-                          if (typeof reviewResponses[index] === 'object') {
-                            const reviewedUser = reviewResponses[index].data;
-                            return { ...review, reviewed_user: reviewedUser };
-                          } else {
-                            // Handle the case where reviewResponses[index] is not an object
-                            return review;
-                          }
+                            if (typeof reviewResponses[index] === 'object') {
+                                const reviewedUser = reviewResponses[index].data;
+                                return { ...review, reviewed_user: reviewedUser };
+                            } else {
+                                // Handle the case where reviewResponses[index] is not an object
+                                return review;
+                            }
                         });
                         setReviews(updatedReviews);
-                      });
-                    
+                    });
                 }
             });
     }, [userId]);
@@ -149,6 +132,7 @@ export default function SingleProfile() {
                                                             <th>Average Rating</th>
                                                             <th>Thumbs Up</th>
                                                             <th>Thumbs Down</th>
+                                                            {/* <th>Action</th> */}
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -161,6 +145,9 @@ export default function SingleProfile() {
                                                                 <td>{review.avg_rating}</td>
                                                                 <td>{review.thumbs_up}</td>
                                                                 <td>{review.thumbs_down}</td>
+                                                                {/* <td><a href={`/admin/edit-review?reviewId=${review.review_id}`}>
+                                                                    <i className="fas fa-edit edit-set" />
+                                                                </a></td> */}
                                                             </tr>
                                                         ))}
                                                     </tbody>

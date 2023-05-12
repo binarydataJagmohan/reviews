@@ -64,9 +64,7 @@ export default function AddReview() {
   };
 
   const onSubmit = async () => {
-    // const current_user_data = getCurrentUserData();
     const current_user_data = getCurrentUserData() as { id: string };
-
     if (!current_user_data) return;
     const body = {
       review_by: current_user_data?.id,
@@ -75,15 +73,15 @@ export default function AddReview() {
       total_rating: user.rating,
       //avg_rating: 3
     }
-    console.log(body);
     submitReview(body).then((res) => {
       if (res.status) {
-        //alert(res.message);
         toast.success(res.message, {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 5000
         });
-        router.push("/user/search")
+        setTimeout(() => {
+          router.push("/user/search");
+        }, 3000); // Delay the redirection by 5 seconds (5000 milliseconds)
       } else {
         toast.error(res.message, {
           position: toast.POSITION.TOP_RIGHT,
@@ -91,7 +89,6 @@ export default function AddReview() {
       }
     })
       .catch((err) => {
-        //   alert(err?.response?.data?.message)
         toast.error(err?.response?.data?.message, {
           position: toast.POSITION.TOP_RIGHT,
         });

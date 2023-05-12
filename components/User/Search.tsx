@@ -19,6 +19,7 @@ interface Review {
   position_title?: string;
   description: string;
   avg_rating: number;
+  total_rating: number;
   thumbs_up: number;
   thumbs_down: number;
   bunjee_score: number;
@@ -34,6 +35,7 @@ interface Liked {
   position_title?: string;
   description: string;
   avg_rating: number;
+  total_rating: number;
   thumbs_up: number;
   thumbs_down: number;
   bunjee_score: number;
@@ -49,6 +51,7 @@ interface Score {
   position_title?: string;
   description: string;
   avg_rating: number;
+  total_rating: number;
   thumbs_up: number;
   thumbs_down: number;
   bunjee_score: number;
@@ -89,16 +92,16 @@ export default function Search() {
     });
   };
 
-  useEffect(() => {
-    getSearchedResults(name)
-      .then((res) => {
-        setSearchResults(res.results);
-      })
-      .catch((error) => {
-        // console.log(error.response.data.message);
-        setSearchResults([]);
-      });
-  }, [name]);
+  // useEffect(() => {
+  //   getSearchedResults(name)
+  //     .then((res) => {
+  //       setSearchResults(res.results);
+  //     })
+  //     .catch((error) => {
+  //       // console.log(error.response.data.message);
+  //       setSearchResults([]);
+  //     });
+  // }, [name]);
 
   useEffect(() => {
     Promise.all([mostLikedReviews(), getLatestReviews()])
@@ -145,7 +148,7 @@ export default function Search() {
   };
 
   const handleSearch = async (e: any) => {
-    const { value } = e.target;
+    const value = e.target.value;
     setSearch(value);
     if (value) {
       getSearchedResults(value)
@@ -321,7 +324,7 @@ export default function Search() {
                           </div>
                           <div className="col-lg-3 col-md-4 col-6 ">
                             <p className="rating">
-                              <span>{result.avg_rating}</span>/5
+                              <span>{result.total_rating}</span>/5
                             </p>
                           </div>
                         </div>
@@ -413,7 +416,7 @@ export default function Search() {
                           </div>
                           <div className="col-lg-3 col-md-4 col-6 ">
                             <p className="rating">
-                              <span>{liked.avg_rating}</span>/5
+                              <span>{liked.total_rating}</span>/5
                             </p>
                           </div>
                         </div>
@@ -490,7 +493,7 @@ export default function Search() {
                           </div>
                           <div className="col-lg-3 col-md-4 col-6 ">
                             <p className="rating">
-                              <span>{result.avg_rating}</span>/5
+                              <span>{result.total_rating}</span>/5
                             </p>
                           </div>
                         </div>
@@ -580,7 +583,7 @@ export default function Search() {
                           </div>
                           <div className="col-lg-3 col-md-4 col-6 ">
                             <p className="rating">
-                              <span>{result.avg_rating}</span>/5
+                              <span>{result.total_rating}</span>/5
                             </p>
                           </div>
                         </div>

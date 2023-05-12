@@ -7,6 +7,10 @@ import { removeToken, removeStorageData, getCurrentUserData, } from "../../lib/s
 import { saveAdminProfileData, getUserProfileData, LikeReview, deleteReviews, EditProfileData, getEditdata, getUserProfileDatabyid } from "../../lib/backendapi";
 
 
+interface UserData {
+  id: number;
+  // other properties
+}
 interface Review {
   first_name: string;
   group_name: string;
@@ -17,6 +21,10 @@ interface Review {
   thumbs_up: number;
   thumbs_down: number;
   review_id: number;
+  id: number;
+  review_by:number;
+  review_to:number;
+  total_rating:string;
 }
 
 interface EditData {
@@ -32,6 +40,8 @@ export default function EditProfile() {
   // const [additionalData, setadditionalData] = useState([]);
   const [additionalData, setadditionalData] = useState<EditData>({ font_color: '', background_color: '', set_name: '' });
   const [editData, seteditData] = useState([]);
+  const [currentUser, setCurrentUser] = useState(null);
+
   const [showPassword, setShowPassword] = useState(false);
   const [shownPassword, setShownPassword] = useState(false);
   const [styled, setstyled] = useState({
@@ -87,14 +97,16 @@ export default function EditProfile() {
         setInitialName(`${firstName.charAt(0).toUpperCase()}${lastName.charAt(0).toUpperCase()}`);
       }
     }
-    const current_user_data = getCurrentUserData();
+   const current_user_data = getCurrentUserData();   
+
     if ('id' in current_user_data) {
+      
       getUserProfileDatabyid(current_user_data.id)
         .then((res) => {
           if (res.status === true) {
             SetUserData(res.data);
             setreviews(res.reviews);
-            // console.log(res.reviews);
+            console.log(res.reviews);
           } else {
             toast.error(res.message, {
               position: toast.POSITION.TOP_RIGHT,
@@ -124,7 +136,6 @@ export default function EditProfile() {
     color: additionalData?.font_color ?? '',
     background: additionalData?.background_color ?? ''
   };
-
 
 
   const handleDelete = (e: any, id: any) => {
@@ -300,9 +311,7 @@ export default function EditProfile() {
               <div className="col-sm-6">
                 <div className="form-blue">
                   <label>Edit Company Name</label>
-
                   <input type="text" onChange={handleChange} name="company_name" value={user.company_name} />
-
                   <label>Edit Group Name</label>
                   <input type="text" onChange={handleChange} name="group_name" value={user.group_name} />
                   <label>Edit Position Title</label>
@@ -330,7 +339,19 @@ export default function EditProfile() {
                     <h4>{review.position_title} </h4>
                   </div>
                   <div className="col-sm-4 col-5 text-right ">
-                    <div className="del-icon">
+                    <div className="del-icon color">
+
+                    {(review.id === review.review_to) && (
+
+                      <a href={`/user/edit-review?reviewId=${review.review_id}`}>
+                        <i className="fas fa-edit edit-set" />
+                      </a>)}
+
+                    {/* {(review.id === review.review_to) && (
+                        <a href={`/user/edit-review?reviewId=${review.review_id}`}>
+                          <i className="fas fa-edit edit-set" />
+                        </a>
+                      )} */}
                       <a
                         href="#"
                         data-bs-toggle="modal"
@@ -339,6 +360,7 @@ export default function EditProfile() {
                         <i className="fa-solid fa-trash" />
                       </a>
                     </div>
+
                     {/* Modal */}
                     <div
                       className="modal fade"
@@ -392,12 +414,12 @@ export default function EditProfile() {
                 <div className="row">
                   <div className="col-6">
                     <div className="row">
-                      <div className="col-lg-2 col-md-3 col-5 ">
+                      <div className="col-lg-4 col-md-3 col-5 ">
                         <h4 className="overall-rating">Overall rating:</h4>
                       </div>
                       <div className="col-lg-3 col-md-4 col-6 ">
                         <p className="rating">
-                          <span>{review.avg_rating}</span>/5
+                          <span>{review.total_rating}</span>/5
                         </p>
                       </div>
                     </div>

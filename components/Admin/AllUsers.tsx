@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Pagination from "../PaginationComponent/pagination";
-import {paginate} from "../../helpers/paginate"
+import { paginate } from "../../helpers/paginate"
 
 
 export default function AddReview() {
@@ -18,17 +18,17 @@ export default function AddReview() {
     getallUsers().then((res) => {
       if (res.status) {
         setAllUsers(res.data);
-      // console.log(res.data);
-        
+        console.log(res.data);
+
       }
     });
   }, []);
 
-  const onPageChange = (page:any) => {
+  const onPageChange = (page: any) => {
     setCurrentPage(page);
-};
+  };
 
-  const handleDelete = (e:any, id:any) => {
+  const handleDelete = (e: any, id: any) => {
     e.preventDefault();
     deleteUser(id)
       .then((res) => {
@@ -74,7 +74,7 @@ export default function AddReview() {
                         </tr>
                       </thead>
                       <tbody>
-                        {paginatedUsers.map((data:any, index:any) => (
+                        {paginatedUsers.map((data: any, index: any) => (
                           // eslint-disable-next-line react/jsx-key
                           <tr key={index}>
                             <td>
@@ -98,82 +98,87 @@ export default function AddReview() {
                                 ? data.position_title
                                 : "No record"}
                             </td>
-                              <div className="row align-items-center">
-                                <div className="col-sm-6">
-                                    <td className="text-center">
-                                      <i
-                                        className="fa fa-eye set-eye"
-                                        aria-hidden="true"
-                                        onClick={() =>
-                                          router.push(
-                                            `/admin/single-profile?userId=${data.id}`
-                                          )
-                                        }
-                                      ></i>
-                                    </td>
-                                </div>
-                                <div className="col-sm-6 col-5">
-                                  <div className="del-icon delt">
-                                    <a
-                                      href="#"
-                                      data-bs-toggle="modal"
-                                      data-bs-target={`#exampleModal${data.id}`}
-                                    >
-                                      <i className="fa-solid fa-trash del" />
-                                    </a>
-                                  </div>
-                                  <div
-                                    className="modal fade"
-                                    id={`exampleModal${data.id}`}
-                                    tabIndex={-1}
-                                    aria-labelledby="exampleModalLabel"
+                            <div className="row align-items-center">
+                              <div className="col-sm-4">
+                                <td className="text-center">
+                                  <i
+                                    className="fa fa-eye set-eye"
                                     aria-hidden="true"
+                                    onClick={() =>
+                                      router.push(
+                                        `/admin/single-profile?userId=${data.id}`
+                                      )
+                                    }
+                                  ></i>
+                                </td>
+                              </div>
+{/*                               
+                              <div className="col-sm-4 col-5">
+                                <a href={`/admin/edit-review?reviewId=${data.id}`}>
+                                  <i className="fas fa-edit edit-set" />
+                                </a></div> */}
+                              <div className="col-sm-4 col-5">
+                                <div className="del-icon delt">
+                                  <a
+                                    href="#"
+                                    data-bs-toggle="modal"
+                                    data-bs-target={`#exampleModal${data.id}`}
                                   >
-                                    <div className="modal-dialog">
-                                      <div className="modal-content">
-                                        <div className="modal-header">
-                                          <h5 className="modal-title" id="exampleModalLabel"></h5>
-                                          <button
-                                            type="button"
-                                            className="btn-close"
-                                            data-bs-dismiss="modal"
-                                            aria-label="Close"
-                                          />
-                                        </div>
-                                        <div className="modal-body pop-des">
-                                          <h3>Are you sure you want to delete this user?</h3>
-                                          <p>
-                                            If deleted, this user will not be able to be recovered.
-                                          </p>
-                                        </div>
-                                        <div className="modal-footer j-cebter">
-                                          <button
-                                            type="button"
-                                            className="btn edit-btn Save changes"
-                                            data-bs-dismiss="modal"
-                                            onClick={(e) => handleDelete(e, data.id)}
-                                          >
-                                            Yes
-                                          </button>
-                                          <button type="button" className="btn edit-btn Cancel">
-                                            No
-                                          </button>
-                                        </div>
+                                    <i className="fa-solid fa-trash del" />
+                                  </a>
+                                </div>
+                                <div
+                                  className="modal fade"
+                                  id={`exampleModal${data.id}`}
+                                  tabIndex={-1}
+                                  aria-labelledby="exampleModalLabel"
+                                  aria-hidden="true"
+                                >
+                                  <div className="modal-dialog">
+                                    <div className="modal-content">
+                                      <div className="modal-header">
+                                        <h5 className="modal-title" id="exampleModalLabel"></h5>
+                                        <button
+                                          type="button"
+                                          className="btn-close"
+                                          data-bs-dismiss="modal"
+                                          aria-label="Close"
+                                        />
+                                      </div>
+                                      <div className="modal-body pop-des">
+                                        <h3>Are you sure you want to delete this user?</h3>
+                                        <p>
+                                          If deleted, this user will not be able to be recovered.
+                                        </p>
+                                      </div>
+                                      <div className="modal-footer j-cebter">
+                                        <button
+                                          type="button"
+                                          className="btn edit-btn Save changes"
+                                          data-bs-dismiss="modal"
+                                          onClick={(e) => handleDelete(e, data.id)}
+                                        >
+                                          Yes
+                                        </button>
+                                        <button type="button" className="btn edit-btn Cancel">
+                                          No
+                                        </button>
                                       </div>
                                     </div>
                                   </div>
                                 </div>
                               </div>
+                            </div>
                           </tr>
-                        ))} 
+                        ))}
                       </tbody>
                     </table>
                     <Pagination
-                            items={allusers} 
-                            currentPage={currentPage}
-                            pageSize={pageSize}
-                            onPageChange={onPageChange}
-                            />  
+                      items={allusers}
+                      currentPage={currentPage}
+                      pageSize={pageSize}
+                      onPageChange={onPageChange}
+                    />
                   </div>
                 </div>
               </div>

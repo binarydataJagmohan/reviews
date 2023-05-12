@@ -974,3 +974,84 @@ a.edit-btn.st.Cancel {
     background: red;
     color: #fff;
 }
+form.set-merge-form label {
+    font-size: 16px;
+    padding-bottom: 20px;
+    font-weight: 300;
+}
+form.set-merge-form select {
+    padding: 5px;
+    font-size: 16px;
+    border-radius: 6px;
+    margin-left: 15px;
+    max-width: 82% !important;
+}
+form.set-merge-form {
+    max-width: 500px;
+    margin: 0 auto;
+    margin-top: 60px;
+}
+.image-ico img {
+    width: 100%;
+    margin: 0 auto;
+    max-width: 10%;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+}
+button.btn.bn-style-popop {
+    padding: 10px;
+    background: #0b38f5;
+    color: #fff;
+    font-size: 14px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    width: 30%;
+    margin: 30px auto;
+}
+
+.mainclass {
+    height: 75vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.set-merge-form select {
+    outline: 0;
+    border: none;
+}
+@media(min-width:1330px){
+    a#topjs {
+        top: -11% !important;
+    }
+}
+
+@media(min-width:1367px){
+    .mainclass {
+        height: 100vh;
+    }
+}
+@media(max-width:767px){
+    form.set-merge-form select {
+        max-width: 80% !important;
+        margin: 15px auto;
+    }
+    form.set-merge-form {
+        text-align: center;
+        margin: 0 auto;
+        margin-top: 60px;
+    }
+}
+@media (max-width: 767px)
+{
+a.btn.btn-all.header-btn.add-image-btn {
+    top: -52%;
+    
+}
+}
+
+i.fas.fa-edit.edit-set {
+    margin-right: 20px;
+    color: green;
+}

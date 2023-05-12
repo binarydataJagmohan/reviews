@@ -22,6 +22,10 @@ interface Review {
   review_id: number;
   created_at:string;
   bunjee_score:number;
+  id: number;
+  review_by:number;
+  review_to:number;
+  total_rating:string;
 }
 
 export default function MyAccount() {
@@ -170,7 +174,7 @@ export default function MyAccount() {
             <div className="col-sm-5 text-right">
               <div className="container">
                 <div className="status-info position-relative">
-                  <h1 className="title Meter" style={{ color: '#fff' }}>Bunjee meter</h1>
+                  <h1 className="title Meter" style={{ color: '#fff' }}>Bungee meter</h1>
                   <div className="d-flex justify-content-center align-items-center">
                     <div className="width-same">-100</div>
                     <div className="bar-wrap w-100">
@@ -211,6 +215,12 @@ export default function MyAccount() {
                   <div className="col-sm-4  col-5 text-right ">
                     <h6 className="date-time">{format(parseISO(review.created_at), 'M/d/yy HH:mm ')}ET<span> #{review.bunjee_score}</span> </h6>
                     <p><a href="#" className="what">What’s this?</a></p>
+                    {(review.id === review.review_to) && (
+                        <a href={`/user/edit-review?reviewId=${review.review_id}`}>
+                          <i className="fas fa-edit edit-set" />
+                        </a>
+                          )}
+                 
                   </div>
                   <div className="col-sm-4 col-5 text-right ">
                     <div className="del-icon">
@@ -280,7 +290,7 @@ export default function MyAccount() {
                       </div>
                       <div className="col-lg-3 col-md-4 col-6 ">
                         <p className="rating">
-                          <span>{review.avg_rating}</span>/5
+                          <span>{review.total_rating}</span>/5
                         </p>
                       </div>
                     </div>
